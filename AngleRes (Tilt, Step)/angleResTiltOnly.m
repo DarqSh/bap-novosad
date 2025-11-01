@@ -1,0 +1,15 @@
+theta = linspace(30, 50, 100);  % in degrees
+res = zeros(size(theta));
+step = 1.8; % in degrees
+res = 360/2/pi*sin(theta/360*2*pi)*sqrt((cos(step/360*2*pi)-cos(0))^2+(sin(step/360*2*pi)-sin(0))^2);
+
+figure;
+plot(theta, res, 'b', 'LineWidth', 1); 
+hold on;
+plot(theta, 0.72*ones(size(theta)), 'r--', 'LineWidth', 1);
+grid on;
+
+legend('Resolution for different \theta', 'LiDAR Resolution');
+
+xlabel('\theta');
+ylabel('Angular Resolution');
