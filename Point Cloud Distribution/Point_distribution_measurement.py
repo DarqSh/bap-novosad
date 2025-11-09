@@ -2,6 +2,7 @@
 
 import numpy as np
 import matplotlib.pyplot as plt
+import matplotlib.patches as mpatches
 import serial
 from enum import Enum
 import struct
@@ -17,7 +18,7 @@ SERIAL_PORT = "/dev/ttyUSB0"
 # many in order to get a 360 degree plot
 MEASUREMENTS_PER_PLOT = 480
 # System will plot between +/-PLOT_MAX_RANGE on both X and Y axis
-PLOT_MAX_RANGE = 2.0 # in meters
+PLOT_MAX_RANGE = 1.0 # in meters
 # Set the plot area to autoscale to the max distance in X or Y
 PLOT_AUTO_RANGE = False
 # Show the confidence as a colour gradiant on the plot
@@ -114,11 +115,28 @@ def on_plot_close(event):
     global Distribution_values
     global distribution_angle
     global running
+
+    mean = np.mean(Distribution_values)
+    var = np.var(Distribution_values)
+    std = np.std(Distribution_values)
+
     plt.ioff()
     plt.figure()
-    print(Distribution_values)
-    plt.hist(Distribution_values, bins=max(Distribution_values)-min(Distribution_values), alpha=0.7)
-    plt.title("Distribution for angle " + str(distribution_angle) + " degrees")
+    # print(Distribution_values)
+    plt.hist(Distribution_values, bins=max(Distribution_values)-min(Distribution_values)+1, alpha=0.7)
+
+    plt.axvline(mean, color='r', linestyle='--', linewidth=1, label = f"Mean: {mean:.2f} mm")
+    plt.axvline(mean+std, color='g', linestyle=':', linewidth=1, label = f"Mean+std: {mean+std:.2f} mm")
+    plt.axvline(mean-std, color='g', linestyle=':', linewidth=1, label = f"Mean-std: {mean-std:.2f} mm")
+
+    # adds variance to legend
+    ax = plt.gca()
+    handles, labels = ax.get_legend_handles_labels()
+    var_patch = mpatches.Patch(color='none', label=f'Variance: {var:.2f} mm²')
+    handles.append(var_patch)
+
+    plt.title("Distribution for distance " + f"{mean:.2f}" + " mm")
+    plt.legend(handles=handles)
     plt.show()
     running = False
 
