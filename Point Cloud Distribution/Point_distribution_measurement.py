@@ -107,7 +107,17 @@ def get_xyc_data(measurements):
     y = np.cos(np.radians(angle)) * (distance / 1000.0)
     return x, y, confidence
 
-
+def outlier_filter(Distribution_values, mean, std, var, distribution_range):
+    Filter_values = []
+    for value in Distribution_values:
+        if (mean - std-50) <= value <= (mean + std+50):
+            Filter_values.append(value)
+    filter_mean = np.mean(Filter_values)
+    filter_std = np.std(Filter_values)
+    filter_var = np.var(Filter_values)
+    filter_range = max(Filter_values) - min(Filter_values)+1
+    print("Previous variance: ", var, " New variance: ", filter_var)
+    return Filter_values, filter_mean, filter_std, filter_var, filter_range
 
 running = True
 
@@ -119,11 +129,15 @@ def on_plot_close(event):
     mean = np.mean(Distribution_values)
     var = np.var(Distribution_values)
     std = np.std(Distribution_values)
+    distribution_range = max(Distribution_values) - min(Distribution_values)+1
+
+    # basic outlier filtering (might change later, currently +- 1 std with some leeway, maybe deleting the values by the size of a bin would be better)
+    Distribution_values, mean, std, var, distribution_range = outlier_filter(Distribution_values, mean, std, var, distribution_range)
 
     plt.ioff()
     plt.figure()
-    # print(Distribution_values)
-    plt.hist(Distribution_values, bins=max(Distribution_values)-min(Distribution_values)+1, alpha=0.7)
+    print(Distribution_values)
+    plt.hist(Distribution_values, bins=distribution_range, alpha=0.7)
 
     plt.axvline(mean, color='r', linestyle='--', linewidth=1, label = f"Mean: {mean:.2f} mm")
     plt.axvline(mean+std, color='g', linestyle=':', linewidth=1, label = f"Mean+std: {mean+std:.2f} mm")
@@ -135,7 +149,7 @@ def on_plot_close(event):
     var_patch = mpatches.Patch(color='none', label=f'Variance: {var:.2f} mm²')
     handles.append(var_patch)
 
-    plt.title("Distribution for distance " + f"{mean:.2f}" + " mm")
+    plt.title("Distribution for distance " + f"{round(mean)/1000:.2f}" + " m")
     plt.legend(handles=handles)
     plt.show()
     running = False
