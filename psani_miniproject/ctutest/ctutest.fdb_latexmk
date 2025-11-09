@@ -1,0 +1,15 @@
+# Fdb version 4
+["pdflatex"] 1762727157.2301 "/home/illia/CVUT/BAP/psani_miniproject/ctutest/ctutest.tex" "ctutest.pdf" "ctutest" 1762727157.30767 2
+  "/etc/texmf/web2c/texmf.cnf" 1762708587.47802 475 c0e671620eb5563b2130f56340a5fde8 ""
+  "/home/illia/CVUT/BAP/psani_miniproject/ctutest/ctutest.tex" 1762726321.82267 6697 dfbb3089919613a380734a4a0777d274 ""
+  "/usr/share/texlive/texmf-dist/web2c/texmf.cnf" 1707919699 40399 f2c302f7d2af602abb742093540a5834 ""
+  "/usr/share/texmf/web2c/texmf.cnf" 1707919699 40399 f2c302f7d2af602abb742093540a5834 ""
+  "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1762708613 6800791 108667194564a3e000a7cde684d047d2 ""
+  "ctutest.aux" 1762727149.22969 32 3985256e7290058c681f74d7a3565a19 "pdflatex"
+  "ctutest.tex" 1762726321.82267 6697 dfbb3089919613a380734a4a0777d274 ""
+  "ctuthesis.cls" 0 -1 0 ""
+  (generated)
+  "ctutest.aux"
+  "ctutest.log"
+  "ctutest.pdf"
+  (rewritten before read)
