@@ -5,9 +5,12 @@
 % The class takes all the key=value arguments that \ctusetup does,
 % and a couple more: draft and oneside
 \documentclass[twoside]{ctuthesis}
+\input{_my_pkg.tex}
+\input{_glossary.tex}
+
 
 \ctusetup{
-	preprint = \ctuverlog,
+	% preprint = \ctuverlog,
 	% mainlanguage = english,
 %	titlelanguage = czech,
 	mainlanguage = english,
@@ -22,8 +25,8 @@
 	supervisor = {Ing. Pavel Puričer, Ph.D.},
 	fieldofstudy-english = {Electronics and Communications},
 	fieldofstudy-czech = {Elektronika a komunikace},
-	keywords-czech = {slovo, klíč},
-	keywords-english = {word, key},
+	keywords-czech = {LiDAR, 3D rekonstrukce, point cloud, zpracování signálů, mapování},
+	keywords-english = {LiDAR, 3D reconstruction, point cloud, signal processing, mapping},
 	day = 13,
 	month = 11,
 	year = 2025,
@@ -47,6 +50,7 @@
 	\end{twocolumnfrontmatterpage}
 }
 
+
 % Theorem declarations, this is the reasonable default, anybody can do what they wish.
 % If you prefer theorems in italics rather than slanted, use \theoremstyle{plainit}
 \theoremstyle{plain}
@@ -66,35 +70,36 @@
 
 \setlength{\parskip}{5ex plus 0.2ex minus 0.2ex}
 
+
 % Abstract in Czech
 \begin{abstract-czech}
-V současnosti existuje spousta pokročilých lidar-senzorů určených pro 3D snímání prostoru [*insert citation*]. 
-Většina z nich je však cenově nedostupná pro běžného uživatele. Nejvíc dostupným komerčním řešením je Unitree L1, který stojí \$\,250  [*insert citation*]. 
-Cílem toho miniprojektu je navrhnout pro 360° lidar-senzor platformu a použít ji v navazující bakalářské práci pro vizualizaci 3D-obrazu naskenovaného prostoru. 
+	V současnosti existuje spousta pokročilých lidar-senzorů určených pro 3D snímání prostoru [*insert citation*]. 
+	Většina z nich je však cenově nedostupná pro běžného uživatele. Nejvíc dostupným komerčním řešením je Unitree L1, který stojí \$\,250  [*insert citation*]. 
+	Cílem toho miniprojektu je navrhnout pro 360° lidar-senzor platformu a použít ji v navazující bakalářské práci pro vizualizaci 3D-obrazu naskenovaného prostoru. 
 \end{abstract-czech}
 
 % Abstract in English
 \begin{abstract-english}
-There are currently many advanced LiDAR sensors available for 3D spatial scanning [*insert citation]. 
-However, most of these sensors are too expensive for the average user. 
-The most affordable commercial option is the Unitree L1, which costs \$\,250 [*insert citation]. 
-The aim of this miniproject is to design a platform for a 360° LiDAR sensor, which will be utilized in a subsequent bachelor's thesis to visualize a 3D image of the scanned environment.
+	There are currently many advanced LiDAR sensors available for 3D spatial scanning [*insert citation]. 
+	However, most of these sensors are too expensive for the average user. 
+	The most affordable commercial option is the Unitree L1, which costs \$\,250 [*insert citation]. 
+	The aim of this miniproject is to design a platform for a 360° LiDAR sensor, which will be utilized in a subsequent bachelor's thesis to visualize a 3D image of the scanned environment.
 \end{abstract-english}
 
 
 
 % Acknowledgements / Podekovani
 \begin{thanks}
-Děkuji ČVUT, že mi je tak dobrou \emph{alma mater}.
+	Děkuji ČVUT, že mi je tak dobrou \emph{alma mater}.
 \end{thanks}
 
 
 
 % Declaration / Prohlaseni
 \begin{declaration}
-Prohlašuji, že jsem předloženou práci vypracoval samostatně, a že jsem uvedl veškerou použitou literaturu.
-
-V Praze, \ctufield{day}.~\monthinlanguage{title}~\ctufield{year}
+	Prohlašuji, že jsem předloženou práci vypracoval samostatně, a že jsem uvedl veškerou použitou literaturu.
+	
+	V Praze, \ctufield{day}.~\monthinlanguage{title}~\ctufield{year}
 \end{declaration}
 
 
@@ -111,18 +116,25 @@ V Praze, \ctufield{day}.~\monthinlanguage{title}~\ctufield{year}
 
 \maketitle
 
+\printglossary[type=\acronymtype]
+\printunsrtglossary[title=Acronyms]
+
 \chapter{Introduction}
-\include{introduction/introduction.tex}
+\input{introduction/introduction.tex}
+
+% \chapter{Design of the 2D LiDAR Platform}
+% \input{design/design.tex}
+
 
 
 \chapter{Conclusion}
-\include{conclusion/conclusion.tex}
+\input{conclusion/conclusion.tex}
 
 \appendix
 
 \printindex
 
-\appendix
+% \appendix
 
 \bibliographystyle{amsalpha}
 \bibliography{ctutest}
