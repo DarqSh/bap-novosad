@@ -1,5 +1,5 @@
 # Fdb version 4
-["bibtex main"] 0 "main.aux" "main.bbl" "main" 1763421055.83745 0
+["bibtex main"] 0 "main.aux" "main.bbl" "main" 1763426641.1404 0
   "/usr/local/texlive/2024/texmf-dist/bibtex/bst/amscls/amsalpha.bst" 1513722769 28675 71ba1b1ee8387ac88670b0ea0eb2399a ""
   "ctutest.bib" 0 -1 0 ""
   "main.aux" 0 -1 0 "lualatex"
@@ -7,8 +7,8 @@
   "main.bbl"
   "main.blg"
   (rewritten before read)
-["lualatex"] 1763421053.25452 "/Users/illianovosad/CVUT/6. semestr/BAP/psani_miniproject/miniproject/main.tex" "main.pdf" "main" 1763421055.83755 0
-  "/Users/illianovosad/CVUT/6. semestr/BAP/psani_miniproject/miniproject/main.tex" 1763420469.22951 4315 3010543f7481b6cef5f23741fad6e326 ""
+["lualatex"] 1763426638.53697 "/Users/illianovosad/CVUT/6. semestr/BAP/psani_miniproject/miniproject/main.tex" "main.pdf" "main" 1763426641.14051 0
+  "/Users/illianovosad/CVUT/6. semestr/BAP/psani_miniproject/miniproject/main.tex" 1763421196.49713 4300 8af36d2029c88b7187516e755363b94a ""
   "/Users/illianovosad/Library/Fonts/Technika-Bold.otf" 1486398109 77508 7508ae5d89d6779023544564013ea70d ""
   "/Users/illianovosad/Library/texlive/2024/texmf-var/luatex-cache/generic/fonts/otl/latinmodern-math.luc" 1763066989.6017 637084 244c6dbd2183f226556d5b9e7ee84e78 ""
   "/Users/illianovosad/Library/texlive/2024/texmf-var/luatex-cache/generic/fonts/otl/lmmono10-regular.luc" 1763066990.20762 81837 ac5b1b311ade3065c5dda4c0bbd0f8cb ""
@@ -28,6 +28,7 @@
   "/usr/local/texlive/2024/texmf-dist/fonts/opentype/public/lm/lmroman10-italic.otf" 1255129361 118828 4d461c73423fe2666dad2ff0dfc3ca68 ""
   "/usr/local/texlive/2024/texmf-dist/fonts/opentype/public/lm/lmroman10-regular.otf" 1255129361 111536 ae9d1b331000d544f47e5223081b7b54 ""
   "/usr/local/texlive/2024/texmf-dist/fonts/opentype/public/lm/lmsans10-bold.otf" 1255129361 107448 a9e5b7aaaf5f74194deee407f2fd1552 ""
+  "/usr/local/texlive/2024/texmf-dist/fonts/opentype/public/lm/lmsans10-oblique.otf" 1255129361 101412 2b1e43c54178c5512dde7c8e2c96d5ba ""
   "/usr/local/texlive/2024/texmf-dist/fonts/tfm/public/amsfonts/symbols/msam10.tfm" 1246382020 916 f87d7c45f9c908e672703b83b72241a3 ""
   "/usr/local/texlive/2024/texmf-dist/fonts/tfm/public/amsfonts/symbols/msam5.tfm" 1246382020 924 9904cf1d39e9767e7a3622f2a125a565 ""
   "/usr/local/texlive/2024/texmf-dist/fonts/tfm/public/amsfonts/symbols/msam7.tfm" 1246382020 928 2dc8d444221b7a635bb58038579b861a ""
@@ -224,7 +225,7 @@
   "/usr/local/texlive/2024/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1723304445.31737 5467645 128b85b7cde5f5edc5cb7f1dd7ff8736 ""
   "/usr/local/texlive/2024/texmf-var/tex/generic/config/language.dat" 1710266660 6831 bfdb703c6246bf92c6e7b254b6450228 ""
   "/usr/local/texlive/2024/texmf-var/web2c/luahbtex/lualatex.fmt" 1723304381 12257116 a91c60bd50b659ae68c379b1a3c117a3 ""
-  "_glossary.tex" 1763419840.43488 361 b4c7b824186938ff4b7b85cf31b5752a ""
+  "_glossary.tex" 1763425315.42689 424 37f6c2cddccd2b9868d2658fdb42c8bb ""
   "_my_pkg.tex" 1763419138.84474 54 fcba0a42f5bd1d08640f8863a1f9b642 ""
   "conclusion/conclusion.tex" 1763061596.42923 0 d41d8cd98f00b204e9800998ecf8427e ""
   "ctu_logo_black.pdf" 1763067396.32634 46035 43bf3f96a77515d47a73fdf951d1c988 ""
@@ -233,16 +234,17 @@
   "ctuth-pkg.tex" 1763066653.27493 32331 62013975deb7c1a723d9beca5cfe74a6 ""
   "ctuth-templates.tex" 1763421049.40372 6714 380e2b6b485c541941427afe8b58a029 ""
   "ctuthesis.cls" 1763410570.23973 2015 0a3e7d2db5bb91977fa36c0bb9a9decb ""
+  "design/design.tex" 1763426638.39849 4439 3b6f929e815f93f9fba012fb78381bd9 ""
   "introduction/introduction.tex" 1763420389.9149 1104 6b6e2404d599ed5fcf3806a188dbd891 ""
-  "main.aux" 1763421055.37589 1760 384972190fb93e0b3c89b3d7a3ab852d "lualatex"
+  "main.aux" 1763426640.63536 2724 038732028e37884f4c45e60eb6775e50 "lualatex"
   "main.bbl" 0 -1 0 "bibtex main"
   "main.gls" 1763416516.37773 6 9f404503043ec80c08484be9f659189e ""
-  "main.ind" 1763420472.11196 0 d41d8cd98f00b204e9800998ecf8427e "makeindex main.idx"
-  "main.lof" 1763421055.37886 546 e53779c002a45e9ab87c0cb0e344569b "lualatex"
-  "main.lot" 1763421055.3789 546 e53779c002a45e9ab87c0cb0e344569b "lualatex"
-  "main.out" 1763421055.37842 280 c11d55a0e9377938975d282049a69583 "lualatex"
-  "main.tex" 1763420469.22951 4315 3010543f7481b6cef5f23741fad6e326 ""
-  "main.toc" 1763421055.37881 940 130826b663af131af72f71580c401942 "lualatex"
+  "main.ind" 1763426376.56826 0 d41d8cd98f00b204e9800998ecf8427e "makeindex main.idx"
+  "main.lof" 1763426640.63865 566 9d3fdbc04a1cc573a45e98488503a01e "lualatex"
+  "main.lot" 1763426640.63869 566 9d3fdbc04a1cc573a45e98488503a01e "lualatex"
+  "main.out" 1763426640.63823 1843 3383bfb9fde98619ebe696c08541ee6f "lualatex"
+  "main.tex" 1763421196.49713 4300 8af36d2029c88b7187516e755363b94a ""
+  "main.toc" 1763426640.6386 1582 f2d8c8b8661e88d5e76ed43e9d23cffa "lualatex"
   (generated)
   "main.aux"
   "main.glo"
@@ -255,8 +257,8 @@
   "main.pdf"
   "main.toc"
   (rewritten before read)
-["makeindex main.idx"] 1763420471.99988 "main.idx" "main.ind" "main" 1763421055.83733 0
-  "main.idx" 1763421054.51309 0 d41d8cd98f00b204e9800998ecf8427e "lualatex"
+["makeindex main.idx"] 1763426376.46774 "main.idx" "main.ind" "main" 1763426641.14029 0
+  "main.idx" 1763426639.73062 0 d41d8cd98f00b204e9800998ecf8427e "lualatex"
   (generated)
   "main.ilg"
   "main.ind"

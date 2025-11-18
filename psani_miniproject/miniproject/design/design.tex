@@ -1,0 +1,62 @@
+This chapter will firstly go over the existing DIY solutions for 360° LiDAR platforms which the author has stumbled upon during the research[too informal?], analyzing their pros and cons.
+\section{Existing DIY Solutions for Environmental Mapping}
+\subsection{Using a Single-Point \gls{lidar} module}
+
+One of the most straightforward approaches to achieve 360° environmental mapping is to utilize a single-point \gls{lidar} module mounted on a rotating platform, as was done in this project[add citation and picture].
+
+Pros:
+\begin{itemize}
+    \item Single-point \gls{lidar}s are the most cost-effective among all existing types
+    \item Simple design
+\end{itemize}
+
+Cons:
+\begin{itemize}
+    \item Slow data acquisition relative to methods leveraging 2D \gls{lidar}'s speed
+    \item Movement of lidar may introduce innacuracies in distance measurements, which need to be compensated for in code if we want to assume that all points are measured from a single position in space
+\end{itemize}
+
+\subsection{Using a Single-Point \gls{lidar} and a Mirror}
+The following approach was used in this project[add citation and picture]. A single-point \gls{lidar} is placed below a rotating mirror, which reflects the laser beam horizontally. As the mirror rotates, the laser beam scans the environment in 360$\degree$. Moreover, by tilting the mirror at an angle, vertical scanning can also be achieved, allowing for the acquisition of the whole scene.
+
+Pros:
+\begin{itemize}
+    \item Cost-effectiveness as in previous implementation
+    \item Simple design
+    \item Much easier to correct the distance measurement, since the \gls{lidar} is stationary and the distance from it to the mirror is known.
+\end{itemize}
+
+Cons:
+\begin{itemize}
+    \item Slow data acquisition relative to methods leveraging 2D \gls{lidar}'s speed
+    \item Mirror's quality may affect the accuracy of distance measurements
+    \item Mechanical structure holding the mirror may introduce vibrations, thus affecting measurement accuracy
+\end{itemize}
+
+\subsection{Using a 2D \gls{lidar} Mounted on a Tilting Platform}
+This approach utilizes a 2D \gls{lidar} sensor mounted on a platform that can tilt the sensor side-to-side, as demonstrated in this project[add citation and picture]. The 2D \gls{lidar} scand the environment in a horizontal plane, while the tilting mechanism allows for vertical scanning.
+Pros:
+\begin{itemize}
+    \item Faster data acquisition compared to solutions with single-point \gls{lidar} measurements
+    \item Higher resolution given by the use of a 2D \gls{lidar} sensor
+    \item This design could be potentially used for \gls{slam} applications, given the higher speed
+\end{itemize}
+Cons:
+\begin{itemize}
+    \item More expensive than single-point \gls{lidar} solutions
+    \item Point distribution is non-uniform due to the tilting mechanism which produces denser point clouds on the axis of tilting (see MATLAB simulation below) [should this note be here?]
+    \item Mechanical design is both more complex and more prone to vibrations produced by the \gls{lidar} itself affecting measurement accuracy
+\end{itemize}
+\section{Proposed Design of a 360° \gls{lidar} Platform}
+Based on the analysis of existing DIY solutions for 360° \gls{lidar} platforms, the proposed design for this miniproject involves using a 2D \gls{lidar} sensor mounted on a tilted platform that is able to rotate 360$\degree$.
+This design leverages the advantages of 2D \gls{lidar} sensors, such as fast data acquisition and high resolution, while also eliminating some of the drawbacks of previous designs, namely:
+\begin{itemize}
+    \item The platform will be quite rigid, minimizing vibrations
+    \item Mechanical design is very simple, making it easy to build and troubleshoot
+    \item The point cloud will be more uniformly distributed compared to the tilting platform design, as the rotation will ensure that a \gls{lidar} won't have a preferred direction around which it collects denser data unless the slope is very steep (see MATLAB simulation below)[could this be phrased better?]
+\end{itemize}
+The main drawback of this design is the existence of "blind spots" in the point cloud, which are areas that the \gls{lidar} cannot scan due to the tilt angle.
+However, this issue can be mitigated by carefully selecting the tilt angle based on the specific application in which the system will be used. (more on that in the next chapter) [system? :/]
+
+
+
