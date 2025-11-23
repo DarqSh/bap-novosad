@@ -1,4 +1,8 @@
 *~
+*.bbl
+*.bcf
+*.run.xml
+*.glo
 *.fdb_latexmk
 *.ist
 *.aux
