@@ -1,4 +1,5 @@
 This chapter will firstly go over the existing DIY solutions for 360° LiDAR platforms which the author has stumbled upon during the research[too informal?], analyzing their pros and cons.
+After that, the proposed design will be presented, along with the chosen design desicions and their justifications.
 \section{Existing DIY Solutions for Environmental Mapping}
 \subsection{Using a Single-Point \gls{lidar} module}
 
@@ -57,13 +58,18 @@ This design leverages the advantages of 2D \gls{lidar} sensors, such as fast dat
 \end{itemize}
 The main drawback of this design is the existence of "blind spots" in the point cloud, which are areas that the \gls{lidar} cannot scan due to the tilt angle.
 However, this issue can be mitigated by carefully selecting the tilt angle based on the specific application in which the system will be used. (more on that in the next chapter) [system? :/]
+\subsection{Controlling the Platform}
+Since we want our platform to be precisely controlled, we need to choose an appropriate motor.
+Stepper motors are commonly used in applications requiring precise positioning, as they can be controlled to move in small, discrete steps.
+For this design, a NEMA 17 stepper motor is used to rotate the \gls{lidar} platform[Add a photo and crucial parameters of the motor].
+Granted that the motor is not under heavy load, we can assume that each step of the motor corresponds to a precise angular movement of the platform, allowing for accurate control of the platform's position without the need for additional feedback mechanisms[reformulate it better, provide a link to a bachelor thesis with the description of stepper motor errors].
 \subsection{Choosing the Tilt Angle}
 The tilt angle of the \gls{lidar} platform is a crucial parameter that affects the size of the aforementioned blind spots in the point cloud.
-A larger tilt angle will result in smaller blind spots, but the trade-off is a more spread-out point cloud in the horizontal direction[see point cloud simulations below], which could reduce the overall resolution of the scan.
+A larger tilt angle will result in smaller blind spots, but the trade-off is a more spread-out point cloud in the horizontal direction if we rotate our platform in discrete steps [see point cloud simulations below].
 Without any further solutions, we would have to choose a compromise tilt angle that balances the size of blind spots and point cloud density.
-Thankfully, there is a way to achieve a more complete coverage of the environment without sacrificing point cloud density, which will be discussed in the next chapter.
 
- 
+Thankfully, there is a way to achieve a more complete coverage of the environment without sacrificing point cloud density.
+
 
 
 
