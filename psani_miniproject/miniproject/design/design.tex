@@ -65,10 +65,15 @@ For this design, a NEMA 17 stepper motor is used to rotate the \gls{lidar} platf
 Granted that the motor is not under heavy load, we can assume that each step of the motor corresponds to a precise angular movement of the platform, allowing for accurate control of the platform's position without the need for additional feedback mechanisms[reformulate it better, provide a link to a bachelor thesis with the description of stepper motor errors].
 \subsection{Choosing the Tilt Angle}
 The tilt angle of the \gls{lidar} platform is a crucial parameter that affects the size of the aforementioned blind spots in the point cloud.
-A larger tilt angle will result in smaller blind spots, but the trade-off is a more spread-out point cloud in the horizontal direction if we rotate our platform in discrete steps [see point cloud simulations below].
-Without any further solutions, we would have to choose a compromise tilt angle that balances the size of blind spots and point cloud density.
+A larger tilt angle will result in smaller blind spots as could be seen from the simulations below.
+
+The trade-off for a larger tilt angle, however, is a more spread-out point cloud in the horizontal direction if we rotate our platform in discrete steps [see point cloud simulations below].
+Without any further solutions, we would have to choose a tilt angle that balances the size of blind spots and point cloud density.
 
 Thankfully, there is a way to achieve a more complete coverage of the environment without sacrificing point cloud density.
+\subsection{Choosing a Gear Ratio for the Rotating Platform}
+In order to remove the need for a compromise between point cloud coverage and density while using a stepper motor to rotate the platform, we can introduce a gear mechanism into our design.
+Using gears with a specific gear ratios allows us to choose a tilt angle that minimizes blind spots while still maintaining a dense point cloud.
 
 
 
