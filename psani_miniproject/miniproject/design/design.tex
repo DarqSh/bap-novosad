@@ -2,7 +2,7 @@ This chapter will firstly go over the existing DIY solutions for 360° LiDAR pla
 \section{Existing DIY Solutions for Environmental Mapping}
 \subsection{Using a Single-Point \gls{lidar} module}
 
-One of the most straightforward approaches to achieve 360° environmental mapping is to utilize a single-point \gls{lidar} module mounted on a rotating platform, as was done in this project[add citation and picture].
+One of the most straightforward approaches to achieve 360° environmental mapping is to utilize a single-point \gls{lidar} module mounted on a platform which is able to rotate and tilt, as was done in this project[add citation and picture].
 
 Pros:
 \begin{itemize}
@@ -57,6 +57,13 @@ This design leverages the advantages of 2D \gls{lidar} sensors, such as fast dat
 \end{itemize}
 The main drawback of this design is the existence of "blind spots" in the point cloud, which are areas that the \gls{lidar} cannot scan due to the tilt angle.
 However, this issue can be mitigated by carefully selecting the tilt angle based on the specific application in which the system will be used. (more on that in the next chapter) [system? :/]
+\subsection{Choosing the Tilt Angle}
+The tilt angle of the \gls{lidar} platform is a crucial parameter that affects the size of the aforementioned blind spots in the point cloud.
+A larger tilt angle will result in smaller blind spots, but the trade-off is a more spread-out point cloud in the horizontal direction[see point cloud simulations below], which could reduce the overall resolution of the scan.
+Without any further solutions, we would have to choose a compromise tilt angle that balances the size of blind spots and point cloud density.
+Thankfully, there is a way to achieve a more complete coverage of the environment without sacrificing point cloud density, which will be discussed in the next chapter.
+
+ 
 
 
 
