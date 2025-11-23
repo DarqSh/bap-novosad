@@ -1,4 +1,6 @@
 *~
+*.fdb_latexmk
+*.ist
 *.aux
 *.blg
 *.ilg
