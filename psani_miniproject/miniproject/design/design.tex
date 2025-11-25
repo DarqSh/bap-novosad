@@ -53,6 +53,7 @@ The following approach was used in this project: \cite{lidar_design_2}. A single
 
 
 \subsection{Using a 2D \gls{lidar} Mounted on a Tilting Platform}
+\label{sec:tilting_platform}
 This approach utilizes a 2D \gls{lidar} sensor mounted on a platform that can tilt the sensor side-to-side, as demonstrated in this project: \cite{lidar_design_3}. The 2D \gls{lidar} scans the environment in a horizontal plane, while the tilting mechanism allows for vertical scanning.
 
 \begin{figure}
@@ -84,8 +85,8 @@ This approach utilizes a 2D \gls{lidar} sensor mounted on a platform that can ti
 \end{figure}
 
 \section{Proposed Design of a 360$\degree$ \gls{lidar} Platform}
-Based on the analysis of existing DIY solutions for 360° \gls{lidar} platforms, the proposed design for this miniproject involves using a 2D \gls{lidar} sensor mounted on a tilted platform that is able to rotate 360$\degree$.
-\begin{figure}
+Based on the analysis of existing DIY solutions for 360° \gls{lidar} platforms, the proposed design for this miniproject involves using a 2D \gls{lidar} sensor mounted on a tilted platform that is able to rotate around its' axis.
+\begin{figure}[H]
     \caption{Proposed platform design. \protect$\theta$ is the tilt angle}
     \input{design/tikz_platform.tex}
     \label{fig:tikz_platform}
@@ -94,7 +95,7 @@ This design leverages the advantages of 2D \gls{lidar} sensors, such as fast dat
 \begin{itemize}
     \item The platform will be quite rigid, minimizing vibrations
     \item Mechanical design is very simple, making it easy to build and troubleshoot
-    \item The point cloud will be more uniformly distributed compared to the tilting platform design, as the rotation will ensure that a \gls{lidar} won't have a preferred direction around which it collects denser data unless the slope is very steep (see MATLAB simulation below)[could this be phrased better?]
+    \item The resulting point cloud will be more uniformly distributed compared to the one obtained using tilting platform design presented in \cref{sec:tilting_platform} unless the tilt angle is extremely steep (see MATLAB simulation below)[could this be phrased better?]
 \end{itemize}
 The main drawback of this design is the existence of "blind spots" in the point cloud, which are areas that the \gls{lidar} cannot scan due to the tilt angle.
 However, this issue can be mitigated by carefully selecting the tilt angle based on the specific application in which the system will be used. (more on that in the next chapter) [system? :/]
