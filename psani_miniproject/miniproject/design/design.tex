@@ -78,7 +78,7 @@ This approach utilizes a 2D \gls{lidar} sensor mounted on a platform that can ti
 \end{tabular}
 
 
-\section{Proposed Design of a 360° \gls{lidar} Platform}
+\section{Proposed Design of a 360$\degree$ \gls{lidar} Platform}
 Based on the analysis of existing DIY solutions for 360° \gls{lidar} platforms, the proposed design for this miniproject involves using a 2D \gls{lidar} sensor mounted on a tilted platform that is able to rotate 360$\degree$.
 \begin{figure}
 \input{design/tikz_platform.tex}
@@ -94,8 +94,31 @@ However, this issue can be mitigated by carefully selecting the tilt angle based
 \subsection{Controlling the Platform}
 Since we want our platform to be precisely controlled, we need to choose an appropriate motor.
 Stepper motors are commonly used in applications requiring precise positioning, as they can be controlled to move in small, discrete steps.
-For this design, a NEMA 17 stepper motor is used to rotate the \gls{lidar} platform[Add a photo and crucial parameters of the motor].
-Granted that the motor is not under heavy load, we can assume that each step of the motor corresponds to a precise angular movement of the platform, allowing for accurate control of the platform's position without the need for additional feedback mechanisms[reformulate it better, provide a link to a bachelor thesis with the description of stepper motor errors].
+For this design, a NEMA 17 17HS8401 stepper motor is used to rotate the \gls{lidar} platform.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\textwidth]{design/stepper_motor_photo.jpg}
+    \caption{NEMA 17 17HS8401 photo\protect\footnotemark[1]}
+    \label{ph:lidar_design_1}
+\end{figure}
+\begin{table}[H]
+    \centering
+    \caption{Crucial parameters of the chosen NEMA 17 17HS8401 stepper motor\protect\footnotemark[1]}
+    \rowcolors{0}{ctubluebg!65}{ctubluebg!20}
+    \begin{tabular}{|c|c|}
+        \toprule
+        Motor Weight [$\ohm$] & 360 \\
+        Holding Torque [$\si{N.m}$] & 0.5\\
+        Step Angle [$\degree$] & 1.8 \\
+        \# of Steps per Revolution [-] & 200 \\
+        Rated Current [$\si{A}$] & 1.68 \\
+        \bottomrule
+    \end{tabular}
+    \label{tab:stepper_motor_params}
+\end{table}
+\footnotetext[1]{Photo and parameters were taken from \url{https://www.laskakit.cz/en/krokovy-motor-nema-17-17hs8401-0-5nm/}}
+For heavy load applications, it is important to consider the potential error sources of stepper motors, such as the stepper motor losing steps due to a heavy load or by driving the motor faster than its maximum speed \cite[p.~13]{friedl_SpeedControlStepper_2008}.
+However, in our case, the load will be relatively light for this motor and the speed will be kept low, thus a feedback mechanism for correcting lost steps is not required.
 \subsection{Choosing the Tilt Angle}
 The tilt angle of the \gls{lidar} platform is a crucial parameter that affects the size of the aforementioned blind spots in the point cloud.
 A larger tilt angle will result in smaller blind spots as could be seen from the simulations below.
