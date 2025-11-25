@@ -57,8 +57,8 @@ This approach utilizes a 2D \gls{lidar} sensor mounted on a platform that can ti
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.6\textwidth]{design/3D_3.jpg}
-    \caption{Implementation in project \cite{lidar_design_3} using a 2D \gls{lidar} mounted on a tilting platform}
+    \includegraphics[width=0.7\textwidth]{design/3D_3.jpg}
+    \caption{Implementation in project \cite{lidar_design_3} using a tilting platform}
     \label{ph:lidar_design_3}
 \end{figure}
 
@@ -72,17 +72,23 @@ This approach utilizes a 2D \gls{lidar} sensor mounted on a platform that can ti
 &
 \begin{itemize}[label=\textcolor{red!70!black}{\textbf{--}}]
     \item More expensive than single-point \gls{lidar} solutions
-    \item Point distribution is non-uniform due to the tilting mechanism which produces denser point clouds on the axis of tilting (see MATLAB simulation below) [should this note be here?]
-    \item Mechanical design is both more complex and more prone to vibrations produced by the \gls{lidar} itself affecting measurement accuracy
+    \item Point distribution is non-uniform due to the tilting mechanism which produces denser point clouds on the axis of tilting (see \cref{fig:tilt_pointCloud})
+    \item Mechanical design is more prone to vibrations produced by the \gls{lidar} itself affecting measurement accuracy
 \end{itemize}
 \end{tabular}
-
+\begin{figure}[H]
+    \centering
+    \input{design/tilt_pointCloud.tex}
+    \caption{Simulation of an obtained point cloud using a tilting platform}
+    \label{fig:tilt_pointCloud}
+\end{figure}
 
 \section{Proposed Design of a 360$\degree$ \gls{lidar} Platform}
 Based on the analysis of existing DIY solutions for 360° \gls{lidar} platforms, the proposed design for this miniproject involves using a 2D \gls{lidar} sensor mounted on a tilted platform that is able to rotate 360$\degree$.
 \begin{figure}
     \caption{Proposed platform design. \protect$\theta$ is the tilt angle}
     \input{design/tikz_platform.tex}
+    \label{fig:tikz_platform}
 \end{figure}
 This design leverages the advantages of 2D \gls{lidar} sensors, such as fast data acquisition and high resolution, while also eliminating some of the drawbacks of previous designs, namely:
 \begin{itemize}
