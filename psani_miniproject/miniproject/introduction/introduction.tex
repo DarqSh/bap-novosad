@@ -1,5 +1,28 @@
 Nowadays, \gls{lidar} sensors are widely used in various applications, including autonomous vehicles, robotics, and environmental mapping \cites[]{doubrava_LIDARSenzorJeho_2021}[Ch.~4-6]{dong_LiDARRemoteSensing_2017}.
 While the former two applications often require high-end and expensive \gls{lidar} systems, environmental mapping can be effectively performed using more affordable sensors.
 However, even the cheapest commercial 3D \gls{lidar} sensor, which was found during the research for this miniproject, costs \$249 \cite{_4DLidarL1_}.
-The primary motivation behind this mini-project (and the subsequent bachelor's thesis) is to develop a cost-effective platform for a $360\,\degree$ \gls{lidar} sensor that can be utilised for 3D spatial scanning and visualisation of the surrounding environment.
+
+The primary motivation behind this mini-project (and the subsequent bachelor's thesis) is to develop a cost-effective platform for a $360\,\degree$ STL-19P \gls{lidar} sensor that can be utilised for 3D spatial scanning and visualisation of the surrounding environment.
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.5\textwidth]{introduction/lidar_photo.png}
+    \caption{Photo of STL-19P \gls{lidar} \protect\footnotemark[1]}
+    \label{ph:lidar_photo}
+\end{figure}
+\begin{table}[h]
+    \centering
+    \caption{Main parameters of STL-19P \gls{lidar}\protect\footnotemark[1]}
+    \rowcolors{0}{ctubluebg!65}{ctubluebg!20}
+    \begin{tabular}{|c|c|}
+        \toprule
+        Typical measuring range [$\si{m}$] & 0.03--12 \\
+        Angular resolution [$\degree$] & 0.72\\
+        Dimensions(WxLxH) [$\si{mm,mm,mm}$] & 38.59*38.59*33.50 \\
+        Communication interface & UART @ 230400 bps \\
+        \bottomrule
+    \end{tabular}
+    \label{tab:lidar_params}
+\end{table}
+\footnotetext[1]{Photo and parameters were taken from \url{https://www.laskakit.cz/en/krokovy-motor-nema-17-17hs8401-0-5nm/}}
+
 A subsequent bachelor's thesis will then focus on the \gls{dsp} techniques for the effective processing of the acquired point cloud data and proper utilisation of open-source visualisation tools (such as Python's Open3D library \cite{zhou_Open3DModernLibrary_2018}) to recreate a 3D scene.
