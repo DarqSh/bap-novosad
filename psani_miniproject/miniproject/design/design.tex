@@ -131,12 +131,12 @@ For this design, a NEMA 17 17HS8401 stepper motor is used to rotate the \gls{lid
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.75\textwidth]{design/stepper_motor_photo.jpg}
-    \caption{NEMA 17 17HS8401 photo\protect\footnotemark[1]}
+    \caption{NEMA 17 17HS8401 photo\protect\footnotemark[2]}
     \label{ph:lidar_design_1}
 \end{figure}
 \begin{table}[H]
     \centering
-    \caption{Crucial parameters of the chosen NEMA 17 17HS8401 stepper motor\protect\footnotemark[1]}
+    \caption{Crucial parameters of the chosen NEMA 17 17HS8401 stepper motor\protect\footnotemark[2]}
     \rowcolors{0}{ctubluebg!65}{ctubluebg!20}
     \begin{tabular}{|c|c|}
         \toprule
@@ -149,11 +149,11 @@ For this design, a NEMA 17 17HS8401 stepper motor is used to rotate the \gls{lid
     \end{tabular}
     \label{tab:stepper_motor_params}
 \end{table}
-\footnotetext[1]{Photo and parameters were taken from \url{https://www.laskakit.cz/en/krokovy-motor-nema-17-17hs8401-0-5nm/}}
+\footnotetext[2]{Photo and parameters were taken from \url{https://www.laskakit.cz/en/krokovy-motor-nema-17-17hs8401-0-5nm/}}
 For heavy load applications, it is important to consider the potential error sources of stepper motors, such as the stepper motor losing steps due to a heavy load or by driving the motor faster than its maximum speed \cite[p.~13]{friedl_SpeedControlStepper_2008}.
 However, in our case, the load will be relatively light for this motor and the speed will be kept low, thus a feedback mechanism for correcting lost steps is not required.
 \subsection{Choosing the Tilt Angle}
-The tilt angle of the \gls{lidar} platform is a crucial parameter that affects the size of the aforementioned blind spots in the point cloud.
+The tilt angle of the \gls{lidar} platform is a crucial parameter that affects the size of the aforementioned blind spots in the point cloud (see \cref{fig:rotate_pointCloud}).
 A larger tilt angle will result in smaller blind spots as could be seen from the simulations below.
 
 The trade-off for a larger tilt angle, however, is a more spread-out point cloud in the horizontal direction if we rotate our platform in discrete steps [see point cloud simulations below].
