@@ -95,8 +95,29 @@ This design leverages the advantages of 2D \gls{lidar} sensors, such as fast dat
 \begin{itemize}
     \item The platform will be quite rigid, minimizing vibrations
     \item Mechanical design is very simple, making it easy to build and troubleshoot
-    \item The resulting point cloud will be more uniformly distributed compared to the one obtained using tilting platform design presented in \cref{sec:tilting_platform} unless the tilt angle is extremely steep (see MATLAB simulation below)[could this be phrased better?]
+    \item The resulting point cloud will be more uniformly distributed compared to the one obtained using tilting platform design presented in \cref{sec:tilting_platform} unless the tilt angle is extremely steep (see \cref{fig:rotate_pointCloud})
 \end{itemize}
+\begin{figure}[h!]
+    \centering
+    
+    \begin{subfigure}{0.45\linewidth}
+        \centering
+        \input{design/30rotate_pointCloud.tex}
+        \caption{$\theta=30\degree$}
+        \label{fig:rotate_pointCloud:30}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.45\linewidth}
+        \centering
+        \input{design/60rotate_pointCloud.tex}
+        \caption{$\theta=60\degree$}
+        \label{fig:rotate_pointCloud:60}
+    \end{subfigure}
+
+    \caption{Simulation of an obtained point cloud using a rotating tilted platform with two different tilt angles $\theta$}
+    \label{fig:rotate_pointCloud}
+\end{figure}
+
 The main drawback of this design is the existence of "blind spots" in the point cloud, which are areas that the \gls{lidar} cannot scan due to the tilt angle.
 However, this issue can be mitigated by carefully selecting the tilt angle based on the specific application in which the system will be used. (more on that in the next chapter) [system? :/]
 \subsection{Controlling the Platform}
