@@ -1,15 +1,15 @@
-\begin{tikzpicture}[scale=1.4]
+\begin{tikzpicture}[scale=1.4, xshift=1cm]
 
 % Colors
 \definecolor{cyl}{RGB}{150,150,150}
 \definecolor{pt}{RGB}{210,50,50}
 
 %% ---------- Shaded lateral surface ----------
-\shade[top color=cyl!80, bottom color=cyl!15, middle color=cyl!50, shading angle=90]
+\shade[top color=cyl!100, bottom color=cyl!15, middle color=cyl!60, shading angle=90]
   (-2,0) -- (-2,3.23) to[bend left=35] (2,4.8) -- (2,0) to[bend left=2] cycle;
 
 %% ---------- Bottom base – visible front half (solid + shaded) ----------
-\shade[top color=cyl!80, bottom color=cyl!15, middle color=cyl!50, shading angle=90]
+\shade[top color=cyl!100, bottom color=cyl!15, middle color=cyl!60, shading angle=90]
   (-2,0) arc[start angle=180, end angle=360, x radius=2, y radius=0.6] -- cycle;
 
 %% ---------- Bottom ellipse contours ----------
@@ -21,7 +21,7 @@
 %% ---------- Top base (slanted) ----------
 \begin{scope}[shift={(0,4)}, rotate around={25:(0,0)}]
   % shaded top disk
-  \shade[top color=white, bottom color=cyl!70, middle color=cyl!25, opacity=1.0]
+  \shade[top color=white, bottom color=cyl!60, middle color=cyl!30, opacity=1.0, shading angle=325]
     (0,0) ellipse (2.175 and 0.8);
   % contour
   \draw[line width=1pt, cyl!60!black]
