@@ -85,14 +85,14 @@ This approach utilizes a 2D \gls{lidar} sensor mounted on a platform that can ti
 \end{figure}
 
 \section{Proposed Design of a 360$\degree$ \gls{lidar} Platform}
-Based on the analysis of existing DIY solutions for 360° \gls{lidar} platforms, the proposed design for this miniproject involves using a 2D \gls{lidar} sensor mounted on a tilted platform that is able to rotate around its' axis.
+Based on the analysis of existing DIY solutions for 360° \gls{lidar} platforms, the proposed design for this miniproject involves using a 2D \gls{lidar} sensor mounted on a tilted platform that is able to rotate around its axis.
 \begin{figure}[H]
     \caption{Proposed platform design. \protect$\theta$ is the tilt angle}
     \input{design/tikz_platform.tex}
     \label{fig:tikz_platform}
 \end{figure}
 This design leverages the advantages of 2D \gls{lidar} sensors, such as fast data acquisition and high resolution, while also eliminating some of the drawbacks of previous designs, namely:
-\begin{itemize}
+\begin{itemize}[label=\textcolor{green!60!black}{\textbf{+}}]
     \item The platform will be quite rigid, minimizing vibrations
     \item Mechanical design is very simple, making it easy to build and troubleshoot
     \item The resulting point cloud will be more uniformly distributed compared to the one obtained using tilting platform design presented in \cref{sec:tilting_platform} unless the tilt angle is extremely steep (see \cref{fig:rotate_pointCloud})
@@ -118,8 +118,12 @@ This design leverages the advantages of 2D \gls{lidar} sensors, such as fast dat
     \label{fig:rotate_pointCloud}
 \end{figure}
 
-The main drawback of this design is the existence of "blind spots" in the point cloud, which are areas that the \gls{lidar} cannot scan due to the tilt angle.
-However, this issue can be mitigated by carefully selecting the tilt angle based on the specific application in which the system will be used. (more on that in the next chapter) [system? :/]
+Such design does have its drawbacks, however. The first one is immediately apparent from \cref{fig:rotate_pointCloud}: there are blind spots in the point cloud where no points are measured.
+While these blind spots can be minimized by choosing as large a tilt angle as possible, it would reintroduce the problem of non-uniform point cloud density.
+
+Besides that, compared to the tilting platform design presented in \cref{sec:tilting_platform}, the proposed design would need to rotate twice as much to obtain all the full coverage of the environment, 
+since the tilting platform scanned only within $[-90\degree, +90\degree]$, whereas the current design must complete a full $360\degree$. This would lead to longer scanning times.
+
 \subsection{Controlling the Platform}
 Since we want our platform to be precisely controlled, we need to choose an appropriate motor.
 Stepper motors are commonly used in applications requiring precise positioning, as they can be controlled to move in small, discrete steps.
