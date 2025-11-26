@@ -1,0 +1,30 @@
+theta = linspace(30, 60, 100); % in degrees
+step = linspace(0.6, 1.4, 64);       % step degrees
+
+[thetamat, stepmat] = meshgrid(theta, step);
+
+resmat = stepmat.*sin(2*pi/360*thetamat);
+
+ref = 0.72*ones(size(resmat));
+
+
+
+surf(thetamat, stepmat, resmat, 'FaceColor', 'interp', 'EdgeColor','none');
+hold on
+refsurf = surf(thetamat, stepmat, ref, 'FaceAlpha', 0.7, 'FaceColor', [1 0.3 0.3]); % ref surface 0.72
+
+plot(theta_intersect, res_intersect, 'ko', 'MarkerFaceColor', 'k');
+text(theta_intersect+2.5, res_intersect+0.05, ...
+    sprintf('(%.1f°, %.2f°)', theta_intersect, res_intersect), ...
+    'FontSize', 14);
+
+
+xlabel('\theta (degrees)');
+ylabel('Step Size (degrees)');
+zlabel('Angular resolution');
+title('Resolution for different \theta and Step Size');
+
+legend(refsurf, 'LiDAR Resolution', 'Location', 'best');
+
+hold off;
+
