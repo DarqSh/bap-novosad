@@ -1,10 +1,11 @@
-This chapter will firstly go over the existing DIY solutions for 360° LiDAR platforms which the author has stumbled upon during the research[too informal?], analyzing their pros and cons.
-After that, the proposed design will be presented, along with the chosen design decisions and their justifications.
+This chapter will firstly go over the existing DIY solutions for 360° LiDAR platforms discovered during the research for this project, analysing their pros and cons.
+Subsequently, the proposed design is presented, along with the chosen design decisions and their justifications.
 \section{Existing DIY Solutions for Environmental Mapping}
 \label{sec:diy_solutions}
 \subsection{Using a Single-Point \gls{lidar} module}
 
-One of the most straightforward approaches to achieve 360° environmental mapping is to utilize a single-point \gls{lidar} module mounted on a platform which is able to rotate and tilt. The implementation could be found in this project: \cite{lidar_design_1}.
+One of the most straightforward approaches to achieve 360° environmental mapping is to utilise a single-point \gls{lidar} module mounted on a platform which can rotate and tilt. 
+The implementation could be found in this project: \cite{lidar_design_1}.
 \begin{figure}
     \centering
     \includegraphics[width=0.5\textwidth]{design/3D_1.png}
@@ -22,13 +23,15 @@ One of the most straightforward approaches to achieve 360° environmental mappin
 &
 \begin{itemize}[label=\textcolor{red!70!black}{\textbf{--}}]
     \item Slow data acquisition relative to methods leveraging 2D \gls{lidar}'s speed
-    \item Movement of lidar may introduce innacuracies in distance measurements, which need to be compensated for in code if we want to assume that all points are measured from a single position in space
+    \item Movement of lidar may introduce inacuracies in distance measurements, which need to be compensated for in code if we want to assume that all points are measured from a single position in space
 \end{itemize}
 \end{tabular}
 
 
 \subsection{Using a Single-Point \gls{lidar} and a Mirror}
-The following approach was used in this project: \cite{lidar_design_2}. A single-point \gls{lidar} is placed below a rotating mirror, which reflects the laser beam horizontally. As the mirror rotates, the laser beam scans the environment in 360$\degree$. Moreover, by tilting the mirror at an angle, vertical scanning can also be achieved, allowing for the acquisition of the whole scene.
+The following approach was used in this project: \cite{lidar_design_2}. A single-point \gls{lidar} is placed below a rotating mirror, which reflects the laser beam horizontally. 
+As the mirror rotates, the laser beam scans the environment in 360-degree sweep. 
+Moreover, by tilting the mirror at an angle, vertical scanning can also be achieved, allowing for the acquisition of the whole scene.
 
 \begin{figure}
     \centering
@@ -42,7 +45,7 @@ The following approach was used in this project: \cite{lidar_design_2}. A single
 \begin{itemize}[label=\textcolor{green!60!black}{\textbf{+}}]
     \item Cost-effectiveness as in previous implementation
     \item Simple design
-    \item Much easier to correct the distance measurement, since the \gls{lidar} is stationary and the distance from it to the mirror is known.
+    \item Much easier to correct the distance measurement since the \gls{lidar} is stationary and the distance from it to the mirror is known.
 \end{itemize}
 &
 \begin{itemize}[label=\textcolor{red!70!black}{\textbf{--}}]
@@ -55,7 +58,7 @@ The following approach was used in this project: \cite{lidar_design_2}. A single
 
 \subsection{Using a 2D \gls{lidar} Mounted on a Tilting Platform}
 \label{sec:tilting_platform}
-This approach utilizes a 2D \gls{lidar} sensor mounted on a platform that can tilt the sensor side-to-side, as demonstrated in this project: \cite{lidar_design_3}. The 2D \gls{lidar} scans the environment in a horizontal plane, while the tilting mechanism allows for vertical scanning.
+This approach utilises a 2D \gls{lidar} sensor mounted on a platform that can tilt the sensor side to side, as demonstrated in this project \cite{lidar_design_3}. The 2D \gls{lidar} scans the environment in a horizontal plane, while the tilting mechanism allows for vertical scanning.
 
 \begin{figure}
     \centering
@@ -74,8 +77,8 @@ This approach utilizes a 2D \gls{lidar} sensor mounted on a platform that can ti
 &
 \begin{itemize}[label=\textcolor{red!70!black}{\textbf{--}}]
     \item More expensive than single-point \gls{lidar} solutions
-    \item Point distribution is non-uniform due to the tilting mechanism which produces denser point clouds on the axis of tilting (see \cref{fig:tilt_pointCloud})
-    \item Mechanical design is more prone to vibrations produced by the \gls{lidar} itself affecting measurement accuracy
+    \item Point distribution is non-uniform due to the tilting mechanism, which produces denser point clouds on the axis of tilting (see \cref{fig:tilt_pointCloud})
+    \item Mechanical design is more prone to vibrations produced by the \gls{lidar} itself, affecting measurement accuracy
 \end{itemize}
 \end{tabular}
 \begin{figure}[H]
@@ -95,9 +98,9 @@ Based on the analysis of existing DIY solutions for 360° \gls{lidar} platforms,
 \end{figure}
 This design leverages the advantages of 2D \gls{lidar} sensors, such as fast data acquisition and high resolution, while also eliminating some of the drawbacks of previous designs, namely:
 \begin{itemize}[label=\textcolor{green!60!black}{\textbf{+}}]
-    \item The platform will be quite rigid, minimizing vibrations
+    \item The platform will be pretty rigid, minimising vibrations
     \item Mechanical design is very simple, making it easy to build and troubleshoot
-    \item The resulting point cloud will be more uniformly distributed compared to the one obtained using tilting platform design presented in \cref{sec:tilting_platform} unless the tilt angle is extremely steep (see \cref{fig:rotate_pointCloud})
+    \item The resulting point cloud will be more uniformly distributed compared to the one obtained using the tilting platform design presented in \cref{sec:tilting_platform} unless the tilt angle is extremely steep (see \cref{fig:rotate_pointCloud})
 \end{itemize}
 \begin{figure}[h!]
     \centering
@@ -120,11 +123,11 @@ This design leverages the advantages of 2D \gls{lidar} sensors, such as fast dat
     \label{fig:rotate_pointCloud}
 \end{figure}
 
-Such design does have its drawbacks, however. The first one is immediately apparent from \cref{fig:rotate_pointCloud}: there are blind spots in the point cloud where no points are measured.
-While these blind spots can be minimized by choosing as large a tilt angle as possible, it would reintroduce the problem of non-uniform point cloud density.
+Such a design does have its drawbacks, however. The first one is immediately apparent from \cref{fig:rotate_pointCloud}: there are blind spots in the point cloud where no points are measured.
+While these blind spots can be minimised by choosing a large tilt angle, this approach reintroduces the problem of non-uniform point cloud density.
 
-Besides that, compared to the tilting platform design presented in \cref{sec:tilting_platform}, the proposed design would need to rotate twice as much to obtain all the full coverage of the environment, 
-since the tilting platform scanned only within $[-90\degree, +90\degree]$, whereas the current design must complete a full $360\degree$. This would lead to longer scanning times.
+Besides that, compared to the tilting platform design presented in \cref{sec:tilting_platform}, the proposed design would need to rotate across twice as large a range to obtain full coverage of the environment, 
+since the tilting platform scanned only within $[-90\degree, +90\degree]$, whereas the current design must complete a full 360-degree rotation. This would lead to longer scanning times.
 
 \subsection{Controlling the Platform}
 Since we want our platform to be precisely controlled, we need to choose an appropriate motor.
@@ -153,7 +156,7 @@ For this design, a NEMA 17 17HS8401 stepper motor is used to rotate the \gls{lid
 \end{table}
 \footnotetext[2]{Photo and parameters were taken from \url{https://www.laskakit.cz/en/krokovy-motor-nema-17-17hs8401-0-5nm/}}
 For heavy load applications, it is important to consider the potential error sources of stepper motors, such as the stepper motor losing steps due to a heavy load or by driving the motor faster than its maximum speed \cite[p.~13]{friedl_SpeedControlStepper_2008}.
-However, in our case, the load will be relatively light for this motor and the speed will be kept low, thus a feedback mechanism for correcting lost steps is not required.
+However, in our case, the load will be relatively light for this motor, and the speed will be kept low; thus, a feedback mechanism for correcting lost steps is not required.
 \subsection{Choosing the Tilt Angle}
 The tilt angle of the \gls{lidar} platform is a crucial parameter that affects the size of the aforementioned blind spots in the point cloud (see \cref{fig:rotate_pointCloud}).
 The trade-off for a larger tilt angle, however, is a more spread-out point cloud in the horizontal direction if we rotate our platform in discrete steps [insert figure].
