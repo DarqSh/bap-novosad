@@ -159,13 +159,11 @@ For heavy load applications, it is important to consider the potential error sou
 However, in our case, the load will be relatively light for this motor, and the speed will be kept low; thus, a feedback mechanism for correcting lost steps is not required.
 \subsection{Choosing the Tilt Angle}
 The tilt angle of the \gls{lidar} platform is a crucial parameter that affects the size of the aforementioned blind spots in the point cloud (see \cref{fig:rotate_pointCloud}).
-However, increasing the tilt angle also increases the spacing between the scans when the platform is rotated in discrete steps [insert figure].
-
-As can be seen from [insert reference to figure], the scan spacing is dependent on the tilt angle, specifically
+However, increasing the tilt angle also increases the spacing between the scans when the platform is rotated in discrete steps. Since this spacing could be changed by choosing a different tilt angle, we can interpret it as the angular resolution of the platform, dependent on the tilt angle, namely
 \begin{equation}
-    \text{res} = \text{step\_angle}\cdot\sin(\theta)
+    \Delta\alpha = \varphi_{\text{step}}\cdot\sin(\theta),
 \end{equation}
-where $\theta$ is the tilt angle and \text{step\_angle} is constant and is equal to 1.8$\degree$ for our motor (see \cref{tab:stepper_motor_params}).
+where $\theta$ is the tilt angle and $\varphi_{\text{step}}$ is constant and is equal to 1.8$\degree$ for our motor (see \cref{tab:stepper_motor_params}).
 The following graph shows how the spacing changes with the tilt angle, providing our \gls{lidar}'s resolution as a base value, which we would like to achieve by choosing a correct tilt angle:
 \begin{figure}[H]
     \centering
@@ -187,9 +185,9 @@ To eliminate the need for a compromise between point cloud coverage and density 
 Using gears with a specific gear ratio allows us to choose a tilt angle that minimises blind spots while still producing a dense point cloud.
 The resolution will then be given by
 \begin{equation}
-    \text{res} = \text{gear\_ratio}\cdot\text{step\_angle}\cdot\sin(\theta),
+    \Delta\alpha = G\cdot\varphi_{\text{step}}\cdot\sin(\theta),
 \end{equation}
-where \text{gear\_ratio} is the ratio of the number of teeth on the driven gear to the number of teeth on the driving gear. A following graph is similar to \cref{fig:angleRes_tiltOnly}, but the third dimension represents different gear ratios:
+where $G$ is the ratio of the number of teeth on the driven gear to the number of teeth on the driving gear. A following graph is similar to \cref{fig:angleRes_tiltOnly}, but the third dimension represents different gear ratios:
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{design/angleRes_TiltPlusGearbox.png}
