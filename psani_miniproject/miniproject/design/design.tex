@@ -137,7 +137,7 @@ For this design, a NEMA 17 17HS8401 stepper motor is used to rotate the \gls{lid
     \centering
     \includegraphics[width=0.75\textwidth]{design/stepper_motor_photo.jpg}
     \caption{NEMA 17 17HS8401 photo\protect\footnotemark[2]}
-    \label{ph:lidar_design_1}
+    \label{ph:stepper_motor_photo}
 \end{figure}
 \begin{table}[H]
     \centering
@@ -159,19 +159,40 @@ For heavy load applications, it is important to consider the potential error sou
 However, in our case, the load will be relatively light for this motor, and the speed will be kept low; thus, a feedback mechanism for correcting lost steps is not required.
 \subsection{Choosing the Tilt Angle}
 The tilt angle of the \gls{lidar} platform is a crucial parameter that affects the size of the aforementioned blind spots in the point cloud (see \cref{fig:rotate_pointCloud}).
-However, increasing the tilt angle also increases the spacing between the scans when the platform is rotated in discrete steps. Since this spacing could be changed by choosing a different tilt angle, we can interpret it as the angular resolution of the platform, dependent on the tilt angle, namely
+However, increasing the tilt angle also increases the spacing between the scans when the platform is rotated in discrete steps (see \cref{fig:scan_spacing}). 
+\begin{figure}[h!]
+    \centering
+    
+    \begin{subfigure}{0.45\linewidth}
+        \centering
+        \input{design/scan_spacing.tex}
+        \caption{3D simulation}
+        \label{fig:scan_spacing:3d}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.45\linewidth}
+        \centering
+        \input{design/tikz_scan_spacing.tex}
+        \caption{Simplified image showing the dependence of scan spacing $S_{\text{scan}}$ on tilt angle $\theta$}
+        \label{fig:scan_spacing:tikz}
+    \end{subfigure}
+
+    \caption{Change in scan spacing dependent on the angle}
+    \label{fig:scan_spacing}
+\end{figure}
+It is obvious from the \cref{fig:scan_spacing:tikz}, that
 \begin{equation}
-    \Delta\alpha = \varphi_{\text{step}}\cdot\sin(\theta),
+    S_{\text{scan}} = \varphi_{\text{step}}\cdot\sin(\theta),
 \end{equation}
-where $\theta$ is the tilt angle and $\varphi_{\text{step}}$ is constant and is equal to 1.8$\degree$ for our motor (see \cref{tab:stepper_motor_params}).
-The following graph shows how the spacing changes with the tilt angle, providing our \gls{lidar}'s resolution as a base value, which we would like to achieve by choosing a correct tilt angle:
+where the step angle $\varphi_{\text{step}}$ is constant and is equal to 1.8$\degree$ for our motor (see \cref{tab:stepper_motor_params}).
+The following graph shows how the spacing changes with the tilt angle, providing our \gls{lidar}'s resolution as a reference value, which we would like to achieve by choosing a correct tilt angle:
 \begin{figure}[H]
     \centering
     \input{design/angleRes_tiltOnly.tex}
-    \caption{Point cloud resolution depending on the tilt angle $\theta$}
+    \caption{Scan spacing depending on the tilt angle $\theta$}
     \label{fig:angleRes_tiltOnly}
 \end{figure}    
-As could be seen from \cref{fig:angleRes_tiltOnly}, the resolution given by the step angle will be the same as the angular resolution of the \gls{lidar} itself at the tilt angle of approximately $\si{23.4}{\degree}$.
+As could be seen from \cref{fig:angleRes_tiltOnly}, the spacing will be the same as the angular resolution of the \gls{lidar} itself at the tilt angle of approximately $\si{23.4}{\degree}$.
 \begin{figure}[H]
     \centering
     \input{design/23point4rotate_pointCloud.tex}
@@ -183,11 +204,11 @@ Thankfully, there is a way to achieve a more complete coverage of the environmen
 \subsection{Choosing a Gear Ratio for the Rotating Platform}
 To eliminate the need for a compromise between point cloud coverage and density when using a stepper motor to rotate the platform, we can incorporate a gear mechanism into our design.
 Using gears with a specific gear ratio allows us to choose a tilt angle that minimises blind spots while still producing a dense point cloud.
-The resolution will then be given by
+The scan spacing will then be given by the following equation:
 \begin{equation}
-    \Delta\alpha = G\cdot\varphi_{\text{step}}\cdot\sin(\theta),
+    S_{\text{scan}} = R_{\text{gear}}\cdot\varphi_{\text{step}}\cdot\sin(\theta),
 \end{equation}
-where $G$ is the ratio of the number of teeth on the driven gear to the number of teeth on the driving gear. A following graph is similar to \cref{fig:angleRes_tiltOnly}, but the third dimension represents different gear ratios:
+where $R_{\text{gear}}$ is the ratio of the number of teeth on the driven gear to the number of teeth on the driving gear. A following graph is similar to \cref{fig:angleRes_tiltOnly}, but the third dimension represents different gear ratios:
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{design/angleRes_TiltPlusGearbox.png}
@@ -195,7 +216,7 @@ where $G$ is the ratio of the number of teeth on the driven gear to the number o
     \label{ph:angleRes_tiltPlusGearbox}
 \end{figure}
 
-As can be seen from \cref{ph:angleRes_tiltPlusGearbox}, using a gearbox allows us to choose from a wide range of tilt angles without compromising on the angular resolution.
+As can be seen from \cref{ph:angleRes_tiltPlusGearbox}, using a gearbox allows us to choose from a wide range of tilt angles without compromising on the spacing between scans.
 \begin{table}[H]
     \centering
     \caption{Best combinations for step angle/gear ratio/tilt angle}
