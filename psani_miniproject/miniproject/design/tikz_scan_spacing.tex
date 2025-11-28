@@ -1,0 +1,30 @@
+\definecolor{mycolor1}{rgb}{0.82745,0.82745,1.00000}%
+\definecolor{mycolor2}{rgb}{0.30000,0.50000,1.00000}%
+\definecolor{mycolor3}{rgb}{0.80000,0.48824,0.48824}%
+\begin{tikzpicture}[dot/.style={densely dotted, thick}, scale=0.65]
+
+% Two perpendicular (vertical) dotted lines, distance 4 units
+\draw[color=mycolor1,dot] (0,0) -- (0,6) node[above] {$ $};
+\draw[color=mycolor1,dot] (4,0) -- (4,6) node[above] {$ $};
+
+% Red continuous line showing the distance between them
+\draw[color=mycolor3, thick] (0,3) -- node[above,xshift=0.7cm,yshift=-0.1cm, color=mycolor3] {Step Angle $\varphi_{\mathrm{step}}$} (4,3);
+
+% Two 45° dotted lines going through the ends of the red segment
+\draw[color=mycolor2,dot] (-3, 0) -- (3,6);    % passes through (0,3)
+\draw[color=mycolor2,dot] (1,0) -- (7,6);      % passes through (4,3)
+
+% The line that is perpendicular to both 45° lines → slope = -1 (also red)
+\draw[red, thick] (0,3) -- node[below left, red, align=center] {Scan\\Spacing\\$S_{\mathrm{scan}}$} (2,1);
+
+%% ---------- Angle θ ----------
+\path (0,3) coordinate (O)
+      (2,1)   coordinate (up)
+      (4,3)  coordinate (slant);
+
+\draw[red!70!black, thick]
+  pic[draw, angle radius=22pt, angle eccentricity=1.25, "$\theta$"]
+  {angle=up--O--slant};
+
+\draw[black] (1.7,1.3) --++ (0.3,0.3) --++(0.3,-0.3);
+\end{tikzpicture}
