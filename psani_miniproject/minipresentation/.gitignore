@@ -1,0 +1,6 @@
+*.gz
+*.nav
+*.snm
+*.fls
+*.fdb_latexmk
+*.toc
