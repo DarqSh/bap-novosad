@@ -34,6 +34,18 @@
 \setbeamercolor*{fine separation line}{}
 
 \setbeamertemplate{navigation symbols}{} 
+\setbeamercovered{transparent}
+
+
+\AtBeginSection[]{
+  \ifnum\value{section}>1
+    \begin{frame}
+      \frametitle{Table of Contents}
+      \tableofcontents[currentsection]
+    \end{frame}
+  \fi
+}
+
 
 
 \usepackage{eqnarray,amsmath}
@@ -47,6 +59,7 @@
 \usepackage{array,booktabs}
 \usepackage{gensymb}
 \input{_my_pkg_presentation.tex}
+\setlength{\columnsep}{1cm}
 
 
 % definice makra pro české uvozovky:
@@ -82,47 +95,148 @@
 \logo{\includegraphics[height=1cm]{symbol_cvut_plna_samostatna_verze.pdf}}
 
 
-
-
-
-
 \begin{frame}
-	\frametitle{Next slide}	
-	\begin{columns}[onlytextwidth]
-		\begin{column}{0.5\textwidth}
-			\begin{itemize}
-				\item Text
-				\item \textbf{Text}
-    			\item \textcolor{cvut_navy}{Text} 
-			    \item \textcolor{cvut_navy}{\textbf{Text}} 
-			\end{itemize}
-		\end{column}
-        
-        \begin{column}{0.5\textwidth}
-            \begin{enumerate}
-				\item Text
-				\item \textbf{Text}
-    			\item \textcolor{cvut_navy}{Text} 
-			    \item \textcolor{cvut_navy}{\textbf{Text}}
-			\end{enumerate}
-		\end{column}
-	\end{columns}
-\end{frame}		
-
-
-\begin{frame}
-    \frametitle{Slide}	
-\begin{itemize}
-    \item Text
-    \item \textbf{Text}
-    \item \textcolor{cvut_navy}{Text} 
-    \item \textcolor{cvut_navy}{\textbf{Text}} 
-\end{itemize}
-Text text text text text text text text text text text text text text text text text text text text text text text text.
-
-\uv{České uvozovky}
+\frametitle{Obsah}
+\tableofcontents
 \end{frame}
 
+
+
+\section{Úvod}
+\begin{frame}
+\frametitle{Úvod}
+\footnotetext[1]{{Odkaz na e-shop: \href{https://shop.unitree.com/products/unitree-4d-lidar-l1?srsltid=AfmBOoq3BmruvbqKoVi3K1l6b9sJburm_M2JcSH1Z_Y6pLmDwkxvvI5o}{Unitree Official Website}}}
+\begin{columns}
+    \column{0.5\textwidth}
+    Komerčně dostupné varianty 3D LiDARů:
+    \begin{figure}
+        \caption*{Unitree 4D L1\footnotemark[1]}
+        \includegraphics[width=0.5\textwidth]{figures/lidar-4d-unitree-l2-rm-360-laserovy-senzor-pro-roboty-a-mapovani-slam.jpeg}
+    \end{figure}
+    Cena: {\color{red} \$250}
+    \pause
+    \column{0.5\textwidth}
+    Řešení: použít levnější 360$\degree$ LiDAR a navrhnout pro něj pohyblivou platformu řízenou krokovým motorem
+    \begin{figure}
+        \caption*{STL-19P\footnotemark[2]}
+        \includegraphics<1>[width=0.55\textwidth]{figures/lidar_photo_transparent.jpeg}
+        \includegraphics<2>[width=0.55\textwidth]{figures/lidar_photo.png}
+    \end{figure}
+    Cena: {\color{PineGreen} \$90}
+\end{columns}
+\footnotetext[2]{Odkaz na e-shop: \href{https://www.laskakit.cz/en/krokovy-motor-nema-17-17hs8401-0-5nm/}{laskakit.cz}}
+\end{frame}
+
+
+
+\section{Návrh platformy}
+\subsection{Ukázka platformy}
+\begin{frame}
+\frametitle{Ukázka platformy}
+\begin{columns}
+\column{0.5\textwidth}
+\begin{figure}[H]
+    \input{figures/tikz_platform.tex}
+    \label{fig:tikz_platform}
+\end{figure}
+\column{0.45\textwidth}
+\begin{itemize}
+    \item Minimální chyba způsobená vibrací LiDARu
+    \item Jednoduchý design
+    \item Relativně rovnoměrně rozložený point cloud při malých úhlech náklonu $\theta$
+\end{itemize}
+\end{columns}
+\end{frame}
+
+
+
+\subsection{Vizualizace point cloudů při různých úhlech náklonu}
+\begin{frame}
+\frametitle{Vizualizace point cloudů při různých úhlech náklonu}
+\begin{figure}[h!]
+    \centering
+    
+    \begin{subfigure}{0.45\linewidth}
+        \centering
+        \input{figures/30rotate_pointCloud.tex}
+        \caption{$\theta=30\degree$}
+        \label{fig:rotate_pointCloud:30}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.45\linewidth}
+        \centering
+        \input{figures/60rotate_pointCloud.tex}
+        \caption{$\theta=60\degree$}
+        \label{fig:rotate_pointCloud:60}
+    \end{subfigure}
+    \label{fig:rotate_pointCloud}
+\end{figure}
+\pause
+\begin{minipage}{10cm}
+{\color{red} Problém:} Větší vzdálenost mezi \uv{řezy} prostoru LiDARem při diskrétních krocích krokového motoru pro velké úhly $\theta$
+\end{minipage}
+\end{frame}
+
+
+\subsection{Závislost vzdálenosti $S_{\text{scan}}$ na úhlu náklonu $\theta$}
+\begin{frame}
+    \frametitle{Závislost vzdálenosti $S_{\text{scan}}$ na úhlu náklonu $\theta$}
+    \begin{figure}
+    \begin{subfigure}{0.4\linewidth}
+        \centering
+        \input{figures/scan_spacing.tex}
+        \caption{3D vizualizace}
+        \label{fig:scan_spacing:3d}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.53\linewidth}
+        \centering
+        \input{figures/tikz_scan_spacing.tex}
+        \caption{Zjednodušený obrázek}
+        \label{fig:scan_spacing:tikz}
+    \end{subfigure}
+    \label{fig:scan_spacing}
+\end{figure}
+\pause
+\begin{minipage}{10cm}
+{\color{cvut_navy} Řešení:} Navrhnout převodovku pro krokový motor
+\end{minipage}
+\end{frame}
+
+\subsection{Výsledné grafy $S_{\text{scan}}\left(\theta\right)$, $S_{\text{scan}}\left(\theta, R_{\text{gear}}\right)$}
+\begin{frame}
+    \frametitle{Výsledné grafy $S_{\text{scan}}\left(\theta\right)$, $S_{\text{scan}}\left(\theta, R_{\text{gear}}\right)$}
+    \begin{columns}
+        \column{0.4\textwidth}
+        \begin{equation*}
+        S_{\text{scan}} = \varphi_{\text{step}}\cdot\sin(\theta)
+        \end{equation*}
+            \begin{figure}
+                \centering
+                \input{figures/angleRes_tiltOnly.tex}
+                \caption*{Bez převodovky}
+            \end{figure}
+        \column{0.55\textwidth}
+        \begin{equation*}
+            S_{\text{scan}} = {\color{cvut_navy}R_{\text{gear}}}\cdot\varphi_{\text{step}}\cdot\sin(\theta)
+        \end{equation*}
+            \begin{figure}
+                \centering
+                \includegraphics[width=\textwidth]{figures/angleRes_TiltPlusGearbox.png}
+                \caption*{S převodovkou}
+            \end{figure}
+\end{columns}
+\end{frame}
+
+\section{Shrnutí}
+\begin{frame}
+    \frametitle{Shrnutí}
+    \begin{itemize}
+    \item Cílem miniprojektu bylo navrhnout cenově dostupné řešení pro mapování okolí pomocí 360$\degree$ LiDARu
+    \item Byla vymyslena platforma pro 360$\degree$ LiDAR
+    \item Platforma bude řízena přes krokový motor s převodovkou pro zlepšení rozlišení při mapování prostředí
+    \end{itemize}
+\end{frame}
 \end{document}
 % =============================================================
 % =========================== END =============================
