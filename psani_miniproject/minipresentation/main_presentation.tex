@@ -74,7 +74,7 @@
 %====================================================
 %========== DEFINITION OF AUTHORS ETC...=============
 %====================================================
-\title[Návrh platformy pro 360$\degree$ LiDAR]{Návrh platformy pro 360$\degree$ LiDAR}
+\title[Návrh platformy pro 2D LiDAR]{Návrh platformy pro 2D LiDAR}
 \author[Illia Novosad]{Illia Novosad}
 \institute[ČVUT]{České vysoké učení technické v Praze}
 \date{4. prosince 2025}
@@ -116,7 +116,7 @@
     Cena: {\color{red} \$250}
     \pause
     \column{0.5\textwidth}
-    Řešení: použít levnější 360$\degree$ LiDAR a navrhnout pro něj pohyblivou platformu řízenou krokovým motorem
+    Řešení: použít levnější 2D LiDAR a navrhnout pro něj platformu řízenou krokovým motorem
     \begin{figure}
         \caption*{STL-19P\footnotemark[2]}
         \includegraphics<1>[width=0.55\textwidth]{figures/lidar_photo_transparent.jpeg}
@@ -143,7 +143,7 @@
 \begin{itemize}
     \item Minimální chyba způsobená vibrací LiDARu
     \item Jednoduchý design
-    \item Relativně rovnoměrně rozložený point cloud při malých úhlech náklonu $\theta$
+    \item Rovnoměrné rozložení point cloudu při malých úhlech náklonu $\theta$
 \end{itemize}
 \end{columns}
 \end{frame}
@@ -171,8 +171,8 @@
     \end{subfigure}
     \label{fig:rotate_pointCloud}
 \end{figure}
-\pause
 \begin{minipage}{10cm}
+Větší úhel náklonu $\theta$ -- větší pokrytí \\\pause
 {\color{red} Problém:} Větší vzdálenost mezi \uv{řezy} prostoru LiDARem při diskrétních krocích krokového motoru pro velké úhly $\theta$
 \end{minipage}
 \end{frame}
@@ -197,8 +197,8 @@
     \end{subfigure}
     \label{fig:scan_spacing}
 \end{figure}
-\pause
 \begin{minipage}{10cm}
+Optimální úhel náklonu $\theta$: {\color{red} $23.4\degree$}\\\pause
 {\color{cvut_navy} Řešení:} Navrhnout převodovku pro krokový motor
 \end{minipage}
 \end{frame}
@@ -233,9 +233,8 @@
 \begin{frame}
     \frametitle{Shrnutí}
     \begin{itemize}
-    \item Cílem miniprojektu bylo navrhnout cenově dostupné řešení pro mapování okolí pomocí 360$\degree$ LiDARu
-    \item Byla vymyslena platforma pro 360$\degree$ LiDAR
-    \item Platforma bude řízena přes krokový motor s převodovkou pro zlepšení rozlišení při mapování prostředí
+    \item Cílem miniprojektu bylo navrhnout platformu pro 2D LiDAR, která umožní získat 3D snímek okolí\pause
+    \item Platforma bude řízena přes krokový motor s převodovkou pro zlepšení rozlišení
     \end{itemize}
 \end{frame}
 \end{document}
