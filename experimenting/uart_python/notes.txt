@@ -1,0 +1,25 @@
+For some reason Micropython produces audible high-frequency noise with
+.uf2 built from Micropython code and not with .uf2 built from C code.
+
+How to build own .uf2 from Micropython source:
+
+Done once:
+~~~~~~~~~~
+Installing prerequisites:
+$ sudo apt update
+$ sudo apt install cmake gcc-arm-none-eabi libnewlib-arm-none-eabi build-essential git python3
+
+Cloning the repo:
+$ git clone https://github.com/micropython/micropython.git
+$ cd micropython
+
+Building te crosscompiler (only needed once)
+$ make -C mpy-cross
+
+Update submodules
+$ git submodule update --init --recursive
+~~~~~~~~~~
+
+
+Done every time a new .uf2 has to be built:
+~~~~~~~~~~
