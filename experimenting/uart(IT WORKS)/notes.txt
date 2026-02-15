@@ -1,3 +1,4 @@
+14.2.
 This is a piece of code made entirely using ChatGPT and Grok
 just to try out if communication Lidar -> Pico -> PC is even possible.
 
@@ -33,3 +34,9 @@ to explore this idea further.
 
 !!! Lots of missed packets due to loose connections with Pico board !!! 
 For final look, consider making solder connections of wires to the board
+
+
+
+
+15.12. UPD: it IS possible to build Micropython from source! See Appendix A, page 45
+https://pip-assets.raspberrypi.com/categories/686-raspberry-pi-pico-w/documents/RP-008257-DS-1-connecting-to-the-internet-with-pico-w.pdf?disposition=inline 
