@@ -1,0 +1,35 @@
+This is a piece of code made entirely using ChatGPT and Grok
+just to try out if communication Lidar -> Pico -> PC is even possible.
+
+At first I thought that ESP can't be used since I was planning on using
+Pico in USB host mode which ESP doesn't support. After figuring out that
+Micropython doesn't support the setting-up of a Pico in USB host mode I
+removed CP2102 and connected the lidar to Pico via UART. Tx pin of Lidar
+outputs 3.3V in HIGH mode, thus it could have been used together with ESP
+provided separate input sources for the lidar and ESP (D500 needs a 5V source).
+That probably wouldn't have been that big of an issue considering that most 
+dc-dc breadboard-compatible regulators provide 5V to the first pair of rails
+and 3.3V to the second, however I've already settled on Pico and taking into
+account that I have a Pico-focused subject in the next semester it would make
+Pico a better choice for this project :P.
+
+Having a Micropython code won't probably work for this project because during
+testing I've noticed that Micropython code isn't able to keep the port open
+for more than 1s at 230400bps. It also can't leave the port open even with
+"easier" programs for other programs to use the data on it for further
+manipulation, making Micropython unusable for the application where we will
+connect to Pico wirelessly and use the incoming data for processing and
+visualisation using PC's computing capabilities. The code for sending data
+therefore has to be written in C (unfortunately).
+
+P.S. I might be wrong regarding the last paragraph and it may be actually
+possible to compile .uf2 files from Micropython and flashing Pico with them
+and I might have just not figured it out yet. However for now
+I'll leave it as it is and try to make it send data wirelessly and plotting 
+it out just to prove that wireless communication is possible. Then I'll try to
+control the stepper motor and integrating it with the data transmission. It 
+would be much easier to do it in Micropython, thus giving me the motivation 
+to explore this idea further.
+
+!!! Lots of missed packets due to loose connections with Pico board !!! 
+For final look, consider making solder connections of wires to the board
