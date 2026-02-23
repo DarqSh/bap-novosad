@@ -23,3 +23,7 @@ $ git submodule update --init --recursive
 
 Done every time a new .uf2 has to be built:
 ~~~~~~~~~~
+delete previous .uf2 build
+$ make clean BOARD=RPI_PICO2_W
+make a .uf2 build from a .py file
+$ make BOARD=RPI_PICO2_W FROZEN_MANIFEST=~/CVUT/....(path to .py file)
