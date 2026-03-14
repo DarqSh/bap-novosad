@@ -1,0 +1,17 @@
+Semi-functional prototype of Lidar -> (UART) -> Pico -> (WiFi TCP) -> PC communication. 
+Made with the help of LLMs because the aim was to make sure that such communication chain is viable for this project.
+
+Lots of fixes and optimisations still have to be made for this code to be usable.
+The final version will probably store parsed data inside numpy array and draw them out in the 3D scene. As a visualisation tool, Open3D library will be used.
+
+Wifi is the only option we have that will be able to handle 230400 baud from lidar.
+
+Pico acts as a WiFi access point. First it is required to connect to the access point via Settings and then connect to the right port via code 
+
+Code that will run on Pico has to be rewritten to be more robust in the edge cases where connection with pc drops/pc reconnects/pc doesn't end the communication the right way.
+
+pc.py: read_bytes definitely has to be rewritten. A batch of (2*PACKET_LENGTH-1) bytes has to be read simultaneously and parsed because
+the code seems to choke on my machine by trying to guess the start bit at State.SYNC0 all the time (checked via print statements placed all around the "while True:" loop)
+
+Parsing will definitely take longer after obtaining that amount of bytes but this seems like the only viable option for now since we do not care
+about losing some packets (lidar will stop at every angle and scan until it obtains a dense enough point cloud).
