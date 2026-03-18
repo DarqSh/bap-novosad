@@ -1,0 +1,2 @@
+SSID = "henlo"
+PASSWORD = "there"
