@@ -1,0 +1,6 @@
+!!! Round off the corners of Bottom (corners were in a line of sight of lidar, see photo)
+!!! Increase the height of Platform by 15mm (making sure the side of Ring Gear Lid doesn't reflect off the signal sent with lidar)
+!!! Change the number of holes for Platform Mount to be equal to the number of holes on the Upper Carrier
+! Add windows to Bottom (for observing electronics and ventilation)
+! Change the hole profiles in which the bolts will go (for lower play)
+Added fillets in some places for a better feel and/or easier assembling
