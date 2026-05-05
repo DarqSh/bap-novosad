@@ -1,0 +1,153 @@
+% arara: pdflatex: { synctex: yes }
+% arara: makeindex: { style: ctuthesis }
+% arara: bibtex
+
+% The class takes all the key=value arguments that \ctusetup does,
+% and a couple more: draft and oneside
+\documentclass[twoside]{ctuthesis}
+\input{_my_pkg.tex}
+\input{_glossary.tex}
+\addbibresource{BAP_bibliography.bib}
+
+
+\ctusetup{
+	% preprint = \ctuverlog,
+	% mainlanguage = english,
+%	titlelanguage = czech,
+	mainlanguage = english,
+	otherlanguages = {czech},
+	title-czech = {Návrh platformy pro 360$\degree$ LiDAR},
+	title-english = {Design of a platform for 360$\degree$ LiDAR},
+	doctype = B,
+	faculty = F3,
+	department-czech = {Katedra radioelektroniky},
+	department-english = {Department of Radioelectonics},
+	author = {Illia Novosad},
+	supervisor = {Ing. Pavel Puričer, Ph.D.},
+	fieldofstudy-english = {Electronics and Communications},
+	fieldofstudy-czech = {Elektronika a komunikace},
+	keywords-czech = {LiDAR, 3D rekonstrukce, point cloud, zpracování signálů, mapování},
+	keywords-english = {LiDAR, 3D reconstruction, point cloud, signal processing, mapping},
+	day = 13,
+	month = 11,
+	year = 2025,
+}
+
+\ctuprocess
+
+\addto\ctucaptionsczech{%
+	\def\supervisorname{Vedoucí}%
+	\def\subfieldofstudyname{Studijní program}%
+}
+
+\ctutemplateset{maketitle twocolumn default}{
+	\begin{twocolumnfrontmatterpage}
+		\ctutemplate{twocolumn.thanks}
+		\ctutemplate{twocolumn.declaration}
+		\ctutemplate{twocolumn.abstract.in.titlelanguage}
+		\ctutemplate{twocolumn.abstract.in.secondlanguage}
+		\ctutemplate{twocolumn.tableofcontents}
+		\ctutemplate{twocolumn.listoffigures}
+	\end{twocolumnfrontmatterpage}
+}
+
+
+% Theorem declarations, this is the reasonable default, anybody can do what they wish.
+% If you prefer theorems in italics rather than slanted, use \theoremstyle{plainit}
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[chapter]
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{conjecture}[theorem]{Conjecture}
+
+\theoremstyle{note}
+\newtheorem*{remark*}{Remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\setlength{\parskip}{3ex plus 0.2ex minus 0.2ex}
+
+
+% Abstract in Czech
+\begin{abstract-czech}
+	Dnes je na trhu široká nabídka senzorů pro prostorové skenování; většina z nich je však příliš drahá pro amatérské využití.
+	Cílem tohoto miniprojektu je navrhnout cenově dostupnou platformu pro 360$\degree$ \gls{lidar} senzor, která bude v navazující bakalářské práci využita k vytvoření 3D modelu naskenovaného prostředí.
+	Práce analyzuje již existující DIY řešení, identifikuje jejich omezení a navrhuje konstrukci platformy, která tyto nedostatky omezuje.
+	Výsledkem je modularní platforma, kterou lze rychle upravit podle požadavků uživatele.
+\end{abstract-czech}
+
+
+
+% Abstract in English
+\begin{abstract-english}
+	A wide range of \gls{lidar} sensors for spatial scanning is available on the market today; however, most remain too expensive for amateur use. 
+	The aim of this miniproject is to design a cost-effective platform for a 360$\degree$ \gls{lidar} sensor, which will be utilised in a subsequent bachelor's thesis to obtain a 3D model of the scanned environment. 
+	This work provides an overview of existing DIY solutions, evaluates their limitations and proposes a platform design that addresses the identified weaknesses. 
+	The result is a configurable platform that can be quickly reassembled depending on whether the user prioritises more complete coverage or quicker scan.
+\end{abstract-english}
+
+
+% Acknowledgements / Podekovani
+\begin{thanks}
+	I am deeply grateful to my supervisor, Ing. Pavel Puričer, Ph.D., for his time and guidance during the work on this project. 
+	I would also like to thank Ing. Jan Šístek, Ph.D., and Ing. František Rund, Ph.D., for their feedback on the homework assignments from the course "Technical Writing", 
+	which was taken into account during the writing of this document.
+\end{thanks}
+
+
+
+% Declaration / Prohlaseni
+\begin{declaration}
+	I hereby declare that artificial intelligence was used during the writing of this thesis, specifically as an aid in generating TikZ figures. 
+	Grammar was controlled with Grammarly.
+	All generated content was verified, and I take full responsibility for the contents of this project. 
+	All information taken from the work of other authors has been properly cited.
+	
+	In Prague, \ctufield{day}.~\monthinlanguage{title}~\ctufield{year}
+\end{declaration}
+
+
+
+% % Only for testing purposes
+% \listfiles
+% \usepackage[pagewise]{lineno}
+% \usepackage{lipsum,blindtext}
+% \usepackage{mathrsfs} % provides \mathscr used in the ridiculous examples
+
+
+% CONTINUE HERE WITH THE DOCUMENT CONTENT
+\begin{document}
+
+\maketitle
+
+\printglossary[type=\acronymtype]
+\printunsrtglossary[title=Acronyms]
+
+\chapter{Introduction}
+\input{introduction/introduction.tex}
+
+\chapter{Design of a Platform}
+\input{design/design.tex}
+
+
+
+\chapter{Conclusion}
+\input{conclusion/conclusion.tex}
+
+\appendix
+
+\printindex
+
+% \appendix
+
+
+\printbibliography[title={Bibliography}]
+\thispagestyle{plain}
+
+% \ctutemplate{specification.as.chapter}
+
+\end{document}
