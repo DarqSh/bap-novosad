@@ -1,0 +1,45 @@
+Several gearbox designs were evaluated for this project.
+Belt drive gearbox
+
+The concept of belt gearbox printed with the help of 3d printed can be seen here {here citation}.
++ Using belt ensures smooth and quiet operation that is hard to achieve with direct teeth-to-teeth contact in interlocking gears
+- Belt design "bowls out" on one side due to the belt having to be stretched, therefore the resulting gearbox may be somewhat bulky in comparison to other solutions discussed below
+
+Cycloidal drive -- widely used in robotics, machine tools, manufacturing equipment and so on
++ Gearboxes with this design feature the highest reduction ratio in the smallest possible package
++ Minimal backlash
++ Symmetric design
+- Correct design of this system requires working with complex parametric equations inside CAD software to correctly design the movement of disks in a cycloidal manner (hence the name). There are tutorials from CAD companies which help with the design, but it is still quite cumbersome compared to the next design https://blog-assets.solidworks.com/uploads/sites/3/Building-a-Cycloidal-Drive-with-SOLIDWORKS.pdf
+- The reduction ratio is determined by the number of lobes on the pair of eccentric disks. Those are getting "pressed" into the rollers and rotated. Typically the number of rollers is n+1, where n is the number of lobes. If we wish to have a reduction ratio of 1:9, we'd have to have 10 ball bearings for the first eccentric disk and another 10 for the second, making up for 20 ball bearings just for the smooth rotation. The next design features much less components, making it more financially reasonable.
+
+Planetary gearboxes
++ Can be made very compact (wasn't meant to be in this project due to the absence of smaller ball bearings that were reasonably priced + a safe module value was used for the gears in my project)
++ Smooth operation could be achieved using helical gears. \footnote The potential drawback in some designs could be the axial forces which arise due to helical nature of teeth. However, for our project this is not an issue since the design of gearbox is vertical
++ Symmetric design
+- Some backlash could be introduced due to the inherent tolerances in 3d designs. Could be mitigated by using higher-module teeth (might be wrong, find citation)
+
+--------------------------------------------------------------------------------------------------------------------------------------
+
+
+Ball bearing on top of the output gear helps to improve the angular stability of the output shaft
+
+
+Gear ratio of 1:9 together with half-stepping option was selected. Having a high reduction ratio also has an added benefit of increasing the torque, however since our structure is vertical and the force caused by the possible shift of the center of mass away from the main axis is compensated by the walls of the ring gear, this benefit plays little role to us.
+
+
+Some tolerances were not guessed correctly: the hole for the magnet had to be made with a smaller diameter(around 0.1mm), holes for screwing microcontroller and hall effect sensor also appeared too big. The hole on the foundation of ring gear was made to neatly wire the microcontroller with the buck converter and stepper motor driver, however the assembly could become quite tricky since it is too small for the microcontroller to come through it. Also, the holes that were made for inserting threaded inserts for screwing the barrel connector mount are obstructed with the part of foundation above it and thus couldn't have been inserted.
+
+Improvements: all of the above + using a smaller motor + the whole design could have been made smaller. A preliminary research of available reasonably priced ball bearings was done before designing a planetary gearbox. The ball bearings which were chosen for this project are somewhat big and thus the size of the elements that come in contact with the ball bearing was designed around the size of ball bearings + the size of gears could be smaller if a smaller module was used + the holes of the circular slip ring + rewriting the code in C might provide better results
+
+
+
+
+When choosing a gear profile, generally it comes to three options: spur, helical, or herringbone gears. Herringbone gears were immediately out of question because there would be no way for us to insert them into the gearbox. The only two viable options are spur and helical gears. Spur gears are the most efficient since the vector of force is perpendicular to the axis of rotation. However, it has the least amount of contact surface when the gears are engaged, resulting in increased noise, jerkier operation and more backlash. Thus, helical gears are the most reasonable option, since in our case we have more than enough torque to rotate the platform and as an added benefit we get the smooth and quiet operation due to the gradual transfer of load between angled teeth.
+
+As for the module of the teeth (ratio of the pitch diameter to the number of teeth), a value of 2.0 was selected. Such value is rather large for the gears, however it was the smallest one that could accommodate the selected ball bearings. Also such module is reliable for 3d printing since tolerances of 3d printers won't affect the resulting gears.
+
+
+
+
+
+

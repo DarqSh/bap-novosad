@@ -37,10 +37,10 @@ Such a design does have its drawbacks, however. The first one is immediately app
 While these blind spots can be minimised by choosing a large tilt angle, this approach reintroduces the problem of non-uniform point cloud density.
 
 Besides that, compared to the tilting platform design presented in \cref{sec:tilting_platform}, the proposed design would need to rotate across twice as large a range to obtain full coverage of the environment, 
-since the tilting platform scanned only within $[-90\degree, +90\degree]$, whereas the current design must complete a full 360-degree rotation. This would lead to longer scanning times.
+since the tilting platform scanned only within $[-90\degree, +90\degree]$, whereas the current design must complete a full 360-degree rotation. Even though this surely leads to longer scanning times, the obtained point cloud will be more dense.
 
 \subsection{Controlling the Platform}
-Since we want our platform to be precisely controlled, we need to choose an appropriate motor.
+Since we want the platform to be precisely controlled, we need to choose an appropriate motor.
 Stepper motors are commonly used in applications requiring precise positioning, as they can be controlled to move in small, discrete steps.
 For this design, a NEMA 17 17HS8401 stepper motor is used to rotate the \gls{lidar} platform.
 \begin{figure}[H]
@@ -66,7 +66,7 @@ For this design, a NEMA 17 17HS8401 stepper motor is used to rotate the \gls{lid
 \end{table}
 \footnotetext[2]{Photo and parameters were taken from \url{https://www.laskakit.cz/en/krokovy-motor-nema-17-17hs8401-0-5nm/}}
 For heavy load applications, it is important to consider the potential error sources of stepper motors, such as the stepper motor losing steps due to a heavy load or by driving the motor faster than its maximum speed \cite[p.~13]{friedl_SpeedControlStepper_2008}.
-However, in our case, the load will be relatively light for this motor, and the speed will be kept low; thus, a feedback mechanism for correcting lost steps is not required.
+However, in our case, the load will be relatively light for this motor, the speed will be kept low, and a gearbox mechanism will be utilised which will both reduce the step angle and increase torque; thus, a feedback mechanism for correcting lost steps is not required.
 \subsection{Choosing the Tilt Angle}
 The tilt angle of the \gls{lidar} platform is a crucial parameter that affects the size of the aforementioned blind spots in the point cloud (see \cref{fig:rotate_pointCloud}).
 However, increasing the tilt angle also increases the spacing between the scans when the platform is rotated in discrete steps (see \cref{fig:scan_spacing}). 
@@ -110,9 +110,9 @@ As could be seen from \cref{fig:angleRes_tiltOnly}, the spacing will be the same
     \label{fig:23point4rotate_pointCloud}
 \end{figure}
 Examining the side profile of the point cloud obtained using this tilt angle, we can see that the blind spots are extremely large, making this tilt angle impractical for our application.
-Thankfully, there is a way to achieve a more complete coverage of the environment without sacrificing point cloud density.
-\subsection{Choosing a Gear Ratio for the Rotating Platform}
-To eliminate the need for a compromise between point cloud coverage and density when using a stepper motor to rotate the platform, we can incorporate a gear mechanism into our design.
+Fortunately, there is a way to achieve a more complete coverage of the environment without sacrificing point cloud density.
+\subsection{Justification for Gearbox Usage}
+To eliminate the need for a compromise between point cloud coverage and density when using a stepper motor to rotate the platform, we can incorporate a gearbox mechanism into the design.
 Using gears with a specific gear ratio allows us to choose a tilt angle that minimises blind spots while still producing a dense point cloud.
 The resulting spacing between scans can be expressed as
 \begin{equation}
@@ -145,7 +145,9 @@ As can be seen from \cref{ph:angleRes_tiltPlusGearbox}, using a gearbox allows u
 \end{table}
 
 Of course, by using the gearbox, we increase the number of steps required for a complete revolution, thereby increasing the scanning time.
-Nevertheless, by providing platforms of different sizes with appropriate gear ratios, we can create a modular platform that can be reassembled depending on the application.
+Nevertheless, scanning time is not that long in the first place to be a deciding factor when designing a platform, making such design choice a reasonable solution for increasing point cloud coverage while preserving the density.
+
+
 
 
 
