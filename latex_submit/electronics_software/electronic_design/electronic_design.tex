@@ -1,0 +1,21 @@
+\section{Electronic Design}
+The system is powered from an external \SI{12}{V} power supply connected through a barrel jack connector.
+The \SI{12}{V} powers the stepper motor driver and is simultaneously reduced to \SI{5}{V} using a buck converter.
+The \SI{5}{V} output is used to power the Raspberry Pi Pico 2 W and the \gls{lidar} sensor.
+
+The platform is rotated using a stepper motor mentioned in \cref{subsec:controlling_the_platform} through the motor driver. 
+The driver receives control signals from the microcontroller via STEP and DIR pins. 
+A \SI{100}{\micro\farad} capacitor is connected across the driver's supply terminals in order to suppress voltage spikes generated during motor switching.
+RESET and SLEEP pins of the driver are tied together and connected to \SI{5}{V} to keep the driver enabled at all times.
+A microstepping mode of 1:2 is set by connecting the M0 pin to \SI{5}{V} and leaving M1 and M2 pins unconnected \cite[sec.~8.3.5]{alldatasheet.com_DRV8825Download_}.
+
+The \gls{lidar} communicates with the microcontroller using a \gls{uart} RX pin. The acquired data are partially parsed by Pico and subsequently sent to a PC via Wi-Fi.
+
+Additionally, a Hall effect sensor module is connected to the microcontroller and is used for the homing mechanism of a platform.
+This initialisation sequence is performed before each scan in order to prevent tangling of the wires connecting the \gls{lidar} sensor to the microcontroller.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.95\textwidth]{electronics_software/electronic_design/electronic_design.pdf}
+    \caption{Wiring diagram of electronics}
+    \label{ph:wiring_diagram}
+\end{figure}

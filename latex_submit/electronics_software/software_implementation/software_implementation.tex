@@ -1,0 +1,169 @@
+\section{Software Implementation}
+The software part consists of two programs. The first one runs on Pico and is responsible for receiving commands from the PC, controlling the motor, acquiring data from the \gls{lidar} and sending the data back to the PC.
+The second program runs on the PC and is responsible for determining the scanning density, receiving data from the Pico, parsing and processing the data, visualisation and storing of the point cloud.
+\subsection{Pico program}
+The Raspberry Pi Pico 2 W is programmed in Micropython. At the start of the program, the hardware is initialised and a Wi-Fi access point is created for the PC to connect to. 
+After the connection is established, Pico waits for the PC to send the scanning density configuration, which is used to calculate the number of motor steps per scan. 
+
+Before the scanning starts, the platform is rotated until the reference position is detected by the Hall effect sensor.
+Then the main loop of the program starts. Each loop iteration is triggered by a command from the PC.
+When the Pico receives the \texttt{r} command, it starts acquiring data from the \gls{lidar} for \SI{200}{\milli\second} and after that parses each valid \gls{lidar} packet, storing only the necessary information needed for reconstructing the point cloud. 
+After that it sends the data to the PC with a \texttt{done} signal to indicate the end of the scan, and moves the platform to the next position.
+
+Below is the pseudocode:
+\begin{algorithm}[H]
+\caption{Pico program}
+\label{alg:pico-program}
+\begin{algorithmic}
+
+\State Initialise hardware
+\State Initialise Wi-Fi access point
+\State Wait for PC connection
+
+\State Receive scan configuration from PC
+\State Calculate number of motor steps per scan
+\State Send ACK to PC
+
+\State Perform platform homing
+
+\While{program is running}
+
+    \State Wait for command from PC
+
+    \If{command is \texttt{r}}
+
+        \State Mark start time
+
+        \While{elapsed time is less than acquisition threshold}
+            \State Read data from LiDAR UART
+            \State Parse valid LiDAR packets
+            \State Send compact packets to PC
+        \EndWhile
+
+        \State Send \texttt{done} to PC
+        \State Move platform to next position
+
+    \ElsIf{command is \texttt{stop}}
+
+        \State Stop motor
+        \State Send \texttt{restarting} to PC
+        \State Restart program
+
+    \EndIf
+\EndWhile
+
+\end{algorithmic}
+\end{algorithm}
+
+\subsection{PC program}
+The PC program is written in Python. Since our application is mostly IO-bound, it is divided into two threads.
+
+The receiver thread is responsible for communication with the Pico. It sends the trigger command to the Pico, receives the data, parses it and performs the necessary transformations to obtain the point cloud. It also computes the current azimuth angle of the platform based on the number of requests sent to the Pico and the scanning density.
+The obtained points are then put into a global queue.
+ 
+The main thread is responsible for visualisation. It creates an Open3D visualisation window and constantly checks the global queue for new data.
+If there are new points, it updates the visualisation with the new data. Such separation allows the visualisation window to be responsive to user input even while the data is being received and processed in the background.
+
+Below are the pseudocodes for both threads:
+\begin{algorithm}[H]
+\caption{PC main thread}
+\label{alg:pc-main-thread}
+\begin{algorithmic}
+    \State Connect to Pico via Wi-Fi
+    \State Send the scanning density config (\# of steps/scan) and wait for ACK
+    \State Start receiver thread
+    \State Initialise visualisation window
+    \State Initialise Open3D point cloud containers for visualisation and export
+    \While{acquistion is running}
+        \State Read all available data from the global queue into a local container
+        \If{local container is not empty}
+            \State Update visualisation with the new dataf
+            \If{\# of points in visualisation container > threshold}
+                \State downsample visualisation container
+            \EndIf
+        \EndIf
+        \State Update visualisation window with the current visualisation container
+    \EndWhile
+    \State Stop recveiver thread
+    \State Send \texttt{stop} command to Pico and wait for \texttt{restarting} message as an ACK
+    \State Save export container on a machine
+    \State Destroy visualisation window
+\end{algorithmic}
+\end{algorithm}
+\begin{algorithm}[H]
+\caption{PC receiver thread}
+\label{alg:pc-receiver-thread}
+\begin{algorithmic}
+    \For{each platform position}
+    \State Compute current azimuth angle
+    \State Send trigger command to Pico \texttt{r}
+    \Repeat
+    \State Receive data chunk from Pico
+    \State Append data chunk to a receive buffer
+    \Until{\texttt{done} signal received}
+    \State Parse data
+    \State Perform transormation on the data (Polar -> Cartesian; 2D to 3D via platform tilt angle and azimuth angle)
+    \State Put obtained points into a global queue
+    \EndFor
+\end{algorithmic}
+\end{algorithm}
+
+\subsection{Point cloud reconstruction}
+The data received from the Pico is a stream of disected \gls{lidar} packets, containing only the start and stop angles and twelve distance measurements "sandwiched" between them.
+The angle corresponding to each distance measurement is obtained by linear interpolation between the start and stop angles\footnote{\SI{360}{\degree} is added to the stop angle in a case where the stop angle is less than the start angle due to the wrap-around occuring between \SI{359}{\degree} and \SI{0}{\degree}}.
+Then, the obtained polar coordinates are transformed into Cartesian coordinates in a 2D plane:
+\begin{equation}
+    x = r \cdot \cos(\alpha), \quad y = r \cdot \sin(\alpha), \quad z = 0,
+\end{equation}
+where $r$ is the distance measurement and $\alpha$ is the corresponding linearly interpolated angle. Since our \gls{lidar} performs only 2D scanning, all points initially lie in the xy-plane($z=0$).
+
+The obtained points are then transformed according to the current orientaion of the \gls{lidar}. First, the points which are lying in xy-plane are rotated around x-axis by the angle $\phi$, corresponding to the platform tilt angle (hard-coded constant in PC program):
+\begin{equation}
+\begin{bmatrix}
+    x_{\text{t}} \\
+    y_{\text{t}} \\
+    z_{\text{t}} \\
+\end{bmatrix}
+=
+\begin{bmatrix}
+    1 & 0 & 0 \\
+    0 & \cos \phi & -\sin \phi \\
+    0 & \sin \phi & \cos \phi \\
+\end{bmatrix}
+\begin{bmatrix}
+    x \\
+    y \\
+    z \\
+\end{bmatrix}.
+\end{equation}
+\begin{figure}[H]
+    \centering
+    \input{electronics_software/software_implementation/transform_vis/tilt_transform_gradient.tex}
+    \caption{Visualisation of the tilt transormation.}
+\end{figure}
+
+After the tilt transformation, the points are rotated around the z-axis by the angle $\theta$, correspoding to the current platform azimuth:
+\begin{equation}
+\begin{bmatrix}
+    x_{\text{a}} \\
+    y_{\text{a}} \\
+    z_{\text{a}} \\
+\end{bmatrix}
+=
+\begin{bmatrix}
+    \cos \theta & -\sin \theta & 0 \\
+    \sin \theta & \cos \theta & 0 \\
+    0 & 0 & 1 \\
+\end{bmatrix}
+\begin{bmatrix}
+    x_{\text{t}} \\
+    y_{\text{t}} \\
+    z_{\text{t}} \\
+\end{bmatrix}.
+\end{equation}
+\begin{figure}[H]
+    \centering
+    \input{electronics_software/software_implementation/transform_vis/azimuth_transform_gradient.tex}
+    \caption{Visualisation of the azimuth transormation.}
+\end{figure}
+By repeating the above process for each received packet from \gls{lidar}, we can reconstruct the environment in the form of a point cloud.
