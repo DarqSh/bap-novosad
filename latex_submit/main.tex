@@ -5,6 +5,7 @@
 % The class takes all the key=value arguments that \ctusetup does,
 % and a couple more: draft and oneside
 \documentclass[twoside]{ctuthesis}
+\let\cleardoublepage\clearpage
 \input{_my_pkg.tex}
 \input{_glossary.tex}
 \addbibresource{BAP_bibliography.bib}
@@ -132,17 +133,16 @@
 \printglossary[type=\acronymtype]
 \printunsrtglossary[title=Acronyms]
 
-\chapter{Introduction}
 \input{introduction/introduction.tex}
 
-\chapter{Design of a Platform}
 \input{design/design.tex}
 
-\chapter{Electronics and Software Implementation}
 \input{electronics_software/electronics_software.tex}
 
-\chapter{Conclusion}
+\input{experimental_results/experimental_results.tex}
+
 \input{conclusion/conclusion.tex}
+
 
 
 \appendix

@@ -60,7 +60,7 @@ The PC program is written in Python. Since our application is mostly IO-bound, i
 
 The receiver thread is responsible for communication with the Pico. It sends the trigger command to the Pico, receives the data, parses it and performs the necessary transformations to obtain the point cloud. It also computes the current azimuth angle of the platform based on the number of requests sent to the Pico and the scanning density.
 The obtained points are then put into a global queue.
- 
+
 The main thread is responsible for visualisation. It creates an Open3D visualisation window and constantly checks the global queue for new data.
 If there are new points, it updates the visualisation with the new data. Such separation allows the visualisation window to be responsive to user input even while the data is being received and processed in the background.
 
@@ -109,6 +109,7 @@ Below are the pseudocodes for both threads:
 \end{algorithm}
 
 \subsection{Point cloud reconstruction}
+\label{subsec:point_cloud_reconstruction}
 The data received from the Pico is a stream of disected \gls{lidar} packets, containing only the start and stop angles and twelve distance measurements "sandwiched" between them.
 The angle corresponding to each distance measurement is obtained by linear interpolation between the start and stop angles\footnote{\SI{360}{\degree} is added to the stop angle in a case where the stop angle is less than the start angle due to the wrap-around occuring between \SI{359}{\degree} and \SI{0}{\degree}}.
 Then, the obtained polar coordinates are transformed into Cartesian coordinates in a 2D plane:
