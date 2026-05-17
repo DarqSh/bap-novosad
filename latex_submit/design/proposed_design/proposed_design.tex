@@ -117,7 +117,7 @@ To eliminate the need for a compromise between point cloud coverage and density 
 Using gears with a specific gear ratio allows us to choose a tilt angle that minimises blind spots while still producing a dense point cloud.
 The resulting spacing between scans can be expressed as
 \begin{equation}
-    S_{\text{scan}} = \frac{\cdot\varphi_{\text{step}}\cdot\sin(\theta)}{R},
+    S_{\text{scan}} = \frac{\varphi_{\text{step}}\cdot\sin(\theta)}{R},
 \end{equation}
 where $R$ is the output step reduction ratio of the gearbox given as the ratio of the number of teeth on the driven gear to the number of teeth on the driving gear.
 A following graph is similar to \cref{fig:angleRes_tiltOnly}, but the third dimension represents different gear ratios:

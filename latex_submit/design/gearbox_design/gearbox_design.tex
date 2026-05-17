@@ -1,10 +1,10 @@
 \section{Gearbox Design}
 \subsection{Choosing reduction ratio}
 The step angle of the stepper motor is equal to $1.8\,\degree$ (see \cref{tab:stepper_motor_params}). 
-An angle of $0.1\,\degree$ was selected as the base output step angle of the platform, since it lets all angles featured in \cref{tab:best_combinations} be represented as integer multiples of this value, meaning a bigger step will be artificially achieved by stepping a couple of times with a smaller step.
-That means that a reduction ratio 18:1 has to be achieved. 
-DRV8825 stepper motor driver\footnote{\url{https://www.ti.com/lit/ds/symlink/drv8825.pdf}} which is used in this project allows for a reduction ratio up to 32:1 to be achieved via microstepping. A reduction ratio of 2:1 was chosen here, since higher microstepping ratios come with a reduced accuracy of the output \cite[sec.~Texas Instruments DRV8825]{by_HowAccurateMicrostepping_2016}.
-That leaves 9:1 reduction ratio to be obtained using a gearbox.
+An angle of $0.1\,\degree$ was selected as the base output step angle of the platform, since it lets all angles featured in \cref{tab:best_combinations} be represented as integer multiples of this value, meaning a larger step will be artificially achieved by performing multiple small steps.
+This requires an overall transmission ratio of 18:1.
+DRV8825 stepper motor driver\footnote{\url{https://www.ti.com/lit/ds/symlink/drv8825.pdf}} used in this project supports microstepping up to 32:1. A microstepping setting of 2:1 was selected, since higher microstepping ratios come with a reduced accuracy of the output \cite[sec.~Texas Instruments DRV8825]{by_HowAccurateMicrostepping_2016}.
+That remaining 9:1 reduction ratio is therefore achieved mechanically using a gearbox.
 \subsection{Gearbox Design Selection}
 \subsubsection{Belt Drive}
 A belt drive is a mechanical transmission system in which rotational motion is transferred between pulleys using a flexible belt. The ratio of pulley diameters determines the reduction ratio. In case of toothed belts, gears could be used instead of pulleys to minimise slipping. An example of a 3D-printed belt drive mechanism can be found in \cite[sec.~Belt Drive]{dejan_WhatBEST3D_2025}
@@ -33,7 +33,7 @@ A cycloidal gearbox is widely used in robotics and machining due to its low back
     \caption{Photo of the components of cycloidal gearbox. Illustration taken from \cite{dejan_WhatCycloidalDriver_2021}}
     \label{ph:cycloidal_drive}
 \end{figure}
-\begin{tabular}{p{0.45\linewidth} p{0.45\linewidth}}
+\begin{tabular}{p{0.30\linewidth} p{0.60\linewidth}}
     \textbf{Pros} & \textbf{Cons} \\
     \begin{itemize}[label=\textcolor{green!60!black}{\textbf{+}}]
         \item Symmetric design (a requirement for our project)
@@ -42,7 +42,7 @@ A cycloidal gearbox is widely used in robotics and machining due to its low back
     &
     \begin{itemize}[label=\textcolor{red!70!black}{\textbf{--}}]
         \item Correct design of this system requires working with complex parametric equations inside CAD software to correctly design the movement of disks in a cycloidal manner (hence the name). Although CAD tutorials and design tools exist \cite{younis_BuildingCycloidalDrive_}, the design process remains cumbersome.
-        \item High component count due to the large number of rollers required for high reduction ratios. In our case, a cycloidal gearbox with a 9:1 reduction ratio would require 10 ball bearings for each of the two cycloidal disks, making the design unnecessarily complex for an amateur project.
+        \item High component count due to the large number of rollers required for high reduction ratios. In our case, a cycloidal gearbox with a 9:1 ratio would require 10 ball bearings for each of the two cycloidal disks, making the design unnecessarily complex for an amateur project.
     \end{itemize}
 \end{tabular}
 
@@ -59,15 +59,15 @@ A planetary gearbox is a compact symmetric transmission system consisting of a s
     \textbf{Pros} & \textbf{Cons} \\
     \begin{itemize}[label=\textcolor{green!60!black}{\textbf{+}}]
         \item Symmetric, simple and compact design
-        \item Smooth operation can be achieved using helical gears\protect\footnotemark[3].
+        \item Smooth operation can be achieved using helical gears\footnotemark[4].
     \end{itemize}
     &
     \begin{itemize}[label=\textcolor{red!70!black}{\textbf{--}}]
-        \item The backlash and noise of the gearbox are strongly influenced by the printing accuracy\footnotemark[4].
+        \item The backlash and noise of the gearbox are strongly influenced by the printing accuracy\footnotemark[5].
     \end{itemize}
 \end{tabular}
-\footnotetext[3]{The potential drawback in some designs could be the axial forces which arise due to helical nature of teeth. However, for our project this is not an issue since the design of gearbox is vertical.}
-\footnotetext[4]{In this project, gears with larger teeth were used in order to reduce the influence of printing tolerances. Although the result shows almost no backlash, it remains quite noisy.}
+\footnotetext[4]{The potential drawback in some designs could be the axial forces which arise due to helical nature of teeth. However, for our project this is not an issue since the design of gearbox is vertical.}
+\footnotetext[5]{In this project, gears with larger teeth were used in order to reduce the influence of printing tolerances. Although the result shows almost no backlash, it remains quite noisy.}
 All things considered, a planetary gearbox is the best solution for our application, featuring both symmetric arrangement of components and simplicity while still providing favourable mechanical characteristics.
 
 \subsection{Choosing Teeth Count}
@@ -80,11 +80,11 @@ Mathematically, planetary gearbox has to satisfy the following equations \cite{_
 \end{equation}
 where $Z_{\text{ring}}, Z_{\text{sun}}$ and $Z_{\text{planet}}$ denote the number of teeth of the respective gears. The number of teeth is linearly proportional to the pitch diameter of a gear since they are located at the circumference. Thus, this equation represents a purely geometry constraint required for the sun and ring gears to be able to fit inside the ring gear.
 \begin{figure}[H]
-    \caption{Visualisation of the geometric constraint defined by \cref{eq:geometric_constraint}\protect\footnotemark[5]. Gears are represented as circles for clarity.}
+    \caption{Visualisation of the geometric constraint defined by \cref{eq:geometric_constraint}\protect\footnotemark[6]. Gears are represented as circles for clarity}
     \input{design/gearbox_design/gearbox_constraint_tikz.tex}
     \label{fig:gearbox_constraint_tikz}
 \end{figure}
-\footnotetext[5]{Two planet gears were used for illustration purposes. Our design uses three planet gears, but the constraint condition remains the same.}
+\footnotetext[6]{Two planet gears were used for illustration purposes. Our design uses three planet gears, but the constraint condition remains the same.}
 
 The next equation that all planet gears can be placed with equal angular spacing around the sun gear. Equal spacing ensures equal load distribution and helps balance the forces with which planet gears act upon the sun gear.
 \begin{equation}

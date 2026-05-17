@@ -17,7 +17,7 @@ Since these faulty measurements are spatially separated from the main point clou
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{experimental_results/photos/z_raw_pcd.png}
-    \caption{Raw point cloud.}
+    \caption{Raw point cloud}
     \label{fig:raw_scan}
 \end{figure}
 
@@ -34,7 +34,7 @@ Since these faulty measurements are spatially separated from the main point clou
         \includegraphics[width=\linewidth]{experimental_results/photos/z_outlier_show.png}
         \caption{Filtered point cloud}
     \end{subfigure}
-    \caption{Visualisation of the outlier removal process.}
+    \caption{Visualisation of the outlier removal process}
 \end{figure}
 
 \subsection{Misalignment Corrections}
@@ -48,7 +48,7 @@ However, it is possible that the holes on the platform used for mounting the sen
 To compensate for this effect, an experimental correction of \SI{-1,0}{\degree} was found to produce the best alignment of the ceiling when applied to every acquired scan slice before the tilt transformation.
 
 \begin{listing}[H]
-\caption{Code snippet with the compensation for assumed \gls{lidar} misalignmen.}
+\caption{Code snippet with the compensation for assumed \gls{lidar} misalignment}
 \begin{minted}[linenos, frame=single, breaklines]{python}
     def lidarTo3D(distance_mm, scan_angle_deg, azimuth_deg):
         r = distance_mm/1000. # mm -> m
@@ -87,7 +87,7 @@ To compensate for this effect, an experimental correction of \SI{-1,0}{\degree} 
         \includegraphics[width=\linewidth]{experimental_results/photos/z_good_ceiling_grayscale.png}
         \caption{After correction}
     \end{subfigure}
-    \caption{Correction of the ceiling misalignment shown in side view.}
+    \caption{Correction of the ceiling misalignment shown in side view}
 \end{figure}
 
 The second correction was aimed at the misalignment of walls.
@@ -96,7 +96,7 @@ This means that an acquired slice is not a slice but a collection of points shif
 An experimental correction of \SI{1,5}{\degree} was found to produce the best alignment of the walls when applied before the tilt transformation.
 
 \begin{listing}[H]
-\caption{Code snippet containing two corrections.\protect\footnotemark}
+\caption{Code snippet containing two corrections\protect\footnotemark}
 \begin{minted}[linenos, frame=single, breaklines]{python}
 def lidarTo3D(distance_mm, scan_angle_deg, azimuth_deg):
     r = distance_mm/1000. # mm -> m
@@ -127,7 +127,7 @@ def lidarTo3D(distance_mm, scan_angle_deg, azimuth_deg):
         \includegraphics[width=\linewidth]{experimental_results/photos/z_good_wall_grayscale.png}
         \caption{After correction}
     \end{subfigure}
-    \caption{Correction of the wall misalignment shown in side view.}
+    \caption{Correction of the wall misalignment shown in side view}
 \end{figure}
 
 \subsection{Comparison with Photograph}
@@ -145,6 +145,6 @@ For this demonstration, the size of surfels in the Open3D visualisation window w
         \includegraphics[width=\linewidth]{experimental_results/photos/z_room_pcd_grayscale.png}
         \caption{Point cloud}
     \end{subfigure}
-    \caption{Comparison between a photo and the point cloud of a scanned room.}
+    \caption{Comparison between a photo and the point cloud of a scanned room}
 \end{figure}
 Grayscale depicts the depth of the points, with darker points being farther away. Author is visible sitting on a bed. Points which were reflected by mirror were positioned at a greater distance due to the reflection of the \gls{lidar} beam and were therefore filtered out by the outlier removal process.
