@@ -1,3 +1,6 @@
+# taken from https://gibbard.me/lidar/
+
+
 #!/usr/bin/env python3
 
 import numpy as np
