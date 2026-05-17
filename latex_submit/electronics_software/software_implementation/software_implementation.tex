@@ -73,7 +73,7 @@ If there are new points, it updates the visualisation with the new data. Such se
     \While{acquisition is running}
         \State Read all available data from the global container into a local container
         \If{local container is not empty}
-            \State Update visualisation with the new dataf
+            \State Update visualisation with the new data
             \If{\# of points in visualisation container > threshold}
                 \State downsample visualisation container
             \EndIf
@@ -106,7 +106,7 @@ If there are new points, it updates the visualisation with the new data. Such se
 
 \subsection{Point cloud reconstruction}
 \label{subsec:point_cloud_reconstruction}
-The data received from the Pico is a stream of trimmed \gls{lidar} packets, containing only the start and stop angles and twelve distance measurements "sandwiched" between them.
+The data received from the Pico are a stream of trimmed \gls{lidar} packets, containing only the start and stop angles and twelve distance measurements "sandwiched" between them.
 The angle corresponding to each distance measurement is obtained by linear interpolation between the start and stop angles\footnote{\SI{360}{\degree} is added to the stop angle in a case where the stop angle is less than the start angle due to the wrap-around occurring between \SI{359}{\degree} and \SI{0}{\degree}}.
 Then, the obtained polar coordinates are transformed into Cartesian coordinates in a 2D plane:
 \begin{equation}
