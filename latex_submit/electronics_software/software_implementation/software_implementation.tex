@@ -7,12 +7,10 @@ After the connection is established, Pico waits for the PC to send the scanning 
 
 Before the scanning starts, the platform is rotated until the reference position is detected by the Hall effect sensor.
 Then the main loop of the program starts. Each loop iteration is triggered by a command from the PC.
-When the Pico receives the \texttt{r} command, it starts acquiring data from the \gls{lidar} for \SI{200}{\milli\second} and after that parses each valid \gls{lidar} packet, storing only the necessary information needed for reconstructing the point cloud. 
+When the Pico receives the \texttt{r} command, it starts acquiring data from the \gls{lidar} for \SI{200}{\milli\second}\footnote{Even though the rotational frequency of the \gls{lidar} sensor is approximately \SI{10}{\hertz}, corresponding to one full scan every \SI{100}{\milli\second}, an acquisition time of \SI{200}{\milli\second} was chosen in order to reliably obtain a complete scan slice even in the presence of possible timing delays.} and after that parses each valid \gls{lidar} packet, storing only the necessary information needed for reconstructing the point cloud. 
 After that it sends the data to the PC with a \texttt{done} signal to indicate the end of the scan, and moves the platform to the next position.
-
-Below is the pseudocode:
 \begin{algorithm}[H]
-\caption{Pico program}
+\caption{Pico program pseudocode}
 \label{alg:pico-program}
 \begin{algorithmic}
 
@@ -59,14 +57,12 @@ Below is the pseudocode:
 The PC program is written in Python. Since our application is mostly IO-bound, it is divided into two threads.
 
 The receiver thread is responsible for communication with the Pico. It sends the trigger command to the Pico, receives the data, parses it and performs the necessary transformations to obtain the point cloud. It also computes the current azimuth angle of the platform based on the number of requests already sent to the Pico (platform makes a step after every request) and the scanning density.
-The obtained points are then put into a global queue.
+The obtained points are then put into a global FIFO container.
 
-The main thread is responsible for visualisation. It creates an Open3D visualisation window and constantly checks the global queue for new data.
+The main thread is responsible for visualisation. It creates an Open3D visualisation window and constantly checks the global FIFO container for new data.
 If there are new points, it updates the visualisation with the new data. Such separation allows the visualisation window to be responsive to user input even while the data is being received and processed in the background.
-
-Below are the pseudocodes for both threads:
 \begin{algorithm}[H]
-\caption{PC main thread}
+\caption{PC main thread pseudocode}
 \label{alg:pc-main-thread}
 \begin{algorithmic}
     \State Connect to Pico via Wi-Fi
@@ -75,7 +71,7 @@ Below are the pseudocodes for both threads:
     \State Initialise visualisation window
     \State Initialise Open3D point cloud containers for visualisation and export
     \While{acquisition is running}
-        \State Read all available data from the global queue into a local container
+        \State Read all available data from the global container into a local container
         \If{local container is not empty}
             \State Update visualisation with the new dataf
             \If{\# of points in visualisation container > threshold}
@@ -91,7 +87,7 @@ Below are the pseudocodes for both threads:
 \end{algorithmic}
 \end{algorithm}
 \begin{algorithm}[H]
-\caption{PC receiver thread}
+\caption{PC receiver thread pseudocode}
 \label{alg:pc-receiver-thread}
 \begin{algorithmic}
     \For{each platform position}
@@ -103,7 +99,7 @@ Below are the pseudocodes for both threads:
     \Until{\texttt{done} signal received}
     \State Parse data
     \State Perform transformation on the data (Polar -> Cartesian; 2D to 3D via platform tilt angle and azimuth angle)
-    \State Put obtained points into a global queue
+    \State Put obtained points into a global container
     \EndFor
 \end{algorithmic}
 \end{algorithm}

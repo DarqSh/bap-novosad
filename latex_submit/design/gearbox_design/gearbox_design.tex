@@ -2,8 +2,8 @@
 \subsection{Choosing reduction ratio}
 The step angle of the stepper motor is equal to $1.8\,\degree$ (see \cref{tab:stepper_motor_params}). 
 An angle of $0.1\,\degree$ was selected as the base output step angle of the platform, since it lets all angles featured in \cref{tab:best_combinations} be represented as integer multiples of this value, meaning a larger step will be artificially achieved by performing multiple small steps.
-This requires an overall transmission ratio of 18:1.
-DRV8825 stepper motor driver\footnote{\url{https://www.ti.com/lit/ds/symlink/drv8825.pdf}} used in this project supports microstepping up to 32:1. A microstepping setting of 2:1 was selected, since higher microstepping ratios come with a reduced accuracy of the output \cite[sec.~Texas Instruments DRV8825]{by_HowAccurateMicrostepping_2016}.
+This requires an overall reduction ratio of 18:1.
+DRV8825 stepper motor driver\footnote{\url{https://www.ti.com/lit/ds/symlink/drv8825.pdf}} used in this project supports microstepping up to 32:1. A microstepping setting of 2:1 was selected, since higher microstepping ratios can significantly reduce positioning accuracy, especially for the DRV8825 driver \cite[sec.~Texas Instruments DRV8825]{by_HowAccurateMicrostepping_2016}.
 That remaining 9:1 reduction ratio is therefore achieved mechanically using a gearbox.
 \subsection{Gearbox Design Selection}
 \subsubsection{Belt Drive}

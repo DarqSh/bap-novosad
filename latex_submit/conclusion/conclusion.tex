@@ -1,6 +1,6 @@
 \chapter{Conclusion}
 The aim of this thesis was to design a cost-effective solution for 3D spatial scanning using a more affordable 2D \gls{lidar} sensor.
-Existing amateur solutions were first analysed and compared, and a rotating tilted platform design was proposed that would address the most significant limitations of its competitors.
+Existing amateur solutions were first analysed and compared, and a rotating tilted platform design was proposed that addresses the most significant limitations of the existing approaches.
 
 A planetary gearbox was introduced into the design in order to reduce the output angular step of the platform driven by a stepper motor, which allowed for a larger tilt angle and therefore better coverage of the scanned environment while still preserving sufficient point cloud density.
 
@@ -48,7 +48,7 @@ So, the total cost of the constructed platform is lower than the price of the ch
 Although the prototype fulfilled its main purpose, several drawbacks of the current design were identified.
 The overall mechanical construction could have been made more compact if a smaller gear size was chosen. In our case, the size of the planet gears was determined by the size of available ball bearings and due to concerns about possible printing issues in the case of smaller gears.
 Screw holes meant to keep Pico and the hall effect sensor module at the outer wall of the ring gear came out too loose and so those components can be easily detached from the platform. The hole for the magnet also turned out to be too large, so the duct tape was used to prevent the magnet from falling out of the hole.
-Also, during the initial planning of the design, the increase in torque caused by the gearbox was not taken into account and an unnecessarily strong stepper motor was chosen, which is larger and more expensive than its weaker alternatives.
+Also, during the initial planning of the design, only a gearbox reduction ratio of 2:1 was considered. Therefore, an unnecessarily strong stepper motor was selected, which is larger and more expensive than its weaker alternatives.
 These limitations could be easily addressed in a future version of the platform.
 
 Overall, the resulting prototype demonstrates that an affordable 2D \gls{lidar} sensor, combined with a simple 3D-printed platform and suitable software processing, can be used to obtain a detailed three-dimensional point cloud, confirming the main objective of this thesis.
