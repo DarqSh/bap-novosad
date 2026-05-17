@@ -48,7 +48,7 @@ However, it is possible that the holes on the platform used for mounting the sen
 To compensate for this effect, an experimental correction of \SI{-1,0}{\degree} was found to produce the best alignment of the ceiling when applied to every acquired scan slice before the tilt transformation.
 
 \begin{listing}[H]
-\caption{Code snippet with the possible misalignment compensation.}
+\caption{Code snippet with the compensation for assumed \gls{lidar} misalignment.}
 \begin{minted}[linenos, frame=single, breaklines]{python}
     def lidarTo3D(distance_mm, scan_angle_deg, azimuth_deg):
         r = distance_mm/1000. # mm -> m
