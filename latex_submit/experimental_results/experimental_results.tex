@@ -3,8 +3,8 @@
 In order to evaluate the performance of the platform, several scans of the author's room at the student dormitory were performed.
 The angular spacing between consecutive platform positions was set to \SI{0.8}{\degree}. With this setting, the total scanning time was approximately two minutes.
 
-A video showing the scanning procedure can be found \href{https://youtube.com/shorts/UBePfZQdfIo?feature=share}{here}.
-A screen recording of the Open3D visualisation of the point cloud being built in real time can be found \href{https://youtu.be/SptaiVY_dwU}{here}.
+A video showing the scanning procedure is available at \href{https://youtube.com/shorts/UBePfZQdfIo?feature=share}{this link}.
+A screen recording of the Open3D visualisation of the point cloud being built in real time is available at \href{https://youtu.be/SptaiVY_dwU}{this link}.
 
 \section{Point Cloud Processing}
 \subsection{Outlier Removal}
@@ -38,7 +38,7 @@ Since these faulty measurements are spatially separated from the main point clou
 \end{figure}
 
 \subsection{Misalignment Corrections}
-After filtering, misalignments betwen individual scan slices became visible. 
+After filtering, misalignments between individual scan slices became visible. 
 These misalignments were most noticeable at wide planes, such as the ceiling and the walls and were made by the reconstruction from \gls{lidar} scan slices acquired at platform azimuth angles differing by \SI{180}{\degree}.
 The exact cause of these misalignments is not known; however, two possible explanations are proposed, each of which was corrected separately.
 
@@ -48,7 +48,7 @@ However, it is possible that the holes on the platform used for mounting the sen
 To compensate for this effect, an experimental correction of \SI{-1,0}{\degree} was found to produce the best alignment of the ceiling when applied to every acquired scan slice before the tilt transformation.
 
 \begin{listing}[H]
-\caption{Code snippet with the possible misalignemnt compensation.}
+\caption{Code snippet with the possible misalignment compensation.}
 \begin{minted}[linenos, frame=single, breaklines]{python}
     def lidarTo3D(distance_mm, scan_angle_deg, azimuth_deg):
         r = distance_mm/1000. # mm -> m
@@ -137,7 +137,7 @@ For this demonstration, the size of surfels in the Open3D visualisation window w
     \begin{subfigure}{0.99\linewidth}
         \centering
         \includegraphics[width=\linewidth]{experimental_results/photos/room_photo.jpg}
-        \caption{Photograph}
+        \caption{Photo}
     \end{subfigure}
     \hfill
     \begin{subfigure}{0.99\linewidth}

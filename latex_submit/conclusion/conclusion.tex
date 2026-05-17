@@ -1,7 +1,52 @@
 \chapter{Conclusion}
-In summary, the proposed rotating tilted platform design addresses most of the drawbacks of the current DIY solutions presented at \cref{sec:diy_solutions}: 
-scanning time is relatively fast thanks to \gls{lidar} type, the platform is rigid, simple in its design, and produces a more uniform point cloud, granted that a suitable tilt angle is used. 
+The aim of this thesis was to design a cost-effective solution for 3D spatial scanning using a more affordable 2D \gls{lidar} sensor.
+Existing amateur solutions were first analysed and compared, and a rotating tilted platform design was proposed that would address the most significant limitations of its competitors.
 
-The introduction of a gearbox represents a key innovation, as it provides the user with control over the trade-off between speed, point cloud density, and environmental coverage. 
-Thus, the resulting platform achieves the best overall compromise among DIY solutions while remaining affordable, as all the parts can be 3D-printed due to their simple design. 
-This makes such a platform ideal for an amateur use case, which is what this project meant to achieve.
+A planetary gearbox was introduced into the design in order to reduce the output angular step of the platform driven by a stepper motor, which allowed for a larger tilt angle and therefore better coverage of the scanned environment while still preserving sufficient point cloud density.
+
+Data acquisition and platform control were implemented using a Raspberry Pi Pico 2 W, which drives the stepper motor through a motor driver, receives data from the \gls{lidar} sensor and forwards the necessary measurements to a PC via Wi-Fi.
+The PC-side program reconstructs the point cloud from the received data and visualises the result using the Open3D library.
+
+The functionality of the prototype was verified by scanning the room.
+The initial obtained point cloud contained several imperfections, namely: a large number of spurious points and misalignments between scan slices obtained at platform azimuthal angles differing by \SI{180}{\degree}.
+The spurious points were spatially separated from the useful part of the scan and were therefore easily removed using outlier filtering tools provided by Open3D.
+The misalignments were most noticeable on large planar surfaces such as the ceiling and walls and were compensated experimentally by tuning the transformation parameters in the PC program.
+After applying the corrections, the resulting point cloud showed good agreement with a photo of the scanned room.
+
+Below is the total bill of materials for the constructed platform:
+\begin{table}[H]
+    \centering
+    \caption{Bill of materials.}
+    \begin{tabular}{lcr}
+        \toprule
+        Part & Quantity & Price [\euro] \\
+        \midrule
+        2D LiDAR sensor & 1 & 80 \\
+        Raspberry Pi Pico 2 W & 1 & 7 \\
+        Buck converter & 1 & 4 \\
+        \SI{12}{V} power supply & 1 & 8 \\
+        NEMA 17 17HS8401 stepper motor & 1 & 14 \\
+        DRV8825 stepper motor driver & 1 & 4 \\
+        Hall effect sensor & 1 & 1 \\
+        Magnet & 1 & 1 \\
+        \SI{100}{\micro\farad} capacitor & 1 & -- \\
+        Ball bearing $15 \times 24 \times 5\,\si{\milli\meter}$ & 12 & 4 \\
+        Ball bearing $50 \times 65 \times 7\,\si{\milli\meter}$ & 1 & 9 \\
+        Ball bearing $35 \times 47 \times 7\,\si{\milli\meter}$ & 2 & 8 \\
+        DC barrel jack adapter -- 2-pin terminal block & 1 & -- \\
+        PLA filament (\SI{700}{g}) & 1 & 23 \\
+        \midrule
+        \textbf{Total} & & \textbf{163} \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+So, the total cost of the constructed platform is lower than the price of the cheapest commercial 3D \gls{lidar} sensor mentioned in \cref{chap:introduction}, confirming the cost-oriented motivation of the thesis.
+
+Although the prototype fulfilled its main purpose, several drawbacks of the current design were identified.
+The overall mechanical construction could have been made more compact if a smaller gear size was chosen. In our case, the size of the planet gears was determined by the size of available ball bearings and due to concerns about possible printing issues in the case of smaller gears.
+Screw holes meant to keep Pico and the hall effect sensor module at the outer wall of the ring gear came out too loose and so those components can be easily detached from the platform. The hole for the magnet also turned out to be too large, so the duct tape was used to prevent the magnet from falling out of the hole.
+Also, during the initial planning of the design, the increase in torque caused by the gearbox was not taken into account and an unnecessarily strong stepper motor was chosen, which is larger and more expensive than its weaker alternatives.
+These limitations could be easily addressed in a future version of the platform.
+
+Overall, the resulting prototype demonstrates that an affordable 2D \gls{lidar} sensor, combined with a simple 3D-printed platform and suitable software processing, can be used to obtain a detailed three-dimensional point cloud, confirming the main objective of this thesis.

@@ -2,9 +2,9 @@
 \subsection{Choosing reduction ratio}
 The step angle of the stepper motor is equal to $1.8\,\degree$ (see \cref{tab:stepper_motor_params}). 
 An effective angular step of $0.1\,\degree$ was selected as the base output step angle of the platform, since it lets all angles featured in \cref{tab:best_combinations} be represented as integer multiples of this value, meaning a bigger step will be artificially achieved by stepping a couple of times with a smaller step.
-That means that a reduction ratio 1:18 has to be achieved. 
-DRV8825 stepper motor driver\footnote{\url{https://www.ti.com/lit/ds/symlink/drv8825.pdf}} which is used in this project allows for a reduction ratio up to 1:32 to be achieved via microstepping. A reduction ratio of 1:2 was chosen here, since higher microstepping ratios come with a reduced accuracy of the output \cite[sec.~Texas Instruments DRV8825]{by_HowAccurateMicrostepping_2016}.
-That leaves 1:9 reduction ratio to be obtained using a gearbox.
+That means that a reduction ratio 18:1 has to be achieved. 
+DRV8825 stepper motor driver\footnote{\url{https://www.ti.com/lit/ds/symlink/drv8825.pdf}} which is used in this project allows for a reduction ratio up to 32:1 to be achieved via microstepping. A reduction ratio of 2:1 was chosen here, since higher microstepping ratios come with a reduced accuracy of the output \cite[sec.~Texas Instruments DRV8825]{by_HowAccurateMicrostepping_2016}.
+That leaves 9:1 reduction ratio to be obtained using a gearbox.
 \subsection{Gearbox Design Selection}
 \subsubsection{Belt Drive}
 A belt drive is a mechanical transmission system in which rotational motion is transferred between pulleys using a flexible belt. The ratio of pulley diameters determines the reduction ratio. In case of toothed belts, gears could be used instead of pulleys to minimise slipping. An example of a 3D-printed belt drive mechanism can be found in \cite[sec.~Belt Drive]{dejan_WhatBEST3D_2025}
@@ -42,7 +42,7 @@ A cycloidal gearbox is widely used in robotics and machining due to its low back
     &
     \begin{itemize}[label=\textcolor{red!70!black}{\textbf{--}}]
         \item Correct design of this system requires working with complex parametric equations inside CAD software to correctly design the movement of disks in a cycloidal manner (hence the name). Although CAD tutorials and design tools exist \cite{younis_BuildingCycloidalDrive_}, the design process remains cumbersome.
-        \item High component count due to the large number of rollers required for high reduction ratios. In our case, a cycloidal gearbox with a 1:9 reduction ratio would require 10 ball bearings for each of the two cycloidal disks, making the design unnecessarily complex for an amateur project.
+        \item High component count due to the large number of rollers required for high reduction ratios. In our case, a cycloidal gearbox with a 9:1 reduction ratio would require 10 ball bearings for each of the two cycloidal disks, making the design unnecessarily complex for an amateur project.
     \end{itemize}
 \end{tabular}
 
@@ -68,10 +68,10 @@ A planetary gearbox is a compact symmetric transmission system consisting of a s
 \end{tabular}
 \footnotetext[3]{The potential drawback in some designs could be the axial forces which arise due to helical nature of teeth. However, for our project this is not an issue since the design of gearbox is vertical.}
 \footnotetext[4]{In this project, gears with larger teeth were used in order to reduce the influence of printing tolerances. Although the result shows almost no backlash, it remains quite noisy.}
-All things considered, a planetary gearbox is the best solution for us, featuring both symmetric arrangement of components and simplicity while still providing favourable mechanical characteristics.
+All things considered, a planetary gearbox is the best solution for our application, featuring both symmetric arrangement of components and simplicity while still providing favourable mechanical characteristics.
 
 \subsection{Choosing Teeth Count}
-Unlike with a cycloidal gearbox, it is harder to achieve 1:9 reduction ratio only with one stage while still keeping the overall design compact. Thus, a two-stage design is needed.
+Unlike with a cycloidal gearbox, it is harder to achieve 9:1 reduction ratio only with one stage while still keeping the overall design compact. Thus, a two-stage design is needed.
 
 Mathematically, planetary gearbox has to satisfy the following equations \cite{_GearSystemsKHK_}:
 \begin{equation}
@@ -96,10 +96,10 @@ If this condition is not fulfilled, the planet gears cannot be equally spaced be
 As was already mentioned in \cref{subsubsec:planetary_gearbox}, planetary gearboxes could output different gear ratios depending on which component is fixed and which component is used as the input.
 In our case, a ring gear whill be part of the outer shell of the platform, thus it will be stationary. In our case, the following transmission ratio will be true:
 \begin{equation}
-    i = 1+\frac{Z_{\text{ring}}}{Z_{\text{sun}}}.
+    R = 1+\frac{Z_{\text{ring}}}{Z_{\text{sun}}}.
     \label{eq:transmission ratio}
 \end{equation}
-Considering the constraints given in the \cref{eq:geometric_constraint,eq:equal_spacing_constraint}, for a transmission ratio of 1:3 for one stage, the following teeth counts were chosen:
+Considering the constraints given in the \cref{eq:geometric_constraint,eq:equal_spacing_constraint}, for a transmission ratio of 3:1 for one stage, the following teeth counts were chosen:
 \begin{equation}
     Z_{\text{ring}} = 64, Z_{\text{sun}} = 32, Z_{\text{planet}} = 16.
 \end{equation}

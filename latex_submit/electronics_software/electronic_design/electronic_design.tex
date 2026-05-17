@@ -7,7 +7,7 @@ The platform is rotated using a stepper motor mentioned in \cref{subsec:controll
 The driver receives control signals from the microcontroller via STEP and DIR pins. 
 A \SI{100}{\micro\farad} capacitor is connected across the driver's supply terminals in order to suppress voltage spikes generated during motor switching.
 RESET and SLEEP pins of the driver are tied together and connected to \SI{5}{V} to keep the driver enabled at all times.
-A microstepping mode of 1:2 is set by connecting the M0 pin to \SI{5}{V} and leaving M1 and M2 pins unconnected \cite[sec.~8.3.5]{alldatasheet.com_DRV8825Download_}.
+A microstepping mode of 2:1 is set by connecting the M0 pin to \SI{5}{V} and leaving M1 and M2 pins unconnected \cite[sec.~8.3.5]{alldatasheet.com_DRV8825Download_}.
 
 The \gls{lidar} communicates with the microcontroller using a \gls{uart} RX pin. The acquired data are partially parsed by Pico and subsequently sent to a PC via Wi-Fi.
 

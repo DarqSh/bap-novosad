@@ -74,7 +74,7 @@ Below are the pseudocodes for both threads:
     \State Start receiver thread
     \State Initialise visualisation window
     \State Initialise Open3D point cloud containers for visualisation and export
-    \While{acquistion is running}
+    \While{acquisition is running}
         \State Read all available data from the global queue into a local container
         \If{local container is not empty}
             \State Update visualisation with the new dataf
@@ -84,7 +84,7 @@ Below are the pseudocodes for both threads:
         \EndIf
         \State Update visualisation window with the current visualisation container
     \EndWhile
-    \State Stop recveiver thread
+    \State Stop receiver thread
     \State Send \texttt{stop} command to Pico and wait for \texttt{restarting} message as an ACK
     \State Save export container on a machine
     \State Destroy visualisation window
@@ -102,7 +102,7 @@ Below are the pseudocodes for both threads:
     \State Append data chunk to a receive buffer
     \Until{\texttt{done} signal received}
     \State Parse data
-    \State Perform transormation on the data (Polar -> Cartesian; 2D to 3D via platform tilt angle and azimuth angle)
+    \State Perform transformation on the data (Polar -> Cartesian; 2D to 3D via platform tilt angle and azimuth angle)
     \State Put obtained points into a global queue
     \EndFor
 \end{algorithmic}
@@ -110,15 +110,15 @@ Below are the pseudocodes for both threads:
 
 \subsection{Point cloud reconstruction}
 \label{subsec:point_cloud_reconstruction}
-The data received from the Pico is a stream of disected \gls{lidar} packets, containing only the start and stop angles and twelve distance measurements "sandwiched" between them.
-The angle corresponding to each distance measurement is obtained by linear interpolation between the start and stop angles\footnote{\SI{360}{\degree} is added to the stop angle in a case where the stop angle is less than the start angle due to the wrap-around occuring between \SI{359}{\degree} and \SI{0}{\degree}}.
+The data received from the Pico is a stream of trimmed \gls{lidar} packets, containing only the start and stop angles and twelve distance measurements "sandwiched" between them.
+The angle corresponding to each distance measurement is obtained by linear interpolation between the start and stop angles\footnote{\SI{360}{\degree} is added to the stop angle in a case where the stop angle is less than the start angle due to the wrap-around occurring between \SI{359}{\degree} and \SI{0}{\degree}}.
 Then, the obtained polar coordinates are transformed into Cartesian coordinates in a 2D plane:
 \begin{equation}
     x = r \cdot \cos(\alpha), \quad y = r \cdot \sin(\alpha), \quad z = 0,
 \end{equation}
-where $r$ is the distance measurement and $\alpha$ is the corresponding linearly interpolated angle. Since our \gls{lidar} performs only 2D scanning, all points initially lie in the xy-plane($z=0$).
+where $r$ is the distance measurement and $\alpha$ is the corresponding linearly interpolated angle. Since our \gls{lidar} performs only 2D scanning, all points initially lie in the xy-plane ($z=0$).
 
-The obtained points are then transformed according to the current orientaion of the \gls{lidar}. First, the points which are lying in xy-plane are rotated around x-axis by the angle $\phi$, corresponding to the platform tilt angle (hard-coded constant in PC program):
+The obtained points are then transformed according to the current orientation of the \gls{lidar}. First, the points which are lying in xy-plane are rotated around x-axis by the angle $\phi$, corresponding to the platform tilt angle (hard-coded constant in PC program):
 \begin{equation}
 \begin{bmatrix}
     x_{\text{t}} \\
@@ -140,10 +140,10 @@ The obtained points are then transformed according to the current orientaion of 
 \begin{figure}[H]
     \centering
     \input{electronics_software/software_implementation/transform_vis/tilt_transform_gradient.tex}
-    \caption{Visualisation of the tilt transormation.}
+    \caption{Visualisation of the tilt transformation.}
 \end{figure}
 
-After the tilt transformation, the points are rotated around the z-axis by the angle $\theta$, correspoding to the current platform azimuth:
+After the tilt transformation, the points are rotated around the z-axis by the angle $\theta$, corresponding to the current platform azimuth:
 \begin{equation}
 \begin{bmatrix}
     x_{\text{a}} \\
@@ -165,6 +165,6 @@ After the tilt transformation, the points are rotated around the z-axis by the a
 \begin{figure}[H]
     \centering
     \input{electronics_software/software_implementation/transform_vis/azimuth_transform_gradient.tex}
-    \caption{Visualisation of the azimuth transormation.}
+    \caption{Visualisation of the azimuth transformation.}
 \end{figure}
 By repeating the above process for each received packet from \gls{lidar}, we can reconstruct the environment in the form of a point cloud.
