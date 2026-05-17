@@ -48,7 +48,7 @@ However, it is possible that the holes on the platform used for mounting the sen
 To compensate for this effect, an experimental correction of \SI{-1,0}{\degree} was found to produce the best alignment of the ceiling when applied to every acquired scan slice before the tilt transformation.
 
 \begin{listing}[H]
-\caption{Code snippet with the compensation for assumed \gls{lidar} misalignment.}
+\caption{Code snippet with the compensation for assumed \gls{lidar} misalignmen.}
 \begin{minted}[linenos, frame=single, breaklines]{python}
     def lidarTo3D(distance_mm, scan_angle_deg, azimuth_deg):
         r = distance_mm/1000. # mm -> m
@@ -96,7 +96,7 @@ This means that an acquired slice is not a slice but a collection of points shif
 An experimental correction of \SI{1,5}{\degree} was found to produce the best alignment of the walls when applied before the tilt transformation.
 
 \begin{listing}[H]
-\caption{Code snippet containing two corrections.\protect\footnotemark[7]}
+\caption{Code snippet containing two corrections.\protect\footnotemark}
 \begin{minted}[linenos, frame=single, breaklines]{python}
 def lidarTo3D(distance_mm, scan_angle_deg, azimuth_deg):
     r = distance_mm/1000. # mm -> m
@@ -112,7 +112,7 @@ def lidarTo3D(distance_mm, scan_angle_deg, azimuth_deg):
     ... # rest of the code is the same as in the previous snippet
 \end{minted}
 \end{listing}
-\footnotetext[7]{To be mathematically correct, both $x$ and $y$ should also be multiplied by \texttt{np.cos(np.deg2rad(1.5))}. However, for such a small angle, the cosine is close to one and the effect of this correction on $x$ and $y$ would therefore have been negligible.}
+\footnotetext{To be mathematically correct, both $x$ and $y$ should also be multiplied by \texttt{np.cos(np.deg2rad(1.5))}. However, for such a small angle, the cosine is close to one and the effect of this correction on $x$ and $y$ would therefore have been negligible.}
 
 \begin{figure}[H]
     \centering

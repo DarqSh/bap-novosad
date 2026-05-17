@@ -1,7 +1,7 @@
 \section{Gearbox Design}
 \subsection{Choosing reduction ratio}
 The step angle of the stepper motor is equal to $1.8\,\degree$ (see \cref{tab:stepper_motor_params}). 
-An effective angular step of $0.1\,\degree$ was selected as the base output step angle of the platform, since it lets all angles featured in \cref{tab:best_combinations} be represented as integer multiples of this value, meaning a bigger step will be artificially achieved by stepping a couple of times with a smaller step.
+An angle of $0.1\,\degree$ was selected as the base output step angle of the platform, since it lets all angles featured in \cref{tab:best_combinations} be represented as integer multiples of this value, meaning a bigger step will be artificially achieved by stepping a couple of times with a smaller step.
 That means that a reduction ratio 18:1 has to be achieved. 
 DRV8825 stepper motor driver\footnote{\url{https://www.ti.com/lit/ds/symlink/drv8825.pdf}} which is used in this project allows for a reduction ratio up to 32:1 to be achieved via microstepping. A reduction ratio of 2:1 was chosen here, since higher microstepping ratios come with a reduced accuracy of the output \cite[sec.~Texas Instruments DRV8825]{by_HowAccurateMicrostepping_2016}.
 That leaves 9:1 reduction ratio to be obtained using a gearbox.
@@ -94,7 +94,7 @@ The next equation that all planet gears can be placed with equal angular spacing
 If this condition is not fulfilled, the planet gears cannot be equally spaced because proper tooth alignment between the planet gears and the sun/ring gears would not be maintained.
 
 As was already mentioned in \cref{subsubsec:planetary_gearbox}, planetary gearboxes could output different gear ratios depending on which component is fixed and which component is used as the input.
-In our case, a ring gear whill be part of the outer shell of the platform, thus it will be stationary. In our case, the following transmission ratio will be true:
+In our case, a ring gear whill be part of the outer shell of the platform, thus it will be stationary. In our case, the following transmission ratio will be true \cite[sec. Fixed ring gear]{tec-science_TransmissionRatiosPlanetary_2021}:
 \begin{equation}
     R = 1+\frac{Z_{\text{ring}}}{Z_{\text{sun}}}.
     \label{eq:transmission ratio}
