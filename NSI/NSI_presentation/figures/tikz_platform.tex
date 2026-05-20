@@ -1,0 +1,70 @@
+\begin{tikzpicture}[scale=0.9]
+
+% Colors
+\definecolor{cyl}{RGB}{150,150,150}
+\definecolor{pt}{RGB}{210,50,50}
+
+%% ---------- Shaded lateral surface ----------
+\shade[top color=cyl!100, bottom color=cyl!15, middle color=cyl!60, shading angle=90]
+  (-2,0) -- (-2,3.23) to[bend left=35] (2,4.8) -- (2,0) to[bend left=2] cycle;
+
+%% ---------- Bottom base – visible front half (solid + shaded) ----------
+\shade[top color=cyl!100, bottom color=cyl!15, middle color=cyl!60, shading angle=90]
+  (-2,0) arc[start angle=180, end angle=360, x radius=2, y radius=0.6] -- cycle;
+
+%% ---------- Bottom ellipse contours ----------
+\draw[line width=1pt, cyl!60!black]
+  (-2,0) arc[start angle=180, end angle=360, x radius=2, y radius=0.6];
+\draw[line width=1pt, cyl!60!black, dashed]
+  (-2,0) arc[start angle=180, end angle=0,   x radius=2, y radius=0.6];
+
+%% ---------- Top base (slanted) ----------
+\begin{scope}[shift={(0,4)}, rotate around={25:(0,0)}]
+  % shaded top disk
+  \shade[top color=white, bottom color=cyl!60, middle color=cyl!30, opacity=1.0, shading angle=325]
+    (0,0) ellipse (2.175 and 0.8);
+  % contour
+  \draw[line width=1pt, cyl!60!black]
+    (0,0) ellipse (2.175 and 0.8);
+\end{scope}
+
+%% ---------- Visible side edges ----------
+\draw[line width=1pt, cyl!60!black] (-2,0) -- (-2,3.23);
+\draw[line width=1pt, cyl!60!black] (2,0)  -- (2,4.8);
+
+%% ---------- LiDAR optical axis (normal to top face) ----------
+\draw[line width=1.4pt, black] (-1,6) -- (0,4);
+
+%% ---------- Vehicle vertical axis ----------
+\draw[dashed, line width=1pt, black] (0,0) -- (0,6.5);
+
+%% ---------- Mounting point ----------
+\fill[pt] (0,4) circle (3pt);
+
+%% ---------- Angle θ ----------
+\path (0,4) coordinate (O)
+      (0,6)   coordinate (up)
+      (-1,6)  coordinate (slant);
+
+\draw[red!70!black, thick]
+  pic[draw, angle radius=26pt, angle eccentricity=1.25, "$\theta$"]
+  {angle=up--O--slant};
+
+%% ---------- Label + arrow ----------
+\node[align=center, font=\bfseries\small] at (2.60,6.20)
+  {LiDAR\\mounting\\position};
+
+\draw[-{Latex[length=3mm]}, thick, black]
+  (1.78,5.58) -- (0,4);
+
+\begin{scope}
+  \coordinate (C) at (0,0);
+
+  \draw[-{Latex[length=3mm]}, thick, black!70]
+    (-2.3,0) arc[start angle=180, end angle=250, x radius=2.3, y radius=0.9];
+  
+  \draw[{Latex[length=3mm]}-, thick, black!70]
+    (2.3,0) arc[start angle=360, end angle=290, x radius=2.3, y radius=0.9];
+\end{scope}
+
+\end{tikzpicture}

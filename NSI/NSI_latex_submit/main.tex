@@ -1,0 +1,162 @@
+% arara: pdflatex: { synctex: yes }
+% arara: makeindex: { style: ctuthesis }
+% arara: bibtex
+
+% The class takes all the key=value arguments that \ctusetup does,
+% and a couple more: draft and oneside
+\documentclass[twoside]{ctuthesis}
+\let\cleardoublepage\clearpage
+\input{_my_pkg.tex}
+\input{_glossary.tex}
+\addbibresource{BAP_bibliography.bib}
+
+
+\ctusetup{
+	% preprint = \ctuverlog,
+	% mainlanguage = english,
+%	titlelanguage = czech,
+	mainlanguage = english,
+	otherlanguages = {czech},
+	title-czech = {Zpracování signálu Lidaru pro 3D mapování},
+	title-english = {3D Mapping Based on LiDAR Signal Processing},
+	doctype = B,
+	faculty = F3,
+	department-czech = {Katedra radioelektroniky},
+	department-english = {Department of Radioelectronics},
+	author = {Illia Novosad},
+	supervisor = {Ing. Pavel Puričer, Ph.D.},
+	fieldofstudy-english = {Electronics and Communications},
+	fieldofstudy-czech = {Elektronika a komunikace},
+	keywords-czech = {LiDAR, 3D mapování, mračno bodů, prostorové skenování, Open3D, Raspberry Pi Pico, planetová převodovka},
+	keywords-english = {LiDAR, 3D mapping, point cloud, spatial scanning, Open3D, Raspberry Pi Pico, planetary gearbox},
+	day = 22,
+	month = 05,
+	year = 2026,
+}
+
+\ctuprocess
+
+\addto\ctucaptionsczech{%
+	\def\supervisorname{Vedoucí}%
+	\def\subfieldofstudyname{Studijní program}%
+}
+
+\ctutemplateset{maketitle twocolumn default}{
+	\begin{twocolumnfrontmatterpage}
+		\ctutemplate{twocolumn.thanks}
+		\ctutemplate{twocolumn.declaration}
+		\ctutemplate{twocolumn.abstract.in.titlelanguage}
+		\ctutemplate{twocolumn.abstract.in.secondlanguage}
+		\ctutemplate{twocolumn.tableofcontents}
+		\ctutemplate{twocolumn.listoffigures}
+	\end{twocolumnfrontmatterpage}
+}
+
+
+% Theorem declarations, this is the reasonable default, anybody can do what they wish.
+% If you prefer theorems in italics rather than slanted, use \theoremstyle{plainit}
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[chapter]
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{conjecture}[theorem]{Conjecture}
+
+\theoremstyle{note}
+\newtheorem*{remark*}{Remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\setlength{\parskip}{2.5ex}
+
+
+% Abstract in Czech
+\begin{abstract-czech}
+	Dnes je na trhu široká škála senzorů pro prostorové skenování; většina z nich však zůstává pro amatérské využití příliš drahá.
+	Cílem tohoto projektu je podat přehled existujících DIY řešení, zhodnotit jejich omezení a navrhnout konstrukci platformy, která řeší identifikované nedostatky.
+	Funkční prototyp je následně představen spolu s popisem procesu návrhu. Dále je popsán přenos dat ze senzoru \gls{lidar} do počítače a je prezentován kód použitý pro řízení platformy a sběr dat.
+	Výsledný point cloud je následně prezentován a diskutován, včetně drobných úprav kódu zavedených za účelem kompenzace konstrukčních chyb návrhu a možných vnitřních nepřesností senzoru \gls{lidar}.
+	Na závěr jsou navržena možná vylepšení konstrukce pro další vývoj tohoto projektu.
+\end{abstract-czech}
+
+% Abstract in English
+\begin{abstract-english}
+	A wide range of \gls{lidar} sensors for spatial scanning is currently available on the market; however, most of them remain too expensive for amateur use.
+	The aim of this project is to provide an overview of existing DIY solutions, evaluate their limitations, and propose a platform design that addresses the identified weaknesses.
+	A working prototype of the proposed design is then presented along with a description of the design process.
+	The transmission of data from the \gls{lidar} sensor to a PC is then described, and the code used for controlling the platform and acquiring the data is presented.
+	The resulting point cloud is then presented and discussed, including the code corrections introduced to compensate for the design flaws and the possible internal misalignments of the \gls{lidar} sensor.
+	Finally, several possible design improvements are proposed for further development of this project.
+\end{abstract-english}
+
+
+
+% Acknowledgements / Podekovani
+\begin{thanks}
+	I am deeply grateful to my supervisor, Ing. Pavel Puričer, Ph.D., for his time and guidance during the work on this project. 
+	\\I would also like to thank my colleague Viktor Trachta for the valuable suggestions regarding the mechanical design and for providing last-minute help with the components for the platform.
+	\\My greatest thanks go to my family for their support and encouragement throughout my studies and for giving me the opportunity to pursue my passion for electronics at CTU.
+\end{thanks}
+
+
+
+% Declaration / Prohlaseni
+\begin{declaration}
+	I hereby declare that artificial intelligence tools were used during the writing of this project.
+	\\ChatGPT was used as an aid in generating TikZ figures (at the time of writing the latest version was 5.5). 
+	\\Copilot was used as an integrated autocompletion tool for small chunks of code inside Visual Studio Code, and ChatGPT was used to identify issues related to edge cases that the initial code did not cover and suggest improvements.
+	\\Sentence structure was checked with ChatGPT.
+	\\Grammar was checked with Grammarly.
+	\\All generated content was verified, and I take full responsibility for the contents of this project. 
+	\\All information taken from the work of other authors has been properly cited.
+	
+	In Prague, \ctufield{day}.~\monthinlanguage{title}~\ctufield{year}
+\end{declaration}
+
+
+
+% % Only for testing purposes
+% \listfiles
+% \usepackage[pagewise]{lineno}
+% \usepackage{lipsum,blindtext}
+% \usepackage{mathrsfs} % provides \mathscr used in the ridiculous examples
+
+
+% CONTINUE HERE WITH THE DOCUMENT CONTENT
+\begin{document}
+
+\maketitle
+
+\printglossary[type=\acronymtype]
+\printunsrtglossary[title=Acronyms]
+
+\input{zadani.tex}
+
+\input{introduction/introduction.tex}
+
+\input{design/design.tex}
+
+\input{electronics_software/electronics_software.tex}
+
+\input{experimental_results/experimental_results.tex}
+
+\input{conclusion/conclusion.tex}
+
+
+
+\appendix
+
+\printindex
+
+% \appendix
+
+
+\printbibliography[title={Bibliography}]
+\thispagestyle{plain}
+
+% \ctutemplate{specification.as.chapter}
+
+\end{document}

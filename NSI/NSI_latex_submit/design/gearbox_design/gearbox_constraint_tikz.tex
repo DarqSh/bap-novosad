@@ -1,0 +1,28 @@
+\begin{tikzpicture}[scale=1.25]
+
+\def\rs{1.0}
+\def\rp{0.7}
+\def\rr{2.4}
+
+\draw[very thick] (0,0) circle (\rr);
+\node[above right] at (1.7,1.7) {$\text{Ring}$};
+
+\draw[thick, fill=gray!20] (0,0) circle (\rs);
+\node at (0,0) {$\text{Sun}$};
+
+\draw[thick, fill=gray!10] ({\rs+\rp},0) circle (\rp);
+\node at ({\rs+\rp},0) {$\text{Planet}$};
+
+\draw[thick, fill=gray!10] ({-(\rs+\rp)},0) circle (\rp);
+\node at ({-(\rs+\rp)},0) {$\text{Planet}$};
+
+\draw[<->, thick] (-\rs,-1.05) -- (\rs,-1.05)
+    node[midway, below] {$d_{\text{s}}$};
+
+\draw[<->, thick] (\rs,-1.05) -- ({\rs+2*\rp},-1.05)
+    node[midway, below] {$d_{\text{p}}$};
+
+\draw[<->, very thick] ({-\rs-2*\rp},-1.65) -- ({\rs+2*\rp},-1.65)
+    node[midway, below] {$d_{\text{r}} = d_{\text{s}} + 2d_{\text{p}}$};
+
+\end{tikzpicture}
