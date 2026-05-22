@@ -1,6 +1,6 @@
 \section{Proposed Design of a 360$\degree$ \gls{lidar} Platform}
 \label{sec:proposed_design}
-Based on the analysis of existing DIY solutions for 360° \gls{lidar} platforms, the proposed design for this miniproject involves using a 2D \gls{lidar} sensor mounted on a tilted platform that is able to rotate around its axis.
+Based on the analysis of existing DIY solutions for 360° \gls{lidar} platforms, the proposed design for this thesis involves using a 2D \gls{lidar} sensor mounted on a tilted platform that is able to rotate around its axis.
 \begin{figure}[H]
     \caption{Proposed platform design. \protect$\theta$ is the tilt angle}
     \input{design/proposed_design/tikz_platform.tex}
@@ -37,7 +37,7 @@ Such a design does have its drawbacks, however. The first one is immediately app
 While these blind spots can be minimised by choosing a large tilt angle, this approach reintroduces the problem of non-uniform point cloud density.
 
 Besides that, compared to the tilting platform design presented in \cref{sec:tilting_platform}, the proposed design would need to rotate across twice as large a range to obtain full coverage of the environment, 
-since the tilting platform scanned only within $[-90\degree, +90\degree]$, whereas the current design must complete a full 360-degree rotation. Even though this surely leads to longer scanning times, the obtained point cloud will be more dense.
+since the tilting platform scanned only within $[-90\degree, +90\degree]$, whereas the current design must complete a full 360-degree rotation. Even though this surely leads to longer scanning times, the obtained point cloud will be denser.
 
 \subsection{Controlling the Platform}
 \label{subsec:controlling_the_platform}
@@ -103,7 +103,7 @@ The following graph shows how the spacing changes with the tilt angle, providing
     \caption{Scan spacing depending on the tilt angle $\theta$}
     \label{fig:angleRes_tiltOnly}
 \end{figure}    
-As could be seen from \cref{fig:angleRes_tiltOnly}, the spacing will be the same as the angular resolution of the \gls{lidar} itself at the tilt angle of approximately $\si{23.4}{\degree}$.
+As could be seen from \cref{fig:angleRes_tiltOnly}, the spacing will be the same as the angular resolution of the \gls{lidar} itself at the tilt angle of approximately \SI{23.4}{\degree}.
 \begin{figure}[H]
     \centering
     \input{design/proposed_design/23point4rotate_pointCloud.tex}
@@ -119,7 +119,7 @@ The resulting spacing between scans can be expressed as
 \begin{equation}
     S_{\text{scan}} = \frac{\varphi_{\text{step}}\cdot\sin(\theta)}{R},
 \end{equation}
-where $R$ is the output step reduction ratio of the gearbox, i.e.\ the the ratio between the step angle of the input and the corresponding step angle of the output.
+where $R$ is the output step reduction ratio of the gearbox, i.e.\ the ratio between the step angle of the input and the corresponding step angle of the output.
 A following graph is similar to \cref{fig:angleRes_tiltOnly}, but the third dimension represents different gear ratios:
 \begin{figure}[H]
     \centering

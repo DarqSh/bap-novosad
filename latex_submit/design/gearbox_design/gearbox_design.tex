@@ -73,7 +73,7 @@ All things considered, a planetary gearbox is the best solution for our applicat
 \subsection{Choosing Teeth Count}
 Unlike with a cycloidal gearbox, it is harder to achieve 9:1 reduction ratio only with one stage while still keeping the overall design compact. Thus, a two-stage design is needed.
 
-Mathematically, planetary gearbox has to satisfy the following equations \cite{_GearSystemsKHK_}:
+Mathematically, planetary gearbox must satisfy the following equations \cite{_GearSystemsKHK_}:
 \begin{equation}
     Z_{\text{ring}} = Z_{\text{sun}} + 2*Z_{\text{planet}},
     \label{eq:geometric_constraint}
@@ -86,7 +86,7 @@ where $Z_{\text{ring}}, Z_{\text{sun}}$ and $Z_{\text{planet}}$ denote the numbe
 \end{figure}
 \footnotetext[6]{Two planet gears were used for illustration purposes. Our design uses three planet gears, but the constraint condition remains the same.}
 
-The next equation that all planet gears can be placed with equal angular spacing around the sun gear. Equal spacing ensures equal load distribution and helps balance the forces with which planet gears act upon the sun gear.
+The next equation ensures that all planet gears can be placed with equal angular spacing around the sun gear. Equal spacing ensures equal load distribution and helps balance the forces with which planet gears act upon the sun gear.
 \begin{equation}
     \frac{Z_{\text{ring}}+Z_{\text{sun}}}{N_{\text{planets}}} = k, k \in \mathbb{N}.
     \label{eq:equal_spacing_constraint}

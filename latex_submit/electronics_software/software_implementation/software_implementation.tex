@@ -3,7 +3,7 @@ The software part consists of two programs. The first one runs on Pico and is re
 The second program runs on the PC and is responsible for determining the scanning density, receiving data from the Pico, parsing and processing the data, visualisation and storing of the point cloud.
 \subsection{Pico program}
 The Raspberry Pi Pico 2 W is programmed in Micropython. At the start of the program, the hardware is initialised and a Wi-Fi access point is created for the PC to connect to. 
-After the connection is established, Pico waits for the PC to send the scanning density configuration, which is used to calculate the number of motor steps per scan. 
+After the connection is established, the Pico waits for the PC to send the scanning density configuration, which is used to calculate the number of motor steps per scan. 
 
 Before the scanning starts, the platform is rotated until the reference position is detected by the Hall effect sensor.
 Then the main loop of the program starts. Each loop iteration is triggered by a command from the PC.
@@ -82,7 +82,7 @@ If there are new points, it updates the visualisation with the new data. Such se
     \EndWhile
     \State Stop receiver thread
     \State Send \texttt{stop} command to Pico and wait for \texttt{restarting} message as an ACK
-    \State Save export container on a machine
+    \State Save the export point cloud container on a machine
     \State Destroy visualisation window
 \end{algorithmic}
 \end{algorithm}
@@ -114,7 +114,7 @@ Then, the obtained polar coordinates are transformed into Cartesian coordinates 
 \end{equation}
 where $r$ is the distance measurement and $\alpha$ is the corresponding linearly interpolated angle. Since our \gls{lidar} performs only 2D scanning, all points initially lie in the xy-plane ($z=0$).
 
-The obtained points are then transformed according to the current orientation of the \gls{lidar}. First, the points which are lying in xy-plane are rotated around x-axis by the angle $\phi$, corresponding to the platform tilt angle (hard-coded constant in PC program):
+The obtained points are then transformed according to the current orientation of the \gls{lidar}. First, the points which are lying in the xy-plane are rotated around the x-axis by the angle $\phi$, corresponding to the platform tilt angle (hard-coded constant in PC program):
 \begin{equation}
 \begin{bmatrix}
     x_{\text{t}} \\
