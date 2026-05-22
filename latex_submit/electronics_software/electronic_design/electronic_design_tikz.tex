@@ -45,8 +45,8 @@
 
 \node[block] (buck) at (8,3)
 {
-    Buck Converter\\
-    \SI{12}{V} $\rightarrow$ \SI{5}{V}
+    \SI{12}{V} $\rightarrow$ \SI{5}{V}\\
+    Buck Converter
 };
 
 \node[block] (motor) at (0.7,-4)
@@ -123,7 +123,7 @@
 
 \draw[signal]
 ($(hall.north)+(+0.2,0)$)
--- node[right] {\shortstack{\ Presence\\\ detection}}
+-- node[right] {\shortstack{\ \ Reference\\\ \ position\\\ \ detection}}
 ($(pico.south west)+(+0.4,0)$);
 
 \end{tikzpicture}

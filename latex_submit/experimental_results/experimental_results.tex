@@ -135,17 +135,17 @@ def lidarTo3D(distance_mm, scan_angle_deg, azimuth_deg):
 For this demonstration, the size of surfels in the Open3D visualisation window was set to maximally large in order to make the point cloud more visible and give a feeling of the continuity of surfaces.
 \begin{figure}[H]
     \centering
-    \begin{subfigure}{0.99\linewidth}
+    \begin{subfigure}{0.95\linewidth}
         \centering
         \includegraphics[width=\linewidth]{experimental_results/photos/room_photo.jpg}
         \caption{Photo}
     \end{subfigure}
     \hfill
-    \begin{subfigure}{0.99\linewidth}
+    \begin{subfigure}{0.95\linewidth}
         \centering
         \includegraphics[width=\linewidth]{experimental_results/photos/z_room_pcd_grayscale.png}
         \caption{Point cloud}
     \end{subfigure}
     \caption{Comparison between a photo and the point cloud of a scanned room}
 \end{figure}
-Grayscale depicts the depth of the points, with darker points being farther away. Author is visible sitting on a bed. Points which were reflected by mirror were positioned at a greater distance due to the reflection of the \gls{lidar} beam and were therefore filtered out by the outlier removal process.
+The grayscale colouring is based on one selected coordinate component of the points in the Open3D visualisation, which helps convey the spatial depth of the reconstructed scene. Author is visible sitting on a bed. Points which were reflected by mirror were positioned at a greater distance due to the reflection of the \gls{lidar} beam and were therefore filtered out by the outlier removal process.
