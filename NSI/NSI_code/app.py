@@ -4,23 +4,24 @@ import os
 app = Flask(__name__)
 
 def picking_scan():
-    scans_files = os.listdir('scans')
+    scans = os.listdir('scans')
     _ = 0
-    photo_found:bool = False
-    for filename in scans_files:
-        if filename.startswith('latest_scan'):
-            photo_found = True
-            break
-        _ += 1
-    if photo_found == False:
-        print("latest_scan wasn't found")
-        exit # how to end program here
-    file_name = scans_files[_]
-    elements = file_name.split('_')
+
+    scans.sort(reverse=True)
+
+    selected_file:str = ""
+    if len(scans) == 1:
+        selected_file = scans[0]
+    else:
+        selected_file = scans[1]
+    
+
+    elements = selected_file.split("_")
+    elements = selected_file.split('_')
     date = elements[2]
     time = elements[3].replace("-",":")
     pcd_points = elements[4][:-4] # getting rid of .png
-    return file_name, date, time, pcd_points
+    return selected_file, date, time, pcd_points
 
 
 

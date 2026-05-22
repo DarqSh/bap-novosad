@@ -193,16 +193,17 @@ def downsampleNumpy(np_points, len_points_vis):
     temp = temp.voxel_down_sample(voxel_size = voxel_size_vis)
     return np.asarray(temp.points)
 
-def make_screencapture(len_points_vis):
-    for scan in os.listdir("scans"):
+def empty_scans():
+    scans = os.listdir("scans")
+    for scan in scans:
         os.remove(f"scans/{scan}")
+
+def make_screencapture(len_points_vis):
     timestamp = datetime.now().strftime("%Y.%m.%d_%H:%M:%S")
-    filename_temp = f"scans/latest_scan_{timestamp}_{len_points_vis}_temp.png"
     filename = f"scans/latest_scan_{timestamp}_{len_points_vis}.png"
-    vis.capture_screen_image(filename_temp)
-    os.replace(filename_temp, filename)
+    vis.capture_screen_image(filename)
 
-
+empty_scans()
 # connecting to pico
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 sock.connect((PICO_IP, PORT))
