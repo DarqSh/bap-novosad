@@ -1,0 +1,61 @@
+\chapter{Attached files}
+The submitted attachments are:
+\begin{itemize}
+    \item code.zip
+    \item 3d\_models.zip
+\end{itemize}
+
+\section{code.zip}
+The structure of \texttt{code.zip} is as follows:
+\begin{verbatim}
+code
+|-- README.md
+|-- electronic_design.pdf
+|-- examples
+|   |-- pcd_2026.05.16_13:41:33_495468-badalign-nocompensation.ply
+|   |-- pcd_2026.05.16_13:54:25_494384-badalign-minus1scanangle-ceilingcorrect.ply
+|   `-- pcd_2026.05.16_14:02:09_494400-best-minus1scanangle-plus1.5z.ply
+|-- pc.py
+|-- pcd_visualizer.py
+|-- pcd_visualizer_outlier_removal.py
+|-- pico_load
+|   |-- main.py
+|   |-- secrets.py
+|   `-- stepper.py
+`-- requirements.txt
+\end{verbatim}
+\begin{itemize}
+    \item \texttt{README.md} contains instructions for setting up the Python \texttt{.venv} environment and running the project.
+    \item \texttt{electronic\_design.pdf} is a wiring diagram created in Fritzing that shows the pin connections used in this project.
+    \item \texttt{examples/} folder contains point clouds that were discussed in \cref{subsec:misalignment_corrections}.
+    \item \texttt{pc.py} is the PC code responsible for communication with Pico, acquisition and parsing of \gls{lidar} data, point cloud reconstruction and management of the visualisation window showing the real-time reconstruction.
+    \item \texttt{pcd\_visualizer.py} and \texttt{pcd\_visualizer\_outlier\_removal.py} are scripts used for visualising the stored point clouds
+    \item \texttt{pico\_load/} folder contains code intended to be uploaded to Pico. \texttt{secrets.py} should be filled with the preferred Wi-Fi SSID and password used for connecting to the Pico access point.
+    \item \texttt{requirements.txt} contains Python libraries needed for running the code on PC.
+\end{itemize}
+
+\section{3d\_models.zip}
+\begin{verbatim}
+3d_models
+|-- Bottom.stl
+|-- CCW Gear x6.stl
+|-- DC housing.stl
+|-- Lower Carrier.stl
+|-- Motor Shaft Gear.stl
+|-- Platform Mount.stl
+|-- Platform.stl
+|-- Ring Gear Lid.stl
+|-- Ring Gear.stl
+|-- Rod x6.stl
+|-- Upper Carrier.stl
+`-- model_attribution.txt
+\end{verbatim}
+The \texttt{3d\_models} contains all 3D models in \texttt{.stl} format used for building the platform. 
+The suffix \texttt{x6} in some filenames indicates the corresponding number of copies required for the assembly.
+
+The \texttt{DC housing.stl} is not author's work. The attribution link is provided in  \texttt{model\_attribution.txt}.
+
+The 3D modelling was done in Onshape. The complete assembly can be accessed via \href{https://cad.onshape.com/documents/0d531e009de73b9ed4692d36/w/83d10e6192a92a79ef75f390/e/35ebef400ac87f1073d7eabc?renderMode=0&uiState=6a06f9cc76a0e4c598c450d3}{this link}.
+
+\section{Project Repository}
+The entire development of this thesis was managed using Git. The repository is hosted on the faculty GitLab server and can be accessed via \href{https://gitlab.fel.cvut.cz/novosill/bap-novosad/-/tree/4b53a596703105143e23482818c8093a5936ead5/}{this link}.
