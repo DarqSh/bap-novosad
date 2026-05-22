@@ -1,0 +1,130 @@
+\resizebox{\textwidth}{!}{
+\begin{tikzpicture}[
+    block/.style={
+        draw,
+        rounded corners=6pt,
+        minimum width=3.5cm,
+        minimum height=1.3cm,
+        align=center,
+        thick,
+        fill=white
+    },
+    powerlabel/.style={
+        draw=red!60!black,
+        rounded corners=4pt,
+        fill=red!5,
+        minimum width=1.3cm,
+        minimum height=0.7cm,
+        font=\small
+    },
+    signal/.style={
+        ->,
+        thick
+    },
+    power/.style={
+        ->,
+        dashed,
+        thick
+    }
+]
+
+% ==================================================
+% BLOCKS
+% ==================================================
+
+\node[block] (psu) at (0.7,3)
+{
+    \SI{12}{V}\\ Power Supply
+};
+
+\node[block] (driver) at (0.7,0)
+{
+    DRV8825\\
+    Stepper Motor Driver
+};
+
+\node[block] (buck) at (8,3)
+{
+    Buck Converter\\
+    \SI{12}{V} $\rightarrow$ \SI{5}{V}
+};
+
+\node[block] (motor) at (0.7,-4)
+{
+    NEMA 17\\
+    Stepper Motor
+};
+
+\node[block] (pico) at (8,0)
+{
+    Raspberry Pi\\
+    Pico 2 W
+};
+
+\node[block] (lidar) at (11,-4)
+{
+    LiDAR\\
+    Sensor
+};
+
+\node[block] (hall) at (5,-4)
+{
+    Hall Effect\\
+    Sensor
+};
+
+% ==================================================
+% POWER CONNECTIONS
+% ==================================================
+
+\draw[power]
+(psu.south)
+-- node[left] {\shortstack{\SI{12}{V}\\+\SI{100}{\micro\farad} decoupling}} (driver.north);
+
+\draw[power]
+(psu.east)
+-- node[above] {\SI{12}{V}}
+(buck.west);
+
+\draw[power]
+(buck.south)
+-- node[right] {\SI{5}{V}}
+(pico.north);
+
+\draw[power]
+(buck.east)
+--(11.2,3)
+-- node[right] {\SI{5}{V}}
+($(lidar.north)+(0.2,0)$);
+
+\draw[power]
+($(pico.south west)+(-0,0)$)
+-- node[left] {\SI{3.3}{V}}
+($(hall.north)+(-0.2,0)$);
+
+% ==================================================
+% SIGNAL CONNECTIONS
+% ==================================================
+
+\draw[signal]
+(driver.south)
+-- node[left] {Coil switching}
+(motor.north);
+
+\draw[signal]
+(pico.west)
+-- node[above] {STEP, DIR}
+(driver.east);
+
+\draw[signal]
+($(lidar.north)+(-0.2,0)$)
+-- node[left] {UART}
+($(pico.south east)+(-0.2,0)$);
+
+\draw[signal]
+($(hall.north)+(+0.2,0)$)
+-- node[right] {\shortstack{\ Presence\\\ detection}}
+($(pico.south west)+(+0.4,0)$);
+
+\end{tikzpicture}
+}
