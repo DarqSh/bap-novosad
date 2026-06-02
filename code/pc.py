@@ -73,10 +73,11 @@ def sendConfig(sock):
 
     print(f"accepted pico config_response: {motor_steps_per_scan} steps")
 
+
 def lidarTo3D(distance_mm:float, scan_angle_deg:float, azimuth_deg:float): # type hinting for Intellisense recognition
     r = distance_mm/1000. # mm -> m
     # scan_angle_rad = np.deg2rad(scan_angle_deg) # possible misalignment of holes on the platform/brass inserts might have not been inserted precisely
-    scan_angle_rad = np.deg2rad(scan_angle_deg-1.0) # possible misalignment of holes on the platform/brass inserts might have not been inserted precisely
+    scan_angle_rad = np.deg2rad(scan_angle_deg-0.5) # possible misalignment of holes on the platform/brass inserts might have not been inserted precisely
     tilt = np.deg2rad(PLATFORM_TILT_DEG)
     azimuth_rad = np.deg2rad(azimuth_deg)
 
@@ -125,6 +126,9 @@ def parseStream(data: bytes, azimuth_deg:float): # type hinting for Intellisense
                 continue
 
             if distance_mm < 300: # clutter close to lidar, added 16.5.
+                continue
+
+            if distance_mm > 12000: # lidar can't scan farther than 12m and therefore those values are garbage
                 continue
 
             scan_angle = start_angle + (stop_angle - start_angle) * (j / (MEASUREMENT_COUNT - 1)) # in deg

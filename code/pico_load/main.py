@@ -67,7 +67,7 @@ def receive_config(client):
         client.sendall(b"config_error invalid_format\n")
         raise ValueError("RECEIVE CONFIG ERROR")
 
-    
+    homing()
     MOTOR_STEPS_PER_SCAN = round(float(parts[1])/0.1)
     response = f"config_response {MOTOR_STEPS_PER_SCAN}\n"
     client.sendall(response.encode())
@@ -161,9 +161,9 @@ s.listen(1) # Enable a server to accept connections. The argument is a number of
 cl, addr = s.accept() # Wait for an incoming connection.  Return a new socket representing the connection, and the address of the client. dir(socket.socket.accept)
 cl.settimeout(None) # set a timeout on socket operations (so that it is non-blocking)
 receive_config(cl)
-print(f"motor steps:{MOTOR_STEPS_PER_SCAN}")
+# print(f"motor steps:{MOTOR_STEPS_PER_SCAN}")
 cl.settimeout(0.1) # set a timeout on socket operations (so that it is non-blocking)
-homing()
+# homing()
 while True: # main loop
     # print("inside the loop")
     try:
