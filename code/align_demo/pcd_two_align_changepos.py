@@ -30,7 +30,7 @@ def preprocess_point_cloud(pcd, voxel_size):
     
 def prepare_dataset(voxel_size):
     pcd_source = o3d.io.read_point_cloud("pcd_2026.06.01_16:51:32_263851_source.ply")
-    pcd_target = o3d.io.read_point_cloud("pcd_2026.06.01_19:56:44_264167_ransacalign.ply")
+    pcd_target = o3d.io.read_point_cloud("pcd_2026.06.02_20:37:36_263845_ransacalign.ply")
 
     pcd_source.paint_uniform_color([1,0.4,0])
     pcd_target.paint_uniform_color([0,0.8,1])
