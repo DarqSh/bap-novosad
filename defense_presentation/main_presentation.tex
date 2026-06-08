@@ -1,0 +1,535 @@
+%===============================================================
+% Template using official colors of Czech Technical University.
+% They are defined by new graphical manual - 2017.
+% Specially designed for Laboratory of Structure of Biomolecules
+% Share and modify as you like. Keep the name of the author.
+% It is forbidden to use the template commercially.
+% Author: Martin Malý.
+% Published: 23.9.2017.
+%===============================================================
+
+\documentclass[169]{beamer}
+\usepackage[utf8]{inputenc}
+
+\usetheme{Madrid}
+\addtobeamertemplate{footline}{\hypersetup{allcolors=.}}{}
+
+  
+\definecolor{cvut_navy}{HTML}{0065BD}
+\definecolor{cvut_blue}{HTML}{6AADE4}
+\definecolor{cvut_gray}{HTML}{156570}
+\definecolor{yellow}{HTML}{F2C811}
+\definecolor{red}{HTML}{E94B3C}
+\definecolor{green}{HTML}{008148}
+
+\setbeamercolor{section in toc}{fg=black,bg=white}
+\setbeamercolor{alerted text}{fg=cvut_blue}
+\setbeamercolor*{palette primary}{bg=cvut_navy,fg=gray!20!white}
+\setbeamercolor*{palette secondary}{bg=cvut_blue,fg=white}
+\setbeamercolor*{palette tertiary}{parent=palette primary}
+\setbeamercolor*{palette quaternary}{fg=green,bg=gray!5!white}
+
+\setbeamercolor*{sidebar}{fg=cvut_navy,bg=gray!15!white}
+
+
+\setbeamercolor{titlelike}{parent=palette primary}
+\setbeamercolor{frametitle}{parent=palette primary}
+
+\setbeamercolor*{separation line}{}
+\setbeamercolor*{fine separation line}{}
+
+\setbeamertemplate{navigation symbols}{} 
+\setbeamercovered{transparent}
+
+
+\AtBeginSection[]{
+  \ifnum\value{section}>1
+    \begin{frame}
+      \frametitle{Table of Contents}
+      \tableofcontents[currentsection]
+    \end{frame}
+  \fi
+}
+
+
+
+\usepackage{eqnarray,amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{lmodern} % pro pismo tucne a zaroven kurziva
+\usepackage{bm} % pro pismo tucne a zaroven kurziva
+\usepackage{epstopdf}
+\usepackage{changepage}
+\usepackage{array,booktabs}
+\usepackage{gensymb}
+\input{_my_pkg_presentation.tex}
+\setlength{\columnsep}{1cm}
+
+
+% definice makra pro české uvozovky:
+\def\bq{\mbox{\kern.1ex\protect\raisebox{-1.3ex}[0pt][0pt]{''}\kern-.1ex}}
+\def\eq{\mbox{\kern-.1ex``\kern.1ex}}
+\def\ifundefined#1{\expandafter\ifx\csname#1\endcsname\relax }%
+\ifundefined{uv}%
+        \gdef\uv#1{\bq #1\eq}
+\fi
+% konec .... použití makra pro psaní český uvozovek: \uv{text uvnitř uvozovek}
+
+%====================================================
+%========== DEFINITION OF AUTHORS ETC...=============
+%====================================================
+\title[LiDAR 3D Mapping]{3D Mapping Based on LiDAR Signal Processing}
+\author[Illia Novosad]{Illia Novosad}
+\institute[CTU]{Czech Technical University in Prague}
+\date{June 17, 2026}
+
+%====================================================
+%========== BEGINNING OF DOCUMENT ===================
+%====================================================
+\begin{document}
+
+\begin{frame}
+	\titlepage
+	\begin{center}
+  		\includegraphics[height=1.3cm]{symbol_cvut_plna_samostatna_verze.pdf}
+	\end{center}
+\end{frame}
+
+
+% \logo{\includegraphics[height=1cm]{symbol_cvut_plna_samostatna_verze.pdf}}
+
+
+\begin{frame}
+\frametitle{Obsah}
+\tableofcontents
+\end{frame}
+
+
+
+\section{Introduction}
+\begin{frame}
+\frametitle{Introduction}
+\begin{columns}
+    \column{0.5\textwidth}
+    Commercially available 3D LiDAR solutions:
+    \begin{figure}
+        \includegraphics[width=0.5\textwidth]{figures/lidar-4d-unitree-l2-rm-360-laserovy-senzor-pro-roboty-a-mapovani-slam.jpeg}
+        \caption*{Unitree 4D L1}
+    \end{figure}
+    Price: {\color{red} 250 \euro}
+    \pause
+    \column{0.5\textwidth}
+    Solution: use a cheaper 2D LiDAR and design a stepper-motor-driven platform for it
+    \begin{figure}
+        \includegraphics<1>[width=0.55\textwidth]{figures/lidar_photo_transparent.jpeg}
+        \includegraphics<2>[width=0.55\textwidth]{figures/lidar_photo.png}
+        \caption*{\href{https://amzn.eu/d/0cCyszli}{STL-19P}}
+    \end{figure}
+    Price: {\color{PineGreen} 80 \euro}
+\end{columns}
+\end{frame}
+
+\section{Platform Design}
+\subsection{Existing Amateur Solutions for 3D Scanning}
+\begin{frame}{Existing Amateur Solutions for 3D Scanning}
+\begin{columns}[T]
+
+\column{0.33\textwidth}
+\centering
+\includegraphics[width=\linewidth]{figures/existing_solutions/3D_1.png}
+\textbf{\scriptsize\href{https://www.qcontinuum.org/lidar-scanner}{Single-Point LiDAR + Platform}}
+\vspace{0.1cm}
+\begin{itemize}[label=\textcolor{green!60!black}{\textbf{+}}]\footnotesize
+    \item Low price
+\end{itemize}
+\begin{itemize}[label=\textcolor{red!70!black}{\textbf{--}}]\footnotesize
+    \item \textbf{Slow scanning}
+\end{itemize}
+
+\column{0.33\textwidth}
+\centering
+\includegraphics[width=\linewidth]{figures/existing_solutions/3D_2.jpg}
+\textbf{\scriptsize\href{https://charleslabs.fr/en/project-3D+Lidar+Scanner+MK2}{Single-Point LiDAR + Moving Mirror}}
+\vspace{0.1cm}
+\begin{itemize}[label=\textcolor{green!60!black}{\textbf{+}}]\footnotesize
+    \item Low price
+    \item LiDAR is stationary (easier to correct the distance measurement)
+\end{itemize}
+\begin{itemize}[label=\textcolor{red!70!black}{\textbf{--}}]\footnotesize
+    \item High quality mirror is needed
+    \item \textbf{Vibrations of the structure}
+\end{itemize}
+
+\column{0.33\textwidth}
+\centering
+\includegraphics[width=\linewidth]{figures/existing_solutions/3D_3.jpg}
+\textbf{\scriptsize\href{http://zlethic.com/diy-3dlidar/}{2D LiDAR + Tilting Platform}}
+\vspace{0.1cm}
+\begin{itemize}[label=\textcolor{green!60!black}{\textbf{+}}]\footnotesize
+    \item High speed
+    \item High resolution
+\end{itemize}
+\begin{itemize}[label=\textcolor{red!70!black}{\textbf{--}}]\footnotesize
+    \item \textbf{Uneven point density}
+\end{itemize}
+
+\end{columns}
+\end{frame}
+
+
+\subsection{Point Cloud Visualisation at Different Tilt Angles}
+\begin{frame}
+\frametitle{Point Cloud Visualisation at Different Tilt Angles}
+\begin{figure}[h!]
+    \centering
+    
+    \begin{subfigure}{0.45\linewidth}
+        \centering
+        \input{figures/30rotate_pointCloud.tex}
+        \caption{$\theta=30\degree$}
+        \label{fig:rotate_pointCloud:30}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.45\linewidth}
+        \centering
+        \input{figures/60rotate_pointCloud.tex}
+        \caption{$\theta=60\degree$}
+        \label{fig:rotate_pointCloud:60}
+    \end{subfigure}
+    \label{fig:rotate_pointCloud}
+\end{figure}
+\begin{minipage}{10cm}
+Larger tilt angle $\theta$ -- more coverage \\\pause
+{\color{red} Problem:} Increasing spacing between consecutive LiDAR sweeps as $\theta$ increases
+\end{minipage}
+\end{frame}
+
+
+
+\subsection{Dependence of Scan Spacing $S_{\text{scan}}$ on Tilt Angle $\theta$}
+\begin{frame}
+    \frametitle{Dependence of Scan Spacing $S_{\text{scan}}$ on Tilt Angle $\theta$}
+    \begin{figure}
+    \begin{subfigure}{0.4\linewidth}
+        \centering
+        \input{figures/scan_spacing.tex}
+        \caption{3D visualisation}
+        \label{fig:scan_spacing:3d}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.53\linewidth}
+        \centering
+        \input{figures/tikz_scan_spacing.tex}
+        \caption{Simplified model showing the dependence}
+        \label{fig:scan_spacing:tikz}
+    \end{subfigure}
+    \label{fig:scan_spacing}
+\end{figure}
+\begin{minipage}{10cm}
+Optimal tilt angle $\theta$: {\color{red} $23.4\degree$}\\\pause
+{\color{red}Problem:} Limited scene coverage\\\pause
+{\color{cvut_navy} Solution:} Design a gearbox to reduce the effective step angle
+\end{minipage}
+\end{frame}
+
+
+\subsection{Effect of Reduction Ratio $R$ on Scan Spacing $S_{\text{scan}}$}
+\begin{frame}
+    \frametitle{Effect of Reduction Ratio $R$ on Scan Spacing $S_{\text{scan}}$}
+    \begin{columns}
+        \column{0.4\textwidth}
+        \begin{equation*}
+        S_{\text{scan}} = \varphi_{\text{step}}\cdot\sin(\theta)
+        \end{equation*}
+        \vspace{-0.5in}
+            \begin{figure}
+                \centering
+                \input{figures/angleRes_tiltOnly.tex}
+                \caption*{Without a gearbox}
+            \end{figure}
+        \column{0.55\textwidth}
+        \begin{equation*}
+         \varphi_{\text{eff}} = \frac{\varphi_{\text{step}}}{\color{cvut_navy}R},   S_{\text{scan}} = \varphi_{\text{eff}}\cdot\sin(\theta)
+        \end{equation*}
+            \begin{figure}
+                \centering
+                \includegraphics[width=\textwidth]{figures/angleRes_TiltPlusGearbox.png}
+                \caption*{With a gearbox}
+            \end{figure}
+\end{columns}
+\end{frame}
+
+
+\subsection{Platform Showcase}
+\begin{frame}
+\frametitle{Platform Showcase}
+\begin{columns}
+\column{0.5\textwidth}
+\begin{figure}[H]
+    \includegraphics[page = 1, width=0.9\textwidth]{figures/platform_drawings.pdf}
+\end{figure}
+\column{0.45\textwidth}
+    Rigid structure\\\vspace{0.2cm}
+    High reduction ratio $R=18$ ($\varphi_{\text{eff}}=0.1\degree$) $\rightarrow$ denser point cloud \& ability to choose different tilt angles while maintaining the uniform point cloud density\\\vspace{0.2cm}
+    Total price of the platform (with LiDAR and electronics): {\color{PineGreen} 164 \euro}
+\end{columns}
+\end{frame}
+
+\section{Electronics and Software}
+\subsection{Electronic Design}
+\begin{frame}
+    \frametitle{Electronic Design}
+    \begin{figure}[htbp]
+    \centering
+        \input{figures/electronic_design_tikz.tex}
+    \end{figure}
+\end{frame}
+
+\subsection{Software Architecture}
+\begin{frame}{Software Architecture}
+\begin{center}
+\begin{tikzpicture}[node distance=2.5cm]
+\node (lidar) {LiDAR};
+\node[right of=lidar] (pico) {Pico 2 W};
+\node[right of=pico] (pc) {PC};
+\node[right of=pc] (open3d) {Open3D};
+
+\draw[->] (lidar) -- node[above] {\footnotesize{UART}} (pico);
+\draw[<->] (pico) -- node[above] {\footnotesize{Wi-Fi}} (pc);
+\draw[->] (pc) -- (open3d);
+\end{tikzpicture}
+\end{center}
+
+\begin{columns}[c]
+\column{0.42\textwidth}
+{
+    \setbeamercolor{block title}{bg=cvut_navy,fg=cvut_navy!5}
+    \setbeamercolor{block body}{bg=gray!10}
+    \begin{block}{Pico 2 W}
+        \begin{itemize}
+            \item Homing and motor control
+            \item UART acquisition
+            \item Wi-Fi transmission
+        \end{itemize}
+    \end{block}
+}
+\column{0.42\textwidth}
+{
+    \setbeamercolor{block title}{bg=cvut_navy!40!cvut_blue,fg=cvut_blue!5}
+    \setbeamercolor{block body}{bg=gray!10}
+    \begin{block}{PC Receiver Thread}
+    \begin{itemize}
+        \item Packet reception
+        \item 3D reconstruction
+    \end{itemize}
+    \end{block}
+    
+    \begin{block}{PC Main Thread}
+    \begin{itemize}
+        \item \href{https://arxiv.org/abs/1801.09847}{Open3D} visualisation
+        \item Point cloud export
+    \end{itemize}
+    \end{block}
+}
+
+\end{columns}
+\end{frame}
+
+\section{Experimental Results}
+\subsection{Room Scan}
+\begin{frame}{Room Scan}
+Tested with $\theta=64\degree$ and 0.8\degree\ step angle between LiDAR sweeps.
+\vspace{-0.1cm}
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{figures/results/z_raw_pcd.png}
+    \caption*{Raw point cloud}
+\end{figure}
+
+\end{frame}
+
+
+\begin{frame}{Room Scan}
+\vspace{0.46cm}
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{figures/results/z_outlier_delete.png}
+    \caption*{Detected outliers}
+\end{figure}
+
+\end{frame}
+
+
+\begin{frame}{Room Scan}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{figures/results/z_outlier_show.png}
+    \caption*{Filtered point cloud}
+\end{figure}
+
+\end{frame}
+
+\subsection{Transformation Corrections}
+\begin{frame}{Transformation Corrections}
+    \begin{columns}
+        \column{0.5\textwidth}
+            \begin{figure}
+                \centering
+                \includegraphics[width=\textwidth]{figures/results/z_bad_ceiling_grayscale.png}
+            \end{figure}
+            \begin{figure}
+                \centering
+                \includegraphics[width=\textwidth]{figures/results/z_good_ceiling_grayscale.png}
+            \end{figure}
+            \column{0.28\textwidth}
+            \begin{figure}
+                \centering
+                \includegraphics[width=\textwidth]{figures/results/z_bad_wall_grayscale.png}
+            \end{figure}
+            \begin{figure}
+                \centering
+                \includegraphics[width=\textwidth]{figures/results/z_good_wall_grayscale.png}
+            \end{figure}
+      \end{columns}
+\end{frame}
+
+\subsection{Comparison with a Photograph}
+\begin{frame}{Comparison with a Photograph}
+    \begin{columns}
+        \column{0.44\textwidth}
+        \begin{figure}
+            \centering
+            \includegraphics[width=\textwidth]{figures/results/room_photo.jpg}
+            \caption*{Photo of a room}
+        \end{figure}
+        \column{0.53\textwidth}
+        \begin{figure}
+            \centering
+            \includegraphics[width=\textwidth]{figures/results/z_room_pcd_color.png}
+            \caption*{Resulting point cloud}
+        \end{figure}
+    \end{columns}
+\end{frame}
+
+\section{Conclusion}
+\begin{frame}{Conclusion}
+A platform enabling 3D reconstruction with 2D LiDAR was built. It features a gearbox with a high reduction ratio, allowing for dense point clouds even at large tilt angles.\\\vspace{0.2cm}
+Code for data acquisition, processing and 3D reconstruction visualisation was written.\\\vspace{0.2cm}
+The prototype was tested by scanning a room, transformation corrections were applied.
+\end{frame}
+
+
+\section{Odpovědi na otázky}
+\begin{frame}{Odpovědi na otázky}
+
+    {\color{yellow}Q1:}Jaká je opakovatelnost měření, zejména s ohledem na zarovnání s využitím Hallovy sondy při inicializaci měření?
+    \begin{columns}
+        \column{0.35\textwidth}
+            {\color{cvut_navy}A1.1:} Měření bylo opakováno 10krát, point cloudy byly překryty.
+            \begin{figure}
+                \centering
+                \includegraphics[width=0.9\textwidth]{figures/repeatability/tight.png}
+            \end{figure}
+        \column{0.52\textwidth}
+            \begin{figure}
+                \centering
+                \includegraphics[width=\textwidth]{figures/repeatability/wide1.png}
+            \end{figure}
+            \begin{figure}
+                \centering
+                \includegraphics[width=\textwidth]{figures/repeatability/wide2.png}
+            \end{figure}
+      \end{columns}
+\end{frame}
+
+\begin{frame}{Odpovědi na otázky}
+
+    {\color{cvut_navy}A1.2:} Open3D nabízí spoustu funkcí pro zarovnávání a porovnávání point cloudů. \href{https://www.open3d.org/docs/release/tutorial/pipelines/icp_registration.html}{Point-to-Point Iterative Closest Point (ICP)} algoritmus byl použit pro demonstrační účely.
+    \begin{columns}
+        \column{0.45\textwidth}
+            \begin{figure}
+                \centering
+                \includegraphics[width=\textwidth]{figures/repeatability/misaligned.png}
+            \end{figure}
+        \column{0.5\textwidth}
+            \begin{figure}
+                \centering
+                \includegraphics[width=\textwidth]{figures/repeatability/aligned.png}
+            \end{figure}
+      \end{columns}
+\end{frame}
+
+
+\begin{frame}{Odpovědi na otázky}
+
+    {\color{yellow}Q2:} Jaké mechanické úpravy by byly potřeba pro umožnění nepřetržité rotace senzoru? Jakým způsobem by bylo možné kontinuálně scanovat bez nutnosti inicializace orientace před každým spuštěním?
+    \begin{columns}[t]
+        \column{0.4\textwidth}
+            \begin{figure}
+                \centering
+                \includegraphics[width=\textwidth]{figures/slip_ring.jpg}
+            \end{figure}
+            Cena: {\color{red} >100 \$}. \href{https://www.amazon.com/Taidacent-Pancake-Rotating-Connector-Electrical/dp/B08FX7GJ8L?th=1&language=en_US&currency=USD}{Odkaz na Amazon}
+        \column{0.56\textwidth}
+            \vspace{0.1cm}
+
+            {\color{cvut_navy}A2:} V LiDARech se používají tzv. slip rings pro umožnění přenosu dat a napájení při otáčení o $360\degree$. Neintegrovaná řešení jsou avšak poměrně drahá.
+    \end{columns}
+\end{frame}
+
+
+\begin{frame}{Odpovědi na otázky}
+    
+    {\color{yellow}Q3:} Jaká je časová náročnost provedení celého 3D scanu?\\
+    {\color{cvut_navy}A3:} $450\,\text{kroků}\cdot0.105\,\text{s/krok} + 10\,\text{s(homing)}= \approx60\,\text{s}$
+    Reálná doba je však o cca 10\,s delší kvůli přenosu dat přes Wi-Fi. V ojedinělých případech může dojít ke ztrátě spojení nebo komunikačním prodlevám, což může dále prodloužít dobu skenování.
+    
+\end{frame}
+
+\begin{frame}[fragile]{Odpovědi na otázky}
+    
+    {\color{yellow}Q4:} Odpovídají rozměry nascanovaného pointcloudu reálným rozměrům místnosti? Jaké je relativní zastoupení outlierů v získaném pointcloudu?
+    \begin{columns}[t]
+        \column{0.28\textwidth}
+            \vspace{-0.4cm}
+            \begin{figure}
+                \centering
+                \includegraphics[width=\textwidth]{figures/marked_points.png}
+            \end{figure}
+        \column{0.7\textwidth}
+            \vspace{-0.13cm}
+
+            Rozměry pokoje: $5.87\pm0.05 \mathrm{m} \times 2.35\pm0.05 \mathrm{m}$ (vzato z wiki \href{http://old-wiki.siliconhill.cz/Rozm%C4%9Bry_strahovsk%C3%A9ho_pokoje_a_n%C3%A1bytku_(mimo_blok_8)}{Silicon Hill})\\\vspace{0.1cm}
+            {\color{yellow}P0}, {\color{blue}P1}, {\color{red}P2}, {\color{green}P3}\\\vspace{-0.2cm}
+            {\footnotesize
+            \begin{verbatim}
+|P1 - P0|: 5.9352 <- length
+|P2 - P1|: 3.0441
+|P3 - P2|: 2.3780 <- width
+            \end{verbatim}
+            }
+            \vspace{-0.7cm}
+            Rozměry nascanovaného pointcloudu jsou v rámci chyby měření
+            \vspace{0.7cm}
+
+            {\footnotesize
+            \begin{verbatim}
+Unfiltered pcd: 494400  points
+Outliers:       3737    points
+Filtered pcd:   490663  points
+Removed points percentage: 0.76%
+            \end{verbatim}
+            }
+
+    \end{columns}
+\end{frame}
+
+
+\end{document}
+
+% =============================================================
+% =========================== END =============================
+% =============================================================
+
