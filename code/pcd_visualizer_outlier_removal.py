@@ -13,6 +13,16 @@ def display_inlier_outlier(cloud, ind):
                                       front=[0.4257, -0.2125, -0.8795],
                                       lookat=[2.6172, 2.0475, 1.532],
                                       up=[-0.0694, -0.9768, 0.2024])
+    
+def print_filter_stats(cloud_before, cloud_after):
+    n_before = len(cloud_before.points)
+    n_after = len(cloud_after.points)
+    n_removed = n_before - n_after
+
+    print(f"Unfiltered pcd: {n_before:<7} points")
+    print(f"Outliers:       {n_removed:<7} points")
+    print(f"Filtered pcd:   {n_after:<7} points")
+    print(f"Removed points percentage: {(100 * n_removed / n_before):.2f}%")
 
 # write your own point cloud file path here
 pcd = o3d.io.read_point_cloud("examples/pcd_2026.05.16_13:41:33_495468-badalign-nocompensation.ply")
@@ -33,3 +43,4 @@ o3d.visualization.draw_geometries([pcd_stat],
                                   front=[0.4257, -0.2125, -0.8795],
                                   lookat=[2.6172, 2.0475, 1.532],
                                   up=[-0.0694, -0.9768, 0.2024])
+print_filter_stats(pcd, pcd_stat)
